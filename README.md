@@ -90,6 +90,10 @@ Near-term milestones:
 4. Stand up minimal simulation scaffold for generator operating-point control experiments.
 5. Define initial bench-test matrix for startup, steady-state, and fault-response behavior.
 
+## Knowledge Migration
+
+- Article-derived subsystem migration notes: `docs/ARTICLE_KNOWLEDGE_MIGRATION_2026Q2.md`
+
 ## Licensing
 
 This repository uses a dual-license model:
