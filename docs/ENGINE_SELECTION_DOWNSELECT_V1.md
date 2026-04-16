@@ -28,7 +28,8 @@ This document is seeded from the published program analysis and then maintained 
 |---|---|---|---:|---:|---|---|---|---|---|
 | Flygas GAS 418S | 1,800 cc | 180 hp / 132 kW @ 5,800 RPM | < 85 | 2.2 | Liquid | 98 octane / mogas | UAV, experimental | EUR20k-EUR30k (est) | Viable |
 | UL Power UL520iS | 3,120 cc | 200 hp / 147 kW @ 5,800 RPM | ~118 | 1.7 | Liquid heads / air cylinders | Mogas | Experimental and kit support | USD45k-USD55k | Viable |
-| Kawasaki I4 Turbo | ~1,000 cc | 148 hp / 110 kW cont | 130-140 installed | 1.1-1.14 | Liquid | Mogas + FADEC | Experimental derivatives | USD15k-USD25k (est) | Viable (heavy) |
+| Kawasaki I4 Turbo | 999 cc | 148 hp / 110 kW max continuous (200 hp / 149 kW takeoff) | 85 dry | 1.74 cont / 2.35 TO | Liquid | Mogas + FADEC | Experimental derivatives | USD15k-USD25k (est) | Viable (packaging/integration risk) |
+| Kawasaki I6 Turbo | 2,069 cc | 350 hp / 261 kW max continuous (375 hp / 280 kW takeoff) | 127 dry | 2.76 cont / 2.95 TO | Liquid | Mogas + FADEC | Experimental derivatives | TBD | Marginal (oversized for current architecture) |
 | Rotax 912 iS | 1,352 cc | 100 hp / 73.5 kW @ 5,800 RPM | 72 | 1.39 | Liquid heads / air cylinders | Mogas | Widely used LSA/experimental | USD28k-USD32k | Viable (low margin) |
 | Rotax 915 iS | 1,352 cc | 141 hp / 103.5 kW @ 5,800 RPM | 83 | 1.70 | Liquid heads / air cylinders | Mogas | Proven LSA/experimental | USD42k-USD48k | Viable |
 | Rotax 916 iS | 1,352 cc | 160 hp / 118 kW @ 5,800 RPM | ~85 | 1.88 | Liquid heads / air cylinders | Mogas | New certified family | USD50k+ | Viable |
@@ -60,6 +61,38 @@ This document is seeded from the published program analysis and then maintained 
 | High-performance option | Flygas GAS 418S (2x) | Strong power-to-weight pending procurement confidence |
 | Best value | Viking 130 (2x) | Cost-favorable with clear mass trade penalty |
 | Budget alternative | Aeromomentum AM15 (2x) | Lower cost, less field-proven |
+
+## Preliminary Dimensional Reference (Packaging)
+
+These values are preliminary planning inputs for CAD envelope studies and must be replaced by vendor installation drawings before commitment.
+
+Brochure caveat: values are target specifications, and dry weight excludes radiator and exhaust.
+
+| Engine | Dimensions (H x W x L) |
+|---|---|
+| Kawasaki I4 Turbo | 670 mm x 640 mm x 600 mm |
+| Kawasaki I6 Turbo | 550 mm x 580 mm x 850 mm |
+
+## Kawasaki Brochure Evidence Notes
+
+Observed from `docs/prepare_for_take_off_dl.pdf`:
+
+1. "Hybrid Propulsion" is shown visually as a product-line row, including engine imagery with an attached cylindrical module suggestive of a generator/motor package.
+2. No explicit generator model, electrical output (kW), voltage, mass, cooling load, or coupling interface specification is provided in text.
+3. Inline 4 turbo is listed with "Gearbox: Optional" and output shaft speed of 8,500 rpm.
+4. Inline 6 turbo is listed with "Integrated Gearbox" and output shaft speed of 2,600-2,800 rpm.
+
+Implication for MAOS trade work: brochure evidence supports a likely hybrid-intent architecture signal, but does not yet provide enough hard data to treat a packaged genset as confirmed hardware.
+
+## Online Evidence Snapshot (2026-04-16)
+
+1. Official Kawasaki Motors news lists a strategic partnership with Dronamics and links to an official PDF release (`global.kawasaki.com/news_250918-1e.pdf`).
+2. The official Kawasaki-Dronamics PDF confirms aero piston engine integration activity for the Black Swan UAV platform and full-lifecycle cooperation (R&D integration engineering, flight testing, and validation).
+3. The official Kawasaki-Dronamics PDF does not provide generator package specifications (no generator power rating, voltage, mass, cooling load, or electrical architecture details).
+4. AIN and FLYER coverage are consistent on the core engine program trajectory (inline 4 and inline 6, certification target around 2030, hydrogen/e-fuel transition intent).
+5. VoltAero-related reporting (GlobalAir summary quoting AirVenture statements) describes a separate hybrid power unit architecture using a Kawasaki H2SX-derived thermal engine plus electric motor (HPU 210), but this is a partner system and not explicit proof that Kawasaki's new clean-sheet inline 4 includes a standardized bundled generator product.
+
+Working conclusion: there is strong evidence of hybrid and integration intent, but still no public, official spec sheet for a Kawasaki inline-4 packaged genset offering.
 
 ## Weight-Budget Reality Check
 
