@@ -34,6 +34,7 @@ Scope note: This is R&D guidance for Experimental Amateur-Built development. It 
 ## Immediate Work Items
 
 1. Create docs/ENGINE_SELECTION_DOWNSELECT_V1.md with weighted scoring and rationale.
+	(Done)
 2. Create docs/GENERATOR_PAIRING_AND_CONTROL_MODES.md for integration contracts.
 3. Create docs/ICE_FAILSAFE_AND_RESTART_LOGIC.md with explicit state machine.
 4. Provide an initial interface payload for MAOS-MOTOR and MAOS-FCS consumption.
@@ -41,5 +42,6 @@ Scope note: This is R&D guidance for Experimental Amateur-Built development. It 
 ## Suggested Deliverables to Add Next
 
 - docs/ENGINE_SELECTION_DOWNSELECT_V1.md
+	(Completed)
 - docs/GENERATOR_PAIRING_AND_CONTROL_MODES.md
 - docs/ICE_FAILSAFE_AND_RESTART_LOGIC.md

@@ -93,6 +93,7 @@ Near-term milestones:
 ## Knowledge Migration
 
 - Article-derived subsystem migration notes: `docs/ARTICLE_KNOWLEDGE_MIGRATION_2026Q2.md`
+- Formal engine shortlist and downselect matrix: `docs/ENGINE_SELECTION_DOWNSELECT_V1.md`
 
 ## Licensing
 
