@@ -55,6 +55,18 @@ Motorcycle engines operate in the 5,000–10,000 RPM power band. The HPDM-180R g
 | **Rotax 916 iS** | 120 kW / 160 hp | 120 kW | ~72 kg | 1.67 kW/kg | ~280 g/kWh | ~2,000 hr | Pending | ~$35–45k new | Announced 2023; builds on 915 architecture |
 | **Kawasaki Inline-4 Aero Turbo** | 110 kW / 148 hp | 149 kW / 200 hp | 85 kg | 1.74 kW/kg (cont) | ~320 g/kWh | TBD | TBD (cert target 2030) | $30–60k est. | Clean-sheet aviation; FADEC; liquid-cooled; mogas |
 | **Kawasaki Inline-6 Aero Turbo** | 261 kW / 350 hp | 280 kW / 375 hp | 127 kg | 2.05 kW/kg | ~300 g/kWh | TBD | TBD (cert target 2030) | $50–90k est. | Same program; highest continuous power in class |
+| **DeltaHawk DHK2H120** | 89.4 kW / 120 hp | 89.4 kW / 120 hp | 72.7 kg | 1.23 kW/kg | ~228 g/kWh max / ~191 g/kWh best econ | TBD | None (UAS/defense product) | Contact mfr | 2-stroke 2-cyl opposed diesel; 1.65L; Jet-A/JP8/SAF/#2 diesel; supercharged + CAC; liquid-cooled; -40°C cold start; max 2600 RPM. DHK2H80 and DHK2H100 also available (same 72.7 kg) |
+| **DeltaHawk DHK180A4** | 134.2 kW / 180 hp | 134.2 kW / 180 hp | 151 kg | 0.88 kW/kg | ~245 g/kWh max / ~220 g/kWh best econ | TBD / contact mfr | **FAA TC (first clean-sheet certified piston in ~50 yrs)** | Contact mfr | 2-stroke inverted-Vee 4-cyl diesel; 3.3L; compound boosted (SC + TC + CAC); liquid-cooled; clockwise rotation (pilot view); Cirrus SR20 demo to 25,000 ft |
+| **DeltaHawk DHK235A4** | 175.2 kW / 235 hp | 175.2 kW / 235 hp | 151 kg | 1.16 kW/kg | ~227 g/kWh max / ~221 g/kWh best econ | TBD / contact mfr | **FAA TC** | Contact mfr | Same DHK4 platform; best-economy SFC nearly flat from 180→235 hp variants; highest power in certified DHK family |
+
+**DeltaHawk Key Notes:**
+- **Best measured SFC in any candidate class.** DHK2H120 best-economy 191 g/kWh and DHK235A4 ~221 g/kWh are substantially below Rotax 915 (~280 g/kWh) and far below M250 at part power (550–700 g/kWh).
+- **Diesel compression ignition** means Jet-A, JP-5, JP-8, SAF, and #2 diesel all work — widest fuel flexibility of any candidate. No avgas dependency.
+- **DHK4 is FAA type certificated** — first clean-sheet certified piston engine in approximately 50 years. Meaningful for supply chain and long-term support confidence even in experimental operation.
+- **Mass penalty:** DHK4 at 151 kg is heavier than Rotax 915 (68 kg) by ~83 kg for ~75 kW more power. Specific power is low (0.88–1.16 kW/kg) vs. motorcycle engines (2.5 kW/kg). For a series hybrid architecture where ICE weight drives less penalty than in direct-drive, this may be acceptable.
+- **DHK2 is UAS/defense-focused** — no published TBO, no aviation type certificate. Lower risk for experimental but supply chain is defense-oriented.
+- **Max RPM 2600** — favorable for direct generator coupling without heavy reduction gearing. H3X HPDM-180R at 3,000 RPM would require only modest ~1.15:1 ratio (or slightly overrunning the HPDM spec — contact H3X). Very clean integration compared to motorcycle engine at 7,000–10,000 RPM.
+- **SFC figures derived from published spec sheet data.** DHK2H120: 45 lbs/hr at 89.4 kW = 228 g/kWh; best economy: 28.2 lbs/hr at 67.1 kW = 191 g/kWh. DHK235A4: 13.1 gal/hr × 6.7 lb/gal = 87.8 lbs/hr at 175.2 kW = 227 g/kWh; best economy: 10.2 gal/hr = 68.3 lbs/hr at 140.2 kW = 221 g/kWh. Source: DeltaHawk Engines operational performance spec sheets (April 2025).
 
 ---
 
@@ -295,6 +307,26 @@ Path H critical gates:
 1. Continuous-duty engine endurance at generator load (primary technical risk).
 2. Reduction-drive durability and torsional behavior for generator coupling.
 3. Generator-mode inverter control validation for selected low-cost machine.
+
+---
+
+### Path D: DeltaHawk-Forward (Certified Diesel, Fuel-Efficient Mid-Range)
+
+**Concept:** Use a DHK235A4 (175 kW, FAA TC'd, Jet-A) as generator source. Best SFC of any piston candidate (~221–227 g/kWh), widest fuel compatibility, and max 2600 RPM output enabling simple direct or near-direct coupling to H3X HPDM-180R (3000 RPM — ~1.15:1 step-up, or operated within spec contact H3X). Path D occupies the middle ground: better efficiency than Path H, far better part-power SFC than Path T, and FAA pedigree for long-term support.
+
+**Primary tradeoff:** Mass. DHK235A4 is 151 kg — 83 kg heavier than Rotax 915 for roughly the same generator output class. In a series hybrid, generator mass is carried everywhere. This requires a clean airframe mass budget review before committing.
+
+| Path D Pairing | ICE | Generator | Propulsion Motor | Combined Electric Hardware Cost (est.) | Notes |
+|---|---|---|---|---|---|
+| **D1 (Premium)** | DHK235A4 | HPDM-180R | HPDM-350 | ~$60–120k | Best integration at max RPM match; dual fault-redundant prop motor |
+| **D2 (Budget)** | DHK235A4 | Hyper9 HV AC-X144 | Tesla Model 3 rear DU | ~$15.5k | Near-direct RPM coupling possible; EV-sourced hardware; low acquisition cost |
+| **D3 (Rotax fallback)** | DHK235A4 | Hyper9 HV AC-X144 | Hyper9 HV motor | ~$11.2k | Full budget track; generator and motor both sub-$6k |
+
+Path D critical gates:
+1. Mass budget: confirm airframe can absorb 151 kg generator ICE vs. 68 kg Rotax-class without exceeding MTOW.
+2. DHK4 TBO and pricing: contact DeltaHawk for actual TBO figure and purchase price.
+3. RPM coupling: confirm H3X HPDM-180R at 3,000 RPM can accept DHK4 max 2,600 RPM direct (or confirm need for ~1.15:1 step-up gear).
+4. Supply chain: DeltaHawk is a startup (Racine, WI); verify production availability and lead time.
 
 ---
 
