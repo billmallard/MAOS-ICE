@@ -294,12 +294,12 @@ Mission intent:
 
 Current best-price pairings (now):
 
-| Path T Pairing | ICE | Generator | Propulsion Motor | Combined Electric Hardware Cost (est.) | Notes |
-|---|---|---|---|---:|---|
-| T1 (Premium) | M250-C20B | HPDM-350 | HPDM-350 | $40k-$80k+ | Best technical fit, highest cost |
-| T2 (Budget Hybrid) | M250-C20B | Hyper9 HV AC-X144 | Tesla Model 3 rear DU | **~$15.5k** | Strong budget fit; mass and integration complexity increase |
-| T3 (Go-Fast Budget) | M250-C20B | Hyper9 HV AC-X144 | Tesla Model S LDU | **~$17.5k** | Highest budget power headroom; strong mass penalty |
-| T4 (Balanced) | M250-C20B | Tesla Model 3 rear DU (gen mode) | Tesla Model 3 rear DU | **~$19.8k** | Symmetric hardware, high controls complexity |
+| Path T Pairing | ICE | Generator | Propulsion Motor | Bus Voltage | Combined Electric Hardware Cost (est.) | Notes |
+|---|---|---|---|---|---:|---|
+| T1 (Premium) | M250-C20B | HPDM-350 | HPDM-350 | **900V** ✓ | $40k-$80k+ | Best technical fit, highest cost |
+| T2 (Budget Hybrid) | M250-C20B | Hyper9 HV AC-X144 | Tesla Model 3 rear DU | **~400V** ⚠ | **~$15.5k** | Self-consistent at 400V; bus ceiling limits scaling; no H3X interop without DC-DC converter |
+| T3 (Go-Fast Budget) | M250-C20B | Hyper9 HV AC-X144 | Tesla Model S LDU | **~400V** ⚠ | **~$17.5k** | Self-consistent at 400V; highest budget power headroom; strong mass penalty |
+| T4 (Balanced) | M250-C20B | Tesla Model 3 rear DU (gen mode) | Tesla Model 3 rear DU | **~400V** ⚠ | **~$19.8k** | Self-consistent at 400V; symmetric hardware, high controls complexity |
 
 Path T critical gates:
 1. Validate turbine part-power SFC at intended cruise altitude and speed.
@@ -314,12 +314,12 @@ Mission intent:
 
 Current best-price pairings (now):
 
-| Path H Pairing | ICE | Generator | Propulsion Motor | Combined Electric Hardware Cost (est.) | Notes |
-|---|---|---|---|---:|---|
-| H1 (Best Budget Baseline) | Single turbo Hayabusa | Hyper9 HV AC-X144 | Hyper9 AC-X1 | **~$11.0k** | Closest to target economics; lower power ceiling |
-| H2 (Twin Redundant Budget) | Twin turbo Hayabusa | 2x Hyper9 HV AC-X144 | Tesla Model 3 rear DU | **~$21.1k** | Strong redundancy and cruise headroom |
-| H3 (High-Speed Cost Compromise) | Twin turbo Hayabusa | Hyper9 HV AC-X144 | Tesla Model 3 rear DU | **~$15.5k** | Better speed potential than H1, manageable cost |
-| H4 (Premium Technical) | Twin turbo Hayabusa | 2x HPDM-180R | HPDM-180R | $60k-$120k | Performance benchmark, outside budget intent |
+| Path H Pairing | ICE | Generator | Propulsion Motor | Bus Voltage | Combined Electric Hardware Cost (est.) | Notes |
+|---|---|---|---|---|---:|---|
+| H1 (Best Budget Baseline) | Single turbo Hayabusa | Hyper9 HV AC-X144 | Hyper9 AC-X1 | **~400V** ⚠ | **~$11.0k** | Self-consistent at 400V; closest to target economics; lower power ceiling |
+| H2 (Twin Redundant Budget) | Twin turbo Hayabusa | 2x Hyper9 HV AC-X144 | Tesla Model 3 rear DU | **~400V** ⚠ | **~$21.1k** | Self-consistent at 400V; strong redundancy and cruise headroom |
+| H3 (High-Speed Cost Compromise) | Twin turbo Hayabusa | Hyper9 HV AC-X144 | Tesla Model 3 rear DU | **~400V** ⚠ | **~$15.5k** | Self-consistent at 400V; better speed potential than H1, manageable cost |
+| H4 (Premium Technical) | Twin turbo Hayabusa | 2x HPDM-180R | HPDM-180R | **850V** ✓ | $60k-$120k | Performance benchmark, outside budget intent |
 
 Path H critical gates:
 1. Continuous-duty engine endurance at generator load (primary technical risk).
@@ -334,11 +334,13 @@ Path H critical gates:
 
 **Primary tradeoff:** Mass. DHK235A4 is 151 kg — 83 kg heavier than Rotax 915 for roughly the same generator output class. In a series hybrid, generator mass is carried everywhere. This requires a clean airframe mass budget review before committing.
 
-| Path D Pairing | ICE | Generator | Propulsion Motor | Combined Electric Hardware Cost (est.) | Notes |
-|---|---|---|---|---|---|
-| **D1 (Premium)** | DHK235A4 | HPDM-180R | HPDM-350 | ~$60–120k | Best integration at max RPM match; dual fault-redundant prop motor |
-| **D2 (Budget)** | DHK235A4 | Hyper9 HV AC-X144 | Tesla Model 3 rear DU | ~$15.5k | Near-direct RPM coupling possible; EV-sourced hardware; low acquisition cost |
-| **D3 (Rotax fallback)** | DHK235A4 | Hyper9 HV AC-X144 | Hyper9 HV motor | ~$11.2k | Full budget track; generator and motor both sub-$6k |
+| Path D Pairing | ICE | Generator | Propulsion Motor | Bus Voltage | Combined Electric Hardware Cost (est.) | Notes |
+|---|---|---|---|---|---|---|
+| **D1 (Premium)** | DHK235A4 | HPDM-180R | HPDM-350 | **850/900V** ⚠² | ~$60–120k | Near-compatible H3X voltages; confirm shared bus tolerance with H3X before committing |
+| **D2 (Budget)** | DHK235A4 | Hyper9 HV AC-X144 | Tesla Model 3 rear DU | **~400V** ⚠ | ~$15.5k | Self-consistent at 400V; near-direct RPM coupling; no 800V path without DC-DC converter |
+| **D3 (Rotax fallback)** | DHK235A4 | Hyper9 HV AC-X144 | Hyper9 HV motor | **~400V** ⚠ | ~$11.2k | Self-consistent at 400V; full budget track; generator and motor both sub-$6k |
+
+> ² D1 note: HPDM-180R is rated 850 VDC; HPDM-350 is rated 900 VDC. These are different H3X products on the same bus — H3X likely designs for this within their system architecture, but this must be confirmed before integration planning proceeds.
 
 Path D critical gates:
 1. Mass budget: confirm airframe can absorb 151 kg generator ICE vs. 68 kg Rotax-class without exceeding MTOW.
@@ -364,6 +366,29 @@ Question resolved: electric motor search is partially independent from ICE, but 
 Practical rule:
 - Run electric motor procurement and bench characterization in parallel across both paths.
 - Keep generator/coupling design path-specific (T vs H) from day one.
+
+### Bus Voltage Architecture Constraint
+
+Bus voltage is a system-level architectural decision that must be made before hardware is committed. It is not recoverable without a DC-DC converter, which adds mass, heat rejection load, conversion loss (~2–5%), and a new failure point.
+
+| Bus Class | Representative Hardware | Penalty if Mixed | Notes |
+|---|---|---|---|
+| **~400V** | Tesla M3/S DU, Hyper9 HV, HPDG-30 | — (self-consistent) | Lower current for given power requires heavier wiring than 800V class; lower efficiency ceiling |
+| **800–900V** | HPDM-180R (850V), HPDM-350 (900V), HPDM-500 (850V) | — (self-consistent within H3X family) | Higher voltage = lower current = lighter wiring, better inverter efficiency at sustained load |
+| **Mixed** | 400V motor + 800V generator, or vice versa | DC-DC converter required: +10–30 kg est., ~2–5% conversion loss, added thermal load, new fault mode | Avoid unless forced by component selection |
+
+**Current path voltage summary:**
+
+| Path | Pairing | Bus Class | Status |
+|---|---|---|---|
+| T1 | HPDM-350 + HPDM-350 | 900V | ✓ Consistent |
+| T2, T3, T4 | Hyper9/Tesla combinations | ~400V | ⚠ Consistent but capped; no H3X interop |
+| H1, H2, H3 | Hyper9/Tesla combinations | ~400V | ⚠ Consistent but capped |
+| H4 | HPDM-180R + HPDM-180R | 850V | ✓ Consistent |
+| D1 | HPDM-180R + HPDM-350 | 850/900V | ⚠ Confirm with H3X |
+| D2, D3 | Hyper9/Tesla combinations | ~400V | ⚠ Consistent but capped |
+
+**Implication:** The budget pairings (T2–T4, H1–H3, D2–D3) are internally self-consistent at ~400V, which is a viable architecture — but it is a permanently lower-performance bus that cannot be upgraded to 800V without replacing all power hardware. If the 800V preference is real, the path must be either H4/T1/D1 class (H3X throughout) or accept the converter penalty for mixed pairings.
 
 ### Two-Mission Framing (Generator Side vs. Propulsor Side)
 
@@ -460,10 +485,11 @@ What this implies for MAOS (non-VTOL mission):
 ## 7. Open Questions / Next Steps
 
 ### High Priority
+- [ ] **Commit to bus voltage architecture: 400V or 800V class** — this decision constrains all downstream hardware selection; cannot be deferred past first hardware procurement
 - [ ] Sustained-duty TBO test data for Hayabusa/ZX-14R at generator load (5,000+ RPM, continuous, 500+ hours) — **this is the critical gate for Configs B and C**
 - [ ] H3X HPDM-180R actual pricing and lead time for non-defense customers
 - [ ] M250 airframe design optimization: what cruise altitude / airspeed puts the engine on its efficiency knee?
-- [ ] magniAIR pricing (expected 2027 commercial availability)
+- [ ] magniAIR pricing and bus voltage specification (expected 2027 commercial availability)
 
 ### Medium Priority
 - [ ] Reduction drive design (belt/chain/gear) for motorcycle engine → HPDM-180R coupling
