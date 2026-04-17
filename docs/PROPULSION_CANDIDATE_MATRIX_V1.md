@@ -42,7 +42,7 @@
 - Turbocharged Hayabusa achieves 600+ hp in drag racing; 300+ hp at reliable street boost levels is well-proven
 
 **Motorcycle Engine Generator Coupling Challenge:**
-Motorcycle engines operate in the 5,000–10,000 RPM power band. The HPDM-180R generator wants 3,000 RPM input (integral 6.7:1 gearbox reduces from ~20,000 RPM internal). A ~2:1 to 3.5:1 belt or chain reduction from engine output shaft to generator input is the typical solution — well-documented in motorsport applications. Toothed belt is preferred for low-noise, low-maintenance operation.
+Motorcycle engines operate in the 5,000–10,000 RPM power band. The HPDM-180R electromagnetic core is a high-speed machine (~20,000 RPM internal), and the integrated 6.7:1 planetary gearbox sets the external shaft speed to about 3,000 RPM. For generator use, this means the ICE-coupled shaft target is still ~3,000 RPM at the machine interface. A ~2:1 to 3.5:1 belt or chain reduction from engine output shaft to generator input is the typical solution — well-documented in motorsport applications. Toothed belt is preferred for low-noise, low-maintenance operation.
 
 ---
 
@@ -364,6 +364,79 @@ Question resolved: electric motor search is partially independent from ICE, but 
 Practical rule:
 - Run electric motor procurement and bench characterization in parallel across both paths.
 - Keep generator/coupling design path-specific (T vs H) from day one.
+
+### Two-Mission Framing (Generator Side vs. Propulsor Side)
+
+MAOS hybrid architecture should be treated as two linked but different machine missions:
+
+1. **Generator mission (ICE-coupled side):**
+	- Goal: hold the ICE near best efficiency and convert shaft power to stable electrical bus power.
+	- Priorities: BSFC island control, thermal rejection at steady high load, torsional robustness, and bus stability.
+	- Typical bias: RPM matching and durability over absolute peak specific power.
+
+2. **Propulsor mission (propeller side):**
+	- Goal: convert electrical power to thrust across climb/cruise/transient envelopes.
+	- Priorities: shaft torque delivery in prop RPM band, transient response, fault tolerance, and cooling during climb.
+	- Typical bias: low-risk prop integration, controllability, and mission-specific efficiency.
+
+Implication for downselect:
+- One machine can serve both missions, but optimization targets are different.
+- Best system outcomes often come from mission-specific pairing (generator machine chosen for ICE coupling, propulsor machine chosen for thrust mission), even when this increases part-count complexity.
+
+### Two-Mission Weighted Scorecard (Generator vs. Propulsor)
+
+Use separate weighted scores for each mission, then combine only at system level.
+
+Scoring scale:
+- 1 = poor fit
+- 3 = acceptable / workable
+- 5 = excellent fit
+
+Generator mission weights (100 total):
+
+| Criterion | Weight (%) | Why it matters |
+|---|---:|---|
+| Shaft-speed compatibility with ICE | 20 | Reduces coupling complexity and losses |
+| Continuous thermal margin | 20 | Generator duty is sustained, not burst |
+| DC bus stability / controls maturity | 20 | Directly affects aircraft power quality and fault behavior |
+| Torsional robustness / coupling simplicity | 15 | Lower mechanical risk and maintenance burden |
+| Steady-load efficiency | 15 | Drives mission fuel burn and range |
+| Availability / cost / lead time | 10 | Practical path execution |
+
+Propulsor mission weights (100 total):
+
+| Criterion | Weight (%) | Why it matters |
+|---|---:|---|
+| Torque delivery in prop RPM band | 25 | Core thrust and climb performance driver |
+| Transient response | 20 | Go-around, gust, and maneuver response |
+| Climb thermal margin | 20 | Highest sustained power stress case |
+| Fault tolerance / graceful degradation | 15 | Safety and dispatch resilience |
+| Prop integration simplicity | 10 | Gearbox/drive complexity and integration risk |
+| Availability / cost / lead time | 10 | Practical path execution |
+
+Score computation:
+- Mission score = sum of (criterion score 1-5 * weight).
+- Keep generator and propulsor scores separate until final architecture trade.
+
+Starter directional scoring (pre-bench, to be replaced with measured data):
+
+| Machine | Generator Mission Score (1-5) | Propulsor Mission Score (1-5) | Confidence | Notes |
+|---|---:|---:|---|---|
+| HPDM-180R | 4.0 | 3.5 | Medium | Strong power density and good generator fit; geared architecture requires coupling discipline |
+| HPDM-350 | 4.2 | 4.3 | Medium | Strong all-around fit; dual-fault architecture helps propulsor mission |
+| Hyper9 HV AC-X144 | 3.0 | 3.1 | Low-Medium | Attractive cost; aviation generator-mode and thermal evidence still limited |
+| Tesla Model 3 rear DU | 2.8 | 4.0 | Low-Medium | Strong traction-machine value for propulsor role; generator-mode integration maturity lower |
+| magniAIR | 2.2 | 4.4 | Medium | Purpose-built propulsor machine; not a primary generator candidate |
+
+Decision rule:
+- Do not select a machine on blended score alone.
+- A machine is "path-ready" only after passing mission-specific bench gates for its assigned role.
+
+### Lightweight Working Principles (Discovery Phase)
+
+- No irreversible architecture lock until at least one bench datapoint exists for each mission role (generator and propulsor).
+- Keep at least two viable propulsion paths alive until one fails on measured evidence.
+- Track major assumptions explicitly and retire them with test data as soon as practical.
 
 ---
 
