@@ -89,6 +89,24 @@ Motorcycle engines operate in the 5,000–10,000 RPM power band. The HPDM-180R g
 
 ---
 
+### 2D. International Candidate Scan (China / Russia / Eastern Europe)
+
+This section captures additional overseas options requested for cost and supply-chain exploration. Entries are included even where data is incomplete, with explicit competitiveness screening.
+
+| Engine | Region | Power (cont.) | Mass | Fuel | Cert. Status | Est. Cost | Competitive vs. MAOS paths now? | Notes |
+|--------|--------|---------------|------|------|--------------|-----------|----------------------------------|-------|
+| **Vedeneyev M14P** | Russia | 268 kW / 360 hp | 214 kg | Avgas | Legacy certified fleet use (aerobatic/trainer) | Contact mfr / overhaul market | **No (current baseline)** | Proven, available via overhaul channels, but heavy and fuel type is poor fit for Jet-A-forward strategy; radial packaging also harder for hybrid integration |
+| **RED A03** | Germany (with Russian operational ecosystem in Yak-152) | 368–405 kW | 357–363 kg | Jet-A / kerosene / diesel / SAF | EASA + FAA + Russian approvals reported | Historical market reports around high six figures new | **No for current 100–230 kW class; maybe for larger future platform** | Excellent SFC reports (~210 g/kWh class) and hybrid-demonstrated in other programs, but mass and power are oversized for current MAOS target envelope |
+| **Technify/Thielert Centurion family (2.0/2.0SMA class)** | Germany (Chinese-owned parent group reported) | 100–172 kW (family dependent) | Varies by variant | Jet-A diesel | Certified variants in field history | Contact mfr | **Maybe (watchlist)** | Jet-A compression-ignition architecture is aligned with Path D goals; current program maturity, support model, and delivered configuration details need confirmation |
+| **Chinese domestic piston options (screened)** | China | — | — | Mostly unknown | Public data sparse | Unknown | **Not actionable yet** | Publicly available English-language data was insufficient for engineering-grade downselect; requires direct CAAC/manufacturer outreach |
+
+**International scan conclusion:**
+- No newly surfaced Russian/Eastern European candidate currently displaces Path D (DeltaHawk) in the 120–235 hp, Jet-A-efficient slot.
+- RED A03 is technically impressive but belongs to a heavier/higher-power class than current MAOS needs.
+- The strongest overseas near-term watch item is a certified Jet-A diesel in the 120–180 kW band with published mass, SFC, and support terms.
+
+---
+
 ## 3. Generator / Electric Motor Candidates (H3X Product Line)
 
 All H3X units are bidirectional (motor or generator mode), liquid-cooled, SiC inverter integrated, CAN interface, -40 to +60°C, rated to 45,000–70,000 ft.
@@ -349,6 +367,23 @@ Practical rule:
 
 ---
 
+## 6C. External Benchmark: Horizon Cavorite X7 (Series-Hybrid eVTOL)
+
+Reference: https://www.horizonaircraft.com/the-aircraft/
+
+What is publicly stated on Horizon's aircraft page:
+- Energy architecture is explicitly **Gas + Electric**.
+- Aircraft uses **14 lift fans** for vertical mode, then transitions to wing-borne conventional flight.
+- Published targets include approximately 250 KTAS max cruise and 500-mile class range with reserve (marketing/performance estimate context).
+- Company messaging claims lower emissions and direct operating costs relative to helicopters for similar missions.
+
+What this implies for MAOS (non-VTOL mission):
+- The page supports the broader thesis that **series-hybrid architecture can credibly target high speed and meaningful range**.
+- MAOS does **not** carry the fan-in-wing VTOL complexity, which should improve structural simplicity, drag profile, and certification burden for equivalent cruise mission.
+- Public page does not disclose a named turbine model in the extracted content; turbine use should be treated as unconfirmed until a technical source explicitly names the core engine.
+
+---
+
 ## 7. Open Questions / Next Steps
 
 ### High Priority
@@ -362,11 +397,14 @@ Practical rule:
 - [ ] Thermal management architecture for series-hybrid bus (shared coolant loop vs. separate loops)
 - [ ] Battery buffer BMS integration with H3X CAN control interface
 - [ ] SFC test data for M250-C20B at FL200–FL250 cruise — does the altitude profile change the SFC calculus?
+- [ ] International candidate validation pass: direct outreach for RED/Technify pricing, lead time, and support geography
+- [ ] Confirm whether any Chinese domestic Jet-A aviation diesel in 100–180 kW band has exportable civil documentation
 
 ### Long Term
 - [ ] Kawasaki aero engine program status check (2027–2028 as they approach cert)
 - [ ] Hydrogen-compatible variant timing (Kawasaki roadmap: post-2030)
 - [ ] Revisit if any Kawasaki-generator package spec sheet becomes available
+- [ ] Track Horizon X7 disclosures for concrete engine-core architecture details (turbine vs. piston prime mover)
 
 ---
 
@@ -383,6 +421,11 @@ Practical rule:
 | Hayabusa turbo ~200–250 kW reliable | Medium | Drag racing heritage + Bugatti 100P replica program; not aviation-validated |
 | M250 part-power SFC ~600–700 g/kWh | Medium | Gas turbine thermodynamic principle; specific M250 curve not obtained |
 | Kawasaki I4/I6 continuous power ratings | High | Confirmed via multiple aviation press sources + brochure |
+| Vedeneyev M14P basic power/mass availability | Medium | Public technical summaries and operator ecosystem references |
+| RED A03 performance/certification summary | Medium | Public manufacturer/press summaries; full current commercial terms not public |
+| Chinese domestic civil aero-engine shortlist (100–180 kW) | Low | Public English-language sourcing incomplete; direct outreach required |
+| Horizon X7 gas+electric architecture statement | Medium | Official aircraft page marketing/spec content |
+| Horizon X7 specific turbine model | Low | Not identified in extracted public page content |
 | H3X pricing estimates | Low | Startup — no published list pricing; contact required |
 
 ---
