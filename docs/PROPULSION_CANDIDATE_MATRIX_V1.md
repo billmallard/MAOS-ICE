@@ -89,6 +89,25 @@ Motorcycle engines operate in the 5,000–10,000 RPM power band. The HPDM-180R e
 
 ---
 
+### 2C-bis. Turboalternators — Direct Electrical Output (added 2026-07-24)
+
+A new category: integrated turbine + alternator, no output shaft. The machine
+replaces ICE + generator + coupling + reduction drive in one unit.
+
+| Unit | Electric Power | Mass | Spec. Power (electric) | SFC (electric, full load) | Fuel | Status | Cost | Notes |
+|--------|-------------|------|-------------|-------------------|-----|-----------|-----------|-------|
+| **AantFarm TA65-1** | 60 kW SL / ~40.5 kW @ 15k ft / ~37 kW @ FL180 (extrap.) | 30 kg (+ customer rectifier, oil coolers, boost pump) | 2.0 kW/kg SL | 433 g/kWh SL, ~406 @ 15k ft; part-load unpublished | Jet A / JP | **In development** (UAV/GPU market; AirVenture 2026) | Unknown | Recuperated 1.5-spool; 705 VAC 1267 Hz out (~950 VDC rectified — fits 800 V class, not 400 V); 4.5 kW total heat rejection; attitude limits pitch ±45° roll ±30° |
+
+**Key insight:** single unit fails the 100 kW continuous floor and delivers
+only ~40% of FL180 cruise electric demand — altitude lapse (~1.4 kVA/1,000 ft)
+is the killer vs turbocharged pistons that hold rated power. A **3x
+installation** closes cruise with margin, matches the Rotax-916-path
+generator-side mass (~120 kg), adds genuine generation redundancy, and nearly
+eliminates cooling drag — at ~+40% fuel burn vs the Rotax path and unknown
+(likely prohibitive) cost. Unit-count modulation (run 2 at design point,
+modulate the third) sidesteps the turbine part-load SFC trap that defines
+Path T. Full evaluation: `TURBOALTERNATOR_TA65_EVALUATION_V0.md`.
+
 ### 2D. International Candidate Scan (China / Russia / Eastern Europe)
 
 This section captures additional overseas options requested for cost and supply-chain exploration. Entries are included even where data is incomplete, with explicit competitiveness screening.
@@ -500,6 +519,7 @@ What this implies for MAOS (non-VTOL mission):
 - [ ] Confirm whether any Chinese domestic Jet-A aviation diesel in 100–180 kW band has exportable civil documentation
 
 ### Long Term
+- [ ] AantFarm TA65 vendor inquiry: price, availability to experimental builders, part-load SFC curve, TBO, alternator voltage options, altitude model above 15k ft, attitude-limit clarification (see `TURBOALTERNATOR_TA65_EVALUATION_V0.md` §6)
 - [ ] Kawasaki aero engine program status check (2027–2028 as they approach cert)
 - [ ] Hydrogen-compatible variant timing (Kawasaki roadmap: post-2030)
 - [ ] Revisit if any Kawasaki-generator package spec sheet becomes available

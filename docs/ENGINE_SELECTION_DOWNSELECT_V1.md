@@ -40,6 +40,16 @@ This document is seeded from the published program analysis and then maintained 
 | Honda CB650 (modified) | 2,596 cc | 67 hp / 50 kW stock | 140-160 installed | 0.42-0.48 | Liquid | Mogas | No direct aviation pedigree | USD7k-USD12k + mods | Marginal |
 | Honda CB500 (modified) | 942 cc | 47 hp / 35 kW stock | 130-150 installed | 0.31-0.36 | Liquid | Mogas | No direct aviation pedigree | USD5k-USD10k + mods | Marginal |
 | Hirth F-23 | 1,006 cc | 50 hp / 37 kW @ 6,500 RPM | 45 | 1.11 | Liquid | Mogas | Ultralight, experimental | EUR8k-EUR12k | Disqualified |
+| AantFarm TA65-1 turboalternator | — (recuperated turbine) | 60 kW electric SLS (~37 kW @ FL180) — no shaft output | 30 + rectifier/coolers | 2.0 electric (SL) | Oil loop, 4.5 kW rejection | Jet A / JP only | UAV/GPU, in development | TBD (likely high) | Watchlist (disqualified as single 1G — 40% of cruise power at FL180; 3x multi-genset concept evaluated separately) |
+
+### Turboalternator note (2026-07-24)
+
+The AantFarm TA65-1 (announced at AirVenture 2026) is a different category —
+integrated turbine + alternator with direct electrical output, no shaft. It
+cannot be scored on the shaft-engine criteria above. Full fit evaluation,
+altitude-lapse math, and 3x multi-genset analysis:
+`TURBOALTERNATOR_TA65_EVALUATION_V0.md`. Disposition: watchlist with vendor
+evidence gates (price, part-load SFC, TBO); not a current-path candidate.
 
 ## Working Recommendations
 
