@@ -1,9 +1,9 @@
-# MAOS Powertrain Trade Study — Integrated Combos Toward $50k (v1)
+# MAOS Powertrain Trade Study — Integrated Combos Toward $50k (v2)
 
 **Status:** Analysis — Experimental Amateur-Built Category. Not a certification claim, not a hardware commitment.
-**Date:** 2026-08-09
+**Date:** 2026-08-09 (v2 section added same day as v1.1)
 **Owner:** PROPULSION
-**Origin:** [AER-57](/AER/issues/AER-57) — "Propulsion trade study - exhaustive powertrain catalog + ranked scorecard toward $50k," child of [AER-56](/AER/issues/AER-56)
+**Origin:** [AER-57](/AER/issues/AER-57) — "Propulsion trade study - exhaustive powertrain catalog + ranked scorecard toward $50k," child of [AER-56](/AER/issues/AER-56). **v2 origin:** [AER-65](/AER/issues/AER-65) — Bill's 2026-08-09 ruling on the four AER-56 calls (whole-powertrain scope confirmed, used/salvage sourcing permitted, bench test deferred, Donut Labs purpose separately scoped) turned his **iterate** into this pass. §1–§8 below are v1.1, unchanged except where §9 explicitly revises a number. **§9 is the v2 delta — read it alongside §7's recommendation, which §9 updates but does not replace.**
 **Standing architecture (not reopened here):** 1G + 1B + 2M series hybrid per `2026-04-05-maos-1g1b2m-architecture-decision`. This document evaluates **components within that architecture** — one ICE-generator set, one battery, two propulsion motors on a coaxial contra-rotating prop. Twin-ICE ("2G") pairings explored earlier in `PROPULSION_CANDIDATE_MATRIX_V1.md` (Config B, Path H2/H3) are **out of scope here**, not because they score badly, but because they reopen an architecture question AER-57 does not authorize revisiting.
 
 **Extends, does not restart:** `2026-04-05-maos-engine-comparison-matrix`, `2026-04-05-maos-generator-selection`, `2026-04-05-maos-drivetrain-economics`, `2026-04-05-maos-propulsion-redundancy-battery`, `ENGINE_SELECTION_DOWNSELECT_V1.md`, `PROPULSION_CANDIDATE_MATRIX_V1.md`, `ENGINE_MGMT_CANDIDATE_MATRIX_V1.md`, `MOTOR_CONTROLLER_TRADE_MATRIX.md`, `TURBOALTERNATOR_TA65_EVALUATION_V0.md`.
@@ -392,6 +392,112 @@ Both are carried forward as open items (§8), not closed by this revision.
 
 ---
 
+---
+
+## 9. v2 — Used/Salvage Sourcing Re-Score (AER-65)
+
+**Trigger:** Bill's ruling on the four AER-56 calls, delivered via structured interaction and confirmed in a follow-up comment (2026-08-09): (1) the $50k target buys the **whole installed powertrain, new-parts-equivalent scope, single build** — not electric-hardware-only; (2) **used/salvage is fair** inside that number; (3) **iterate** — another engineering pass on cost, not the funded bench endurance test; (4) Donut Labs purpose is a separate prose thread, not a re-score input here. R1/R2 do not reopen the architecture (§ header) or change the cost-scope boundary from what §0 already assumed as its default — §0's boundary **was already the whole-installed-hardware scope**, so nothing in §1–§8 needs re-deriving for scope. What changes in v2 is purely a second price column: **realistic used/salvage sourcing**, priced with the same rigor and the same refusal to fabricate a number that v1 applied to new parts.
+
+### 9.0 What "used/salvage, sourced" means here
+
+Per Bill's R2 and Elon's "show sourced line items with price provenance, not estimates": every used/salvage figure below is tagged one of three ways —
+
+- **SOURCED** — a specific current listing, classified ad, or in-repo cost table with a market/date anchor.
+- **EXTRAPOLATED** — a discount ratio observed on a sourced comparable component, applied to a different but related part because no direct listing was found this pass. Flagged explicitly; not to be read as a quote.
+- **ESTIMATE** — PROPULSION's own placeholder for integration/labor/adaptation cost with no vendor quote behind it (the same category v1 already used for things like the Hyper9-to-Hayabusa reduction drive). Flagged explicitly.
+
+No line item is silently priced as if a salvage part were free of engineering or condition risk. §9.5 covers the one line item — the battery — where that risk is flight-critical, not just a BOM number.
+
+### 9.1 Sourced used/salvage market data (2026-08-09 web pass)
+
+| Component | New (v1 baseline) | Used/salvage figure | Tag | Source |
+|---|---:|---:|---|---|
+| Hyper9 HV AC-X144 (generator role) | $5,600 | $3,950 (midpoint of $2,500–$5,400) | SOURCED | `MOTOR_CONTROLLER_TRADE_MATRIX.md` Pairing B2, EV-West/used-market anchors dated 2026-04-16 (already in-repo; not a fresh listing) |
+| Hyper9 AC-X1 (motor role, ×2) | $5,400 ea. | $3,950 ea. | EXTRAPOLATED | Same B2 range, applied to the propulsion-motor role — B2 itself only prices one used unit against one new unit; applying the same used-unit price to both roles assumes the AC-X1 and AC-X144 HV command similar used prices as the same base machine. No direct used-AC-X144-HV listing found this pass. |
+| Tesla Model 3 rear drive unit, bare-pull (no kit, no T-2C) | $9,900 (EV West "starter kit" — itself a refurbished pull, not new; Tesla does not sell drive units new) | $2,000–$4,000, midpoint $3,000 | SOURCED (search-result-extracted from a 2025-dated market summary; direct page fetch returned HTTP 410, so treat as a secondary citation, not a live listing — corroborated directionally by real current bare-DU asking prices visible in Tesla-parts marketplace listings surfaced the same search) | "How Much Is a Tesla Motor in 2025?" (Recharged) via 2026-08-09 search snippet |
+| EV Controls T-2C VCU (required for any Tesla DU, new or used — firmware-locked, no salvage market) | $2,699 | $2,699 (no change — sole-source new item) | SOURCED (unchanged from v1/`MOTOR_CONTROLLER_TRADE_MATRIX.md`) | EV West, 2026-04-22 |
+| Rotax 915 iS | $31,500 (v1 midpoint quote) | $35,000 (156-hr low-time unit, incl. harness/ECU/hoses/intercooler) | SOURCED | rotax-owner.com classified ad, found 2026-08-09 |
+| Rotax 916 iS | $50,000 | No direct listing found | EXTRAPOLATED — see finding below | — |
+| Emrax 268 (generator role, Combo 1) | $12,000 | $3,780–$8,000, midpoint $5,890 | SOURCED | eBay listings, found 2026-08-09 |
+| Emrax 228 (motor role ×2, Combo 1) | $8,000 ea. | $3,920 ea. (same ~49% used/new ratio as Emrax 268, applied) | EXTRAPOLATED | No direct Emrax 228 used listing found this pass |
+| Suzuki Hayabusa, complete pre-built turbo engine (single opportunistic listing) | — | $2,500 | SOURCED, but see caveat | mpsracing.com garage-sale listing, found 2026-08-09; **Gen1 engine (~172 hp base), not the Gen3 (~190 hp) this study's derate table (§1.3) is keyed to** — a lower-base-rating engine credits even less continuous power under SAFETY's 50%-of-documented-steady-state rule, so this is not a drop-in substitute for the Gen3 figures used elsewhere without re-running §1.3's table. One-off listing, not a repeatable channel. Not used in the headline combo totals below — see the Combo 3 footnote. |
+| Salvage Tesla Model 3 Standard-Range/RWD battery pack, 60 kWh (genuine CATL LFP prismatic cells — same chemistry SAFETY ruled as baseline in AER-62 §3, not NMC) | — (v1's new baseline is a $10,000 DIY 40 kWh LFP pack) | $3,700–$4,500, midpoint $4,100, for **60 kWh** — oversized relative to the 40 kWh requirement, at under half the DIY-new price | SOURCED | eBay OEM salvage listings, part-number class 1666968-99-C, found 2026-08-09 | **See §9.5 — this line is cost-only-sourced, not safety-creditable yet.** |
+
+**A finding this pass surfaced that matters as much as any single price:** used/salvage sourcing is a large, real lever for **commodity automotive- and motorcycle-derived components** (Hayabusa, Hyper9, Tesla DU, Emrax, EV battery packs) — 25–70% off new depending on the part — and **close to no lever at all for certified aviation-specific hardware** (Rotax). The one Rotax used-market listing found ($35,000 for a 915 iS) is *above* v1's new-parts quote ($31,500), not below it. Certified engines hold value tightly on a thin, low-supply used market; there is no salvage-yard analog for a Part 33-adjacent powerplant the way there is for a wrecked EV or a parted-out sportbike. **This is a first-principles reason, not a data artifact, to expect the whole used/salvage lever to concentrate on the electric side and the motorcycle-ICE side of any combo, and to do essentially nothing for the Rotax-anchored combos (1, 2).** The scored results below bear this out.
+
+### 9.2 Two-column BOM per combo
+
+Battery shown in two used/salvage states: **(new)** keeps the $10,000 DIY-LFP baseline; **(salvage, provisional)** credits the $4,100 salvage-pack line **plus** the integration cost that line does not include on its own (§9.5) — shown for completeness but explicitly not creditable toward a final number until [AER-67](/AER/issues/AER-67) rules. Reduction/coupling, HV wiring/switchgear/fusing, and the contra-rotating prop are bespoke or safety-critical items with no salvage channel identified this pass — carried at v1's new price in both columns.
+
+| Combo | New total (v1.1) | Used/salvage total (new battery) | Used/salvage total (salvage battery, provisional) | Electric-hardware-only, used |
+|---|---:|---:|---:|---:|
+| 1 — Premium Anchor (Rotax 916 + Emrax) | $130,900 (+162%) | $115,203 (+130%) | $113,663 (+127%) | $25,730 (was $40,000) |
+| 2 — Certified-Turbo Budget (Rotax 915 + Hyper9) | $81,840 (+64%) | $76,835 (+54%) | $75,295 (+51%) | $11,850 (was $16,400) |
+| **3 — H-Budget-Solo (Hayabusa + Hyper9) — LEAD** | **$55,990 (+12%)** | **$50,985 (+2%)** | **$49,445 (−1.1%, i.e. under)** | **$11,850 (was $16,400)** |
+| 4 — H-Budget-Robust (Hayabusa + Tesla DU generator) | $63,689 (+27%) | $54,559 (+9%) | $53,019 (+6%) | $15,099 (was $23,399) |
+| 6 — Kawasaki H2 Budget | $65,890 (+32%) | $60,885 (+22%)¹ | $59,345 (+19%)¹ | $11,850 (was $16,400) |
+| 5, 7, 8 | Unchanged from v1.1 | Not re-priced — see note | Not re-priced | — |
+
+¹ Using the midpoint of the already-used $8k–$18k Kawasaki H2 range ($17,000, unchanged from v1). An aggressive low-end-of-range reading ($12,000 engine, same $4,000 conversion) plus the provisional salvage battery brings Combo 6 to **$53,845 (+8%)** — shown for completeness, not used as the scored figure, because "low end of a stated range" is not a listing the way the Combo 3/4 figures above are.
+
+**Combos 5, 7, 8 are not re-priced in v2.** Combo 5 (H3X HPDM-180R ×3) is aerospace-boutique hardware with no secondary market — there is no salvage channel to price, which is itself the finding, not an oversight. Combos 7 (DeltaHawk) and 8 (AantFarm) remain entirely unpriced on new parts in v1.1; used/salvage pricing is not meaningful to add on top of "no price exists at all."
+
+### 9.3 Bill's hypothesis, tested directly: does "used Hayabusa + used Tesla/EV drive unit" close the 12%?
+
+**Read literally — swap Combo 4's generator for a used Tesla drive unit — no, it does not close.** Combo 4 fully used/salvage-sourced (used Hayabusa, used bare-pull Tesla DU + mandatory T-2C, used Hyper9 propulsion motors) lands at **$54,559 (+9%)**, or **$53,019 (+6%)** crediting the still-provisional salvage battery. Better than v1's new-parts $63,689, but not under $50k either way. The reason is a fixed cost the used market cannot discount: the **$2,699 EV Controls T-2C VCU is mandatory for any Tesla drive unit, new or salvage** — the inverter firmware is proprietary and won't take an external command without it (§5.2 background, `MOTOR_CONTROLLER_TRADE_MATRIX.md`). That tax, plus DIY mounting/prep hardware a bare pull doesn't include ($1,500, ESTIMATE), means a used Tesla DU generator line ($7,199) is **more expensive than a used Hyper9 HV generator line ($3,950)** — the Tesla path buys generator headroom (220 kW peak vs. the 96 kW floor), not cost savings, exactly as v1 already found for the new-parts case. Used/salvage sourcing does not change that verdict.
+
+**Read as "aggressively used/salvage-source the whole lead combo" — yes, narrowly, and only with an asterisk.** Combo 3 (Hayabusa + Hyper9, not Tesla) fully used/salvage-sourced reaches **$50,985 (+2%)** without touching the battery, and **$49,445 (−1.1%, under the line)** if the salvage battery is credited. The lever that actually closes most of the gap is the **used Hyper9 generator and motors** ($11,850 vs. $16,400 new — a $4,550 swing, larger than the battery's own $1,400–$5,900 swing depending on how it's counted), not the ICE (already used-sourced in v1) and not a Tesla drive unit (which, per §9.3 above, isn't the cheaper path even used).
+
+**Net answer to Bill's specific hypothesis:** the *Tesla drive unit* half of it doesn't hold up as a cost lever, even sourced aggressively. The *used/salvage broadly* half of it does — just via the Hyper9 electric side, not the Tesla DU, and it gets there by inches, not by a wide margin.
+
+### 9.4 Re-scored ranking (used/salvage, cost dimension only)
+
+Performance and Safety scores are **unchanged from §3.2** — sourcing a component used doesn't change which engine/generator/motor it is, so the derate status (§1.3), the ECU severity ruling, and the zero-sustained-duty-data flags all carry over unchanged. Only the Cost sub-score moves, using the same 1–5 scale defined in §3.1.
+
+| Rank basis | Combo | Cost (used, no battery credit) | Cost (used, salvage battery) | Weighted score (no battery credit) | Weighted score (salvage battery) |
+|---|---|---:|---:|---:|---:|
+| — | 3 — H-Budget-Solo | 4 *(1–15% over, same bucket as new)* | **5** *(at/under)* | 2.80 *(unchanged bucket)* | **3.20** |
+| — | 4 — H-Budget-Robust | 4 *(up from 3)* | 4 *(no further bucket change)* | 2.80 *(up from 2.40)* | 2.80 |
+| — | 1 — Premium Anchor | 1 *(unchanged bucket)* | 1 *(unchanged)* | 2.65 *(unchanged)* | 2.65 |
+| — | 8 — 3× AantFarm (reference, not re-derived) | — | — | 2.55 *(carried)* | 2.55 |
+| — | 6 — Kawasaki H2 Budget | 3 *(up from 2)* | 3 *(midpoint reading)* | 2.40 *(up from 2.00)* | 2.40 |
+| — | 2 — Rotax 915 Budget | 2 *(up from 1)* | 2 *(unchanged bucket)* | 2.35 *(up from 1.95)* | 2.35 |
+| — | 5 — H-Premium-Technical | 1 *(unchanged, no used channel)* | 1 | 1.35 *(unchanged)* | 1.35 |
+
+**A scoring-scale artifact worth naming, not hiding:** under the no-battery-credit reading, Combo 3 and Combo 4 tie at 2.80 — the discrete cost bucket (1–15% over = score 4) doesn't distinguish Combo 3's 2% over from Combo 4's 9% over, even though Combo 3 is $3,574 cheaper in absolute dollars and is the only one of the two with any realistic path under the line at all. **The recommendation in §9.6 goes on absolute dollars and on which combo can actually clear $50k, not on the tied weighted score.** Once the battery question resolves (either direction), Combo 3 either pulls clearly ahead (if credited) or the tie holds (if not) — nothing in §9.5 can make Combo 4 the better answer, because Combo 4's own generator-line cost is fixed by the T-2C tax regardless of how the battery question resolves.
+
+**DES-INT-001 second architecture — unaffected.** Combo 1 remains the architecturally distinct fallback per v1.1 §7: even fully used/salvage-sourced it's $113,663–$115,203 (127–130% over), nowhere near budget contention, which is exactly why it works as "the proof the mission is achievable today, at a known, high, certain cost, if the Hayabusa bet doesn't pay off." Used/salvage sourcing doesn't change that role.
+
+### 9.5 Safety gate — the salvage battery is not a cost-only decision
+
+Every used/salvage line item in §9.1–§9.4 **except the battery** is the same category of decision SAFETY already ruled on in AER-62: buying a used Hayabusa, a used Hyper9, or a used Rotax changes *how much wear-and-hours history is unknown* on a component whose failure mode is already FMEA'd (engine-out, generator-out) and already carries the interim continuous-duty derate or a real manufacturer rating. `maos-drivetrain-economics`'s own existing mitigation — buy low-mile, inspect carefully, run break-in hours on a test stand before flight — already covers this class of risk, and nothing about buying it used moves it into a new hazard category. **PROPULSION is treating those lines as cost-only decisions**, consistent with Bill's R2 framing.
+
+**The battery is different, and PROPULSION is not pricing it as if it weren't.** Per SAFETY's own AER-62 §3 ruling, the battery is *"the sole emergency reserve standing between an ICE/generator failure and total propulsion loss, with no peer battery to fall back on"* in the 1G architecture. A salvage Tesla pack — even one built on the SAFETY-ruled-correct LFP chemistry — carries unknowns a used Hayabusa doesn't: unknown donor-vehicle collision/flood/thermal-event history, unknown cycle count and depth-of-discharge history, and a factory BMS that's vehicle-locked and must be re-hosted on unproven aftermarket hardware (the same category of problem as the Tesla-drive-unit/T-2C precedent, but on the pack that has no backup if it's wrong). **This is why the $8,600 "salvage, provisional" figure in §9.1–§9.4 is not the sourced $4,100 pack price alone** — it already carries PROPULSION's own $4,500 of unsourced ESTIMATE placeholders (aftermarket BMS $2,000, cell-health requalification labor $1,500, repackaging/mounting $1,000) precisely because pricing the bare pack price alone would understate what actually has to happen before that pack can go on the aircraft.
+
+**[AER-67](/AER/issues/AER-67) is open to SAFETY**, asking for: provenance/history acceptance criteria, condition-testing thresholds, a ruling on whether aftermarket-BMS re-hosting is a new hazard class needing its own interim derate (analogous to the ICE's 50%-of-documented-steady-state rule), and a remaining-capacity credit policy so the reserve-duration math doesn't quietly assume fresh-pack capacity from a used pack. **Until AER-67 answers, the salvage-battery column in §9.2/§9.4 is not creditable toward a final $50k determination** — it is shown so the board can see the shape of the number, not adopted as the basis for a yes.
+
+### 9.6 Is the whole-powertrain target met ≤$50k under used/salvage — plainly
+
+**Not yet cleared, and cleared only by a hair once it is.**
+
+- **Without the salvage battery (the only fully-resolved-today number): $50,985, 2% ($985) over the line.** This is the closest any combo has come in either version of this study, closed almost entirely by used/salvage sourcing on the Hyper9 generator and motors — not by the engine, and not by a Tesla drive unit.
+- **With the salvage battery credited (provisional, pending AER-67): $49,445, ≈1.1% ($555) under the line.** This is a real result, not a rounding trick — but it rests on a battery-sourcing path SAFETY has not yet ruled acceptable, priced with $4,500 of PROPULSION's own unsourced integration-cost estimates layered on a $4,100 sourced pack price.
+
+**Recommendation on disposition:** given a margin this thin (1–2% either side of the line, well inside the noise of a BOM built on midpoints, ranges, and one extrapolated engine price), report this to Elon as **"target essentially met, margin negligible, one open safety gate away from a clean under-$50k number"** rather than an unqualified yes or a trigger to reconsider build-our-own. Build-our-own remains not triggered — the same conclusion as v1.1 §7, now on firmer ground: a real, under-$50k-or-a-hair-over path exists using entirely off-the-shelf used/salvage components, no from-scratch engineering required to reach it.
+
+**The lead combo does not change.** Combo 3 (turbo Hayabusa + Hyper9 HV generator + 2× Hyper9 AC-X1 motors + 40 kWh LFP battery) was the lead in v1.1 on new-parts pricing and remains the lead — now more clearly so — on used/salvage pricing. Everything else in §7's recommendation (the bench-endurance evidence gate, the DES-INT-001 fallback to Combo 1, the market re-evaluation triggers) is unchanged by this pass; §9 revises the cost picture, not the engineering disposition.
+
+### 9.7 Open items — v2 additions
+
+1. **[AER-67](/AER/issues/AER-67) — open, SAFETY.** Salvage-battery provenance/condition/BMS-re-hosting ruling. Blocks crediting the $49,445 (under-target) figure; does not block reporting the $50,985 (2%-over, no-battery-credit) figure as today's defensible number.
+2. **Vendor/listing refresh needed:** the Recharged Tesla-DU bare-pull citation (§9.1) is a search-snippet extraction from a page that returned HTTP 410 on direct fetch — treat as directionally sound, not as a live quote, until a current listing is pulled directly.
+3. **No direct used-market listing found** for Rotax 916 iS or Emrax 228 — both used EXTRAPOLATED ratios from a comparable sourced component (§9.1). Low priority given neither combo is within reach of budget contention regardless.
+4. **Gen1 turbo Hayabusa single-listing ($2,500, §9.1)** is not folded into any scored total — it's a real but non-repeatable data point, and it's a lower-base-rating engine than the Gen3 this study's derate table assumes. Flagged for the weekly-cadence follow-on (AER-59) to watch for a repeatable Gen3-equivalent used-turbo-engine market, not acted on here.
+5. **All other v1.1 open items (§8) carry forward unchanged** — the bench endurance program, the AERO/PROPULSION altitude-floor item, the ICE-FLT-001 turbo-fault-mode confirmation, the Hyper9 HV AC-X144 datasheet pull, and the DeltaHawk/AantFarm vendor quotes. None of them are resolved or superseded by this cost-focused pass, per Bill's explicit deferral of the bench test (AER-65 item 5).
+
+---
+
 *Analysis by PROPULSION, MAOS Design Board*
 *Version 1.1 — 2026-08-09. Revises v1.0 to fold in the SAFETY consult ruling ([AER-62](/AER/issues/AER-62)): interim ICE continuous-duty derate (§1.3), revised Performance and Safety scores (§3.2), resolved battery chemistry ruling (§4), and closed consult (§6). The lead recommendation (Combo 3) is unchanged; its basis is not — see §7.*
+*Version 2 — 2026-08-09. Adds §9: two-column (new/used-salvage) re-score of every priceable combo per Bill's AER-56 ruling (whole-powertrain scope confirmed, used/salvage sourcing permitted, bench test deferred). Directly tests and substantially rejects the "Tesla drive unit as a cost lever" reading of Bill's hypothesis (§9.3) while confirming a narrower "used/salvage broadly" reading gets the lead combo to within 2% of the line unconditionally and marginally under it pending a new SAFETY consult ([AER-67](/AER/issues/AER-67)) on salvage-battery provenance. Lead recommendation (Combo 3) and its bench-test evidence gate (§7) are unchanged.*
 *R&D guidance for Experimental Amateur-Built development. Not a certification claim.*
