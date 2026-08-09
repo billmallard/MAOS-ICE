@@ -1,9 +1,9 @@
-# MAOS Powertrain Trade Study — Integrated Combos Toward $50k (v2)
+# MAOS Powertrain Trade Study — Integrated Combos Toward $50k (v3)
 
 **Status:** Analysis — Experimental Amateur-Built Category. Not a certification claim, not a hardware commitment.
-**Date:** 2026-08-09 (v2 section added same day as v1.1)
+**Date:** 2026-08-09 (v2 and v3 sections both added same day as v1.1)
 **Owner:** PROPULSION
-**Origin:** [AER-57](/AER/issues/AER-57) — "Propulsion trade study - exhaustive powertrain catalog + ranked scorecard toward $50k," child of [AER-56](/AER/issues/AER-56). **v2 origin:** [AER-65](/AER/issues/AER-65) — Bill's 2026-08-09 ruling on the four AER-56 calls (whole-powertrain scope confirmed, used/salvage sourcing permitted, bench test deferred, Donut Labs purpose separately scoped) turned his **iterate** into this pass. §1–§8 below are v1.1, unchanged except where §9 explicitly revises a number. **§9 is the v2 delta — read it alongside §7's recommendation, which §9 updates but does not replace.**
+**Origin:** [AER-57](/AER/issues/AER-57) — "Propulsion trade study - exhaustive powertrain catalog + ranked scorecard toward $50k," child of [AER-56](/AER/issues/AER-56). **v2 origin:** [AER-65](/AER/issues/AER-65) — Bill's 2026-08-09 ruling on the four AER-56 calls (whole-powertrain scope confirmed, used/salvage sourcing permitted, bench test deferred, Donut Labs purpose separately scoped) turned his **iterate** into this pass. **v3 origin:** a same-day follow-up comment on AER-65 (R3) — Bill widens ICE sourcing to Chinese/Russian/Eastern European engines and asks for the Donut Labs ring/hub motor as a candidate row. §1–§8 below are v1.1, unchanged except where §9 explicitly revises a number. §9 is the v2 delta. **§10 is the v3 delta — read it alongside §9.6, which it tests against but does not change.**
 **Standing architecture (not reopened here):** 1G + 1B + 2M series hybrid per `2026-04-05-maos-1g1b2m-architecture-decision`. This document evaluates **components within that architecture** — one ICE-generator set, one battery, two propulsion motors on a coaxial contra-rotating prop. Twin-ICE ("2G") pairings explored earlier in `PROPULSION_CANDIDATE_MATRIX_V1.md` (Config B, Path H2/H3) are **out of scope here**, not because they score badly, but because they reopen an architecture question AER-57 does not authorize revisiting.
 
 **Extends, does not restart:** `2026-04-05-maos-engine-comparison-matrix`, `2026-04-05-maos-generator-selection`, `2026-04-05-maos-drivetrain-economics`, `2026-04-05-maos-propulsion-redundancy-battery`, `ENGINE_SELECTION_DOWNSELECT_V1.md`, `PROPULSION_CANDIDATE_MATRIX_V1.md`, `ENGINE_MGMT_CANDIDATE_MATRIX_V1.md`, `MOTOR_CONTROLLER_TRADE_MATRIX.md`, `TURBOALTERNATOR_TA65_EVALUATION_V0.md`.
@@ -497,7 +497,85 @@ Every used/salvage line item in §9.1–§9.4 **except the battery** is the same
 
 ---
 
+## 10. v3 — Widened ICE Sourcing (China/Russia/Eastern Europe) + Donut Ring-Motor Candidate Row (AER-65, R3)
+
+**Trigger:** Bill's 2026-08-09 comment on AER-56, relayed by Elon as R3 on AER-65: engine sourcing is geographically unrestricted — Chinese, Russian, and Eastern European mass-produced engines are explicitly fair game alongside the turbo-Hayabusa baseline, catalogued as named rows with sourcing/support risk surfaced (not pre-excluded). Separately, the Donut Labs ring/hub motor is added as a candidate motor line (packaging: tail-boom root, per a parallel CAD-marketing thread) — a low-commitment catalog entry, not a re-opened architecture study. Everything in §0–§9 stands; this section only adds rows and re-tests whether the wider net beats §9.6's finding.
+
+### 10.1 Widened ICE/generator prime-mover catalog
+
+| Candidate | Origin | Type | Credited cont. power | Weight | Price (new) | Sourcing/support risk | Disposition |
+|---|---|---|---:|---:|---:|---|---|
+| **Zongshen CA550T** | China | Turbocharged, liquid-cooled, opposed-4, purpose-built aviation, **published TBO** | 106.6 kW / 145 hp (manufacturer continuous rating — no SAFETY interim derate needed, §1.3 doesn't apply) | 80 kg / 176 lb (incl. prop reduction gearbox) | **$63,144 CAD ≈ $45,300 USD** (CAD→USD at 1.394, 2026-08-08 rate; SOURCED, CKD Aero shop listing) | **Low-moderate.** China's largest piston aircraft-engine manufacturer by volume; real Western distribution exists — ZS AeroEngines Central Europe (Poland) and CKD Aero (Canada) — unlike most rows below. No US export-control regime targets this class of Chinese civil good today. Parts/service network is thin and unproven at North American scale relative to Rotax's decades-deep network. | **Priced below (Combo 9).** The only turbocharged, non-Hayabusa/H2 candidate in this catalog with a manufacturer-published continuous rating *and* TBO (1,000 hr) — a real safety-case improvement over every Hayabusa/H2 combo's zero-sustained-duty-data flag (§1.3). Costs as much as Rotax; does not solve the cost problem. |
+| Chinese automotive 1.5T turbo I4 (Geely/Chery/Great Wall class — e.g. Chery E4T15C, Geely BHE15) | China | Turbocharged, water-cooled, automotive, mass-produced at automotive (millions/yr) scale | 73–133 kW / 98–178 hp class, per-model (SOURCED spec sheets, made-in-china.com/carnewschina.com listings) | Not confirmed for a specific model this pass | **No fixed price found** — B2B listings are wholesale-quote-only; a new-crate estimate of $2,000–5,000 and a salvage-pull estimate of $500–1,500 are PROPULSION's own EXTRAPOLATION from the commodity-automotive-parts pattern in §9.1, **not sourced quotes** | **High.** No identified standalone-unit import/distribution channel to the US for these specific engine families — they ship inside Chinese-domestic-market vehicles not sold in North America. Sourcing would mean parting out a non-US-market vehicle or finding an unsurveyed industrial/genset OEM channel. | **Not priced as a combo.** The disqualifying factor isn't cost, it's engineering readiness: **no aviation/homebuilt conversion precedent was found** for this engine family — unlike the Hayabusa, which has a decades-deep motorsport/homebuilt aftermarket-turbo-to-generator ecosystem (§5.2) that is itself load-bearing for why Combo 3 is buildable at all. Adopting this engine would mean originating that ecosystem from zero: cooling-system redesign, bellhousing/mount fabrication, ECU integration — costs this catalog has never had to price for any other row. Flagged as a watchlist item, not evaluated further. |
+| **Verner 9V** (9-cylinder radial) | Czech Republic (Eastern Europe) | **Naturally aspirated**, air-cooled radial, purpose-built aviation | 101.4 kW / 136 hp (manufacturer continuous rating) | 238 lb / 108 kg | $27,500 (SOURCED, scalebirds.com 2024 price list — flag: list may be stale by ~2 yr) | **Low.** 20+ year EU ultralight-aviation manufacturer (Vikýřovice, Czech Republic) with existing US dealer/support coverage per KITPLANES and EAA AirVenture coverage — genuinely mass-produced within the small-aviation-engine category, not a one-off shop build. | **Priced below (Combo 10).** Not turbocharged — doesn't literally answer Bill's turbo question — but is the cheapest engine in the entire catalog (new or used) with a genuine manufacturer continuous rating and no SAFETY derate exposure. The real "is there a cheaper Rotax" answer, just not the "is there a cheap turbo" answer. |
+| Vedeneyev M14P (9-cylinder radial) | Russia | Naturally aspirated, air-cooled radial | 268 kW / 360 hp — **2–3× oversized** for this application | ~476 lb / 216 kg — >2× the incumbent Rotax 916 iS | ~$46,000 (2019-dated quote; SOURCED but stale, not re-quoted this pass) | **High.** Sole manufacturer is Voronezh Mechanical Plant, a Russian state-affiliated, defense-adjacent enterprise. Genuine sanctions/export exposure for a US-based open-source project attempting new-production sourcing; parts network was already documented as thinning pre-2022 (kitplanes.com, "New Life for Old Radials"), before geopolitical risk is even counted. | **Disqualified on power/weight mismatch alone, before sourcing risk is considered.** 2–3× the power class this mission needs and more than double the incumbent's weight — no plausible combo closes with this engine regardless of price. Not priced as a combo. Listed per R3's instruction to surface, not pre-exclude. |
+| Anhui Haery "Lark HFE" | China | Turbocharged, **heavy-fuel** (Jet-A/diesel-cycle), 4-stroke | ~112 kW / 150 hp class (vendor-stated; no independent civil rating found) | 98 kg / 216 lb dry | **No public price found** | **Very high.** Developed for and deployed on the CH-4 medium-altitude military UAV program; no identified civil sales channel. A US-based open-source purchase attempt plausibly runs into the same export-control category as the drone program it was built for. | **Not pricing — unsourceable for this project as a practical matter.** Flagged for completeness per R3's "surface the number and the risk honestly, ranked, not pre-decide it" instruction. The heavy-fuel/Jet-A capability is a genuine GA-relevant feature worth remembering if a civil derivative or civil-market equivalent ever surfaces — that is the only reason it stays on the catalog rather than being dropped. |
+
+### 10.2 Combo 9 — Zongshen Budget: Turbo Zongshen CA550T + Hyper9 HV AC-X144 (gen) + 2× Hyper9 AC-X1 (motors) + LFP battery
+
+| Item | Cost (new) | Cost (used/salvage) |
+|---|---:|---:|
+| Zongshen CA550T | $45,300 | $45,300 — **no used/salvage channel identified**; recent Western-market import with no secondary-market history, unlike Hayabusa/Rotax (§9.1's certified-hardware finding applies here even though the engine's *origin* is a commodity-manufacturing country — it's sold and priced as aviation hardware, not automotive/motorcycle hardware, and inherits aviation hardware's thin-used-market economics regardless of where it's built) |
+| Generator (Hyper9 HV AC-X144) | $5,600 | $3,950 (§9.1) |
+| Propulsion motors (2× Hyper9 AC-X1) | $10,800 | $7,900 (§9.1) |
+| Reduction/coupling (Zongshen→generator input — **the engine's integral gearbox is prop-RPM-matched, not generator-RPM-matched; this is a separate, unresolved coupling design, same evidence-gate category as §5.2**) | $1,500 (ESTIMATE, same placeholder basis as every other combo) | $1,500 |
+| Battery + BMS (40 kWh LFP) | $10,000 | $10,000 (new) / $8,600 (salvage, provisional — pending AER-67, §9.5) |
+| HV wiring/switchgear/fusing | $7,000 | $7,000 |
+| Contra-rotating prop | $8,000 | $8,000 |
+| Subtotal | $88,200 | $83,650 (new batt) / $82,250 (salvage batt) |
+| Contingency (10%) | $8,820 | $8,365 / $8,225 |
+| **Total** | **~$97,020 (+94%)** | **~$92,015 (+84%) / ~$90,475 (+81%)** |
+| Electric-hardware-only subtotal | $16,400 | $11,850 |
+
+**Reads exactly like Combo 2 (Rotax 915), not like Combo 3.** A manufacturer-rated, TBO-published, no-derate-needed turbo engine costs as much as a certified Western one — because it's priced and sold as aviation hardware, the same finding §9.1 already made for Rotax, just from a different country of origin. Country of manufacture doesn't override "priced/sold as aviation hardware, thin used market" — that's the load-bearing variable, not the flag on the box.
+
+### 10.3 Combo 10 — Verner Budget: Verner 9V (NA radial) + Hyper9 HV AC-X144 (gen) + 2× Hyper9 AC-X1 (motors) + LFP battery
+
+| Item | Cost (new) | Cost (used/salvage) |
+|---|---:|---:|
+| Verner 9V | $27,500 | $27,500 — no used-market listing found this pass (low-volume manufacturer; expect a thin secondary market by inference, not confirmed) |
+| Generator (Hyper9 HV AC-X144) | $5,600 | $3,950 |
+| Propulsion motors (2× Hyper9 AC-X1) | $10,800 | $7,900 |
+| Reduction/coupling | $1,500 (ESTIMATE) | $1,500 |
+| Battery + BMS (40 kWh LFP) | $10,000 | $10,000 (new) / $8,600 (salvage, provisional) |
+| HV wiring/switchgear/fusing | $7,000 | $7,000 |
+| Contra-rotating prop | $8,000 | $8,000 |
+| Subtotal | $70,400 | $65,850 (new batt) / $64,450 (salvage batt) |
+| Contingency (10%) | $7,040 | $6,585 / $6,445 |
+| **Total** | **~$77,440 (+55%)** | **~$72,435 (+45%) / ~$70,895 (+42%)** |
+| Electric-hardware-only subtotal | $16,400 | $11,850 |
+
+Cheapest engine in the whole catalog with a real continuous rating and no derate exposure, and it still lands 42–55% over the line even fully used/salvage-sourced — the electric side and BOS items (unaffected by which engine is chosen) are more than half the total by themselves. Not turbocharged, so it doesn't answer Bill's literal question, but it is the honest answer to "does a cheaper no-derate-needed alternative to Rotax exist": yes, at roughly half Rotax 916's price, still nowhere near budget contention.
+
+### 10.4 Does the wider net find "the" lightweight mass-produced turbo ICE — plainly
+
+**No.** Neither Zongshen (Combo 9) nor Verner (Combo 10, not even turbocharged) beats Combo 3's economics, used/salvage or not. The Chinese-automotive-turbo bucket is the one candidate class that *could* theoretically beat Hayabusa on unit cost, but it fails on engineering readiness, not price — there is no aftermarket conversion ecosystem to inherit the way the Hayabusa combos do, and pricing a from-zero conversion program is exactly the "build-our-own" question §7 already scoped and declined to open. The Russian and Chinese-military-UAV rows are disqualified/unsourceable for reasons independent of price. **§9.6's finding stands unchanged: Combo 3 (turbo Hayabusa + Hyper9 electric side + LFP battery) remains the lead combo, at $50,985 (+2%, no battery credit) to $49,445 (−1.1%, salvage battery, pending AER-67).** The wider geographic net was worth running — it surfaced a genuine safety-case improvement (Zongshen's TBO/no-derate rating) worth remembering for a future pass if the bench-endurance program (§7) comes back negative on Hayabusa — but it does not change today's cost recommendation.
+
+### 10.5 Donut Labs ring/hub motor — candidate row, not scored
+
+Added per R3 as a candidate propulsion-motor line (replacing/augmenting the Hyper9 AC-X1 role), reflecting Bill's active interest in packaging a ring/hub motor around the tail-boom root — tracked separately as CAD-marketing work, not re-opened here.
+
+| Spec | Value | Source |
+|---|---|---|
+| Model (closest fit to our per-motor power class) | "17-inch" motor | donutlab.com/motor, 2026-08-09 |
+| Power (vendor-stated, "up to") | 150 kW | Vendor spec sheet — **UNVERIFIED, no independent test found for this product line** |
+| Torque (vendor-stated, "up to") | 1,200 Nm | Same |
+| Mass | 21 kg / 46 lb | Same |
+| Continuous vs. peak rating | **Not published** | Not disclosed on vendor spec sheet |
+| Efficiency, voltage, cooling method | **Not published** | Not disclosed |
+| Price | **Not published** | No public pricing found |
+| Aviation use / independent validation | **None found** | See caveat below |
+
+**Why "not credible until independently supported" is not PROPULSION editorializing — it's a documented pattern from the same company.** Donut Lab (an Estonia-based spin-off of Verge Motorcycles) markets a separate solid-state battery product with parallel "up to" performance claims. VTT (an independent Finnish testing institute) ran third-party validation on that battery in 2026: it confirmed the fast-charging claim but found actual energy density at **297 Wh/kg against a claimed 400 Wh/kg** — a real, sourced, ~26% shortfall between vendor claim and independent measurement, on the one Donut Lab product line that has been independently tested to date. The motor line has not been independently tested at all as of this pass. **This is direct evidence for exactly the caution the wake comment asked for, not an assumption**: treat every "up to" figure on the motor spec sheet as an unverified ceiling, not a design number, until a comparable independent test exists for the motor itself.
+
+**Integration reality, same category as every rim-drive note in this catalog:** a ring/hub motor at the tail-boom root is architecturally a rim-drive installation, not a drop-in swap for the coaxial-shaft-driven Hyper9 AC-X1 pairing this study has priced everywhere else. Per PROPULSION's own standing rim-drive findings (marine rim-drive's "cooling is free" and "no bearing needed" properties do not transfer to air — air's volumetric heat capacity is roughly three orders of magnitude below water's, and a large-diameter mechanical bearing at rim tip speed is a genuinely hard problem), any Donut-based propulsion path needs its own first-principles thermal and bearing-support sizing before a mass or a cost can be trusted — the vendor spec sheet answers none of that, because it's a ground-vehicle/wheel-hub product, not an aviation one.
+
+**Disposition: watchlist candidate row, not scored.** No price exists to build a combo with, no continuous rating exists to check against the §1 envelope, and no independent validation exists for the specific claims that would matter (power, efficiency, thermal). Per the wake comment's own framing, this stays a low-commitment catalog entry — a deeper architecture study is warranted only if Donut Labs engages directly with sourced, aviation-relevant data.
+
+---
+
 *Analysis by PROPULSION, MAOS Design Board*
 *Version 1.1 — 2026-08-09. Revises v1.0 to fold in the SAFETY consult ruling ([AER-62](/AER/issues/AER-62)): interim ICE continuous-duty derate (§1.3), revised Performance and Safety scores (§3.2), resolved battery chemistry ruling (§4), and closed consult (§6). The lead recommendation (Combo 3) is unchanged; its basis is not — see §7.*
 *Version 2 — 2026-08-09. Adds §9: two-column (new/used-salvage) re-score of every priceable combo per Bill's AER-56 ruling (whole-powertrain scope confirmed, used/salvage sourcing permitted, bench test deferred). Directly tests and substantially rejects the "Tesla drive unit as a cost lever" reading of Bill's hypothesis (§9.3) while confirming a narrower "used/salvage broadly" reading gets the lead combo to within 2% of the line unconditionally and marginally under it pending a new SAFETY consult ([AER-67](/AER/issues/AER-67)) on salvage-battery provenance. Lead recommendation (Combo 3) and its bench-test evidence gate (§7) are unchanged.*
+*Version 3 — 2026-08-09. Adds §10: widens the ICE/generator candidate pool per R3 (Bill, via AER-65 comment) to Chinese, Russian, and Eastern European mass-produced engines, cataloged with sourcing/support risk as an explicit column; prices two new combos (Zongshen CA550T, Verner 9V) that do not beat Combo 3; disqualifies or flags-unsourceable two rows (Vedeneyev M14P, Anhui Haery Lark HFE) on power-mismatch and export-control grounds respectively; adds the Donut Labs ring/hub motor as an unscored watchlist candidate row with an independent-testing caution grounded in that company's own battery-product test record. Lead recommendation (Combo 3) and its bench-test evidence gate (§7) are unchanged.*
 *R&D guidance for Experimental Amateur-Built development. Not a certification claim.*
