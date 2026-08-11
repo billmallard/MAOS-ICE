@@ -1,7 +1,7 @@
 # Combo 3 — Price-vs-Capability Frontier: Corrected Machine × Single/Twin Motor Lever (AER-73)
 
 **Status:** Paper-first trade study. Experimental Amateur-Built category. Not a certification claim, not a hardware commitment. No endurance/runtime validation performed — per Bill's 2026-08-11 direction, the goal here is closing the number on paper.
-**Date:** 2026-08-11
+**Date:** 2026-08-11 (V1), corrected 2026-08-11 (V2 — see §0.1)
 **Owner:** PROPULSION
 **Origin:** [AER-73](/AER/issues/AER-73), child of [AER-56](/AER/issues/AER-56). Supersedes the pass/fail framing in `COMBO3_CORRECTED_ELECTRIC_MACHINE_V1.md` (PR #16) per Bill's 2026-08-11 requirement update (R1′) and adds the single-propulsion-motor lever (R4).
 
@@ -17,6 +17,11 @@ Two requirement updates landed on AER-56 on 2026-08-11 and were routed to this i
 - **R4 — a single propulsion motor is now admissible**, pending SAFETY's ruling on the total-loss-of-thrust/forced-landing case ([AER-81](/AER/issues/AER-81), open, not yet answered as of this pass). This removes the twin-motor *mandate* it does not remove the twin-motor *option* — both are scored below.
 
 **What is not reopened here:** the 1G+1B+xM series-hybrid architecture, the turbo-Hayabusa prime mover, the EMRAX 268 generator selection (passed its kill gate in PR #16 — 117 kW continuous MV/CC clears the 96 kW cruise floor with 22% margin), and the ~700V DC DG-004 bus proposal. Those stand. What's new here is: (1) recasting cost as a two-column frontier instead of one pass/fail number, and (2) adding single-motor propulsion candidates alongside the twin-268 baseline.
+
+### 0.1 V2 correction — two things changed after V1 posted
+
+1. **SAFETY ruled on AER-81 (2026-08-11).** Headline: twin-motor mandate lifted, but a *bare* single winding-set/single-inverter motor is **not admissible**. Redundancy must come from (a) a dual-wound motor with two independent winding sets, each on its own independent inverter channel, independent gate-drive/control power, physically/thermally separated, or (b) two physically separate motor+inverter units — see full requirements (R1–R5) applied package-by-package in §3 and §4 below.
+2. **Self-caught datasheet error, found while re-verifying Package B against the SAFETY ruling.** Package B's V1 text cited "162 kW continuous S1" for the EMRAX 348 MV/CC, sourced to "datasheet v1.5." Re-pulled directly from EMRAX's current **v1.6 datasheet (June 2025)** and parsed against its positioned table cells (not just flattened text, to avoid column misalignment) — the actual MV/CC continuous power S1 is **145 kW**, not 162 kW. Independently cross-checked against EMRAX's own product-page summary spec ("PEAK | CONTINUOUS POWER: 340 kW | 145 kW"), which matches. The EMRAX 268 baseline figure (117 kW continuous MV/CC) was re-checked the same way against its own v1.6 datasheet and is confirmed correct — no change there. **Consequence: Package B fails the 155 kW climb floor by 6.5% at full rated power, before any redundancy tax — it is disqualified on capability alone, independent of AER-81.** See §3 Package B and §4.
 
 ---
 
@@ -65,24 +70,33 @@ Two requirement updates landed on AER-56 on 2026-08-11 and were routed to this i
 **Mass (installed, incl. prop):** ≈634 kg — unchanged from PR #16 §4.4 (architecture untouched).
 **Torque/gyroscopic:** coaxial contra-rotating — cancels, per PR #16/AER-69's existing finding.
 
-### Package B — Single EMRAX 348 (R4 lever; single conventional prop)
+**AER-81 safety-column read (R1–R5):**
+- **R1 — satisfied via (b), no new technology.** STRUCTURES's live-CAD pull (AER-69) confirms this is already two physically separate motor+inverter units (two conventional EMRAX 268 + BAMOCAR pairs on a coaxial contra-rotating prop), not a shared-stator arrangement — the clean path SAFETY named. Nothing to add here.
+- **R3 — the "motor-out" redundancy above is a real partial capability, not a full limp-home.** The surviving motor clears the 96 kW *cruise* floor, not the 155 kW *climb* floor — a motor-out event mid-climb loses climb capability and continues at cruise-equivalent thrust only. State this plainly rather than reading "motor-out safe" as "unaffected."
+- **R5 — common-cause not yet cleared.** Both motor+inverter units currently sit on the same ~700V DG-004 bus segment, the same battery/generator chain, and (per PR #16's cooling budget) an unconfirmed coolant-loop split. R1(b)'s protection is only as good as these being genuinely independent — **open item, not yet confirmed with Systems/Structures** (see §5).
+- **R2/R4 (safety numbering) — unchanged from the standing baseline.** No FIT-rate data sourced for the EMRAX 268 + BAMOCAR class this pass (open item). The single-generator, single-battery, unsegmented-bus SPOFs (AER-62/AER-74) are untouched by this package choice — Package A's motor-level redundancy does not extend to them.
 
-**EMRAX 348 MV/CC** (MFR datasheet v1.5, pulled fresh this pass): 162 kW continuous S1, 425 Nm continuous torque, 230 A_RMS continuous, 43.5 kg, 830V peak-power voltage (same MV-winding voltage-ceiling logic as the 268 — HV winding actually delivers *less* continuous power at this bus voltage, same non-obvious finding as PR #16 §1.1). Clears the 155 kW climb floor **alone, with only a 4.5% margin** — thin, and worth stating plainly against Package A's 51%.
+### Package B — Single EMRAX 348 — **DISQUALIFIED on capability, corrected this pass (see §0.1)**
 
-**Controller:** the 348's continuous current (230 A_RMS) exceeds the BAMOCAR D3-700/400's single-unit rating (200 A_RMS) — the only 700V-class BAMOCAR variant with public documentation found. Rather than invent an unsourced bigger controller, this uses EMRAX's own supported **2×UVW parallel-winding configuration** (documented on the 348 datasheet) with **2× BAMOCAR D3-700/400** — the same already-sourced/qualified controller used on the generator, each carrying ~115 A (well inside its 200 A rating). This reuses a known part instead of extrapolating a new one, at the cost of not saving a controller.
+**EMRAX 348 MV/CC** (MFR datasheet **v1.6, re-pulled and position-parsed this pass — supersedes V1's v1.5 figure**): **145 kW continuous S1** (not 162 kW), 425 Nm continuous torque, 230 A_RMS continuous, 43.5 kg, 830V peak-power voltage (same MV-winding voltage-ceiling logic as the 268 — HV winding actually delivers *less* continuous power at this bus voltage, same non-obvious finding as PR #16 §1.1). Independently corroborated against EMRAX's own product-page summary spec (340 kW peak / 145 kW continuous). The 268 baseline (117 kW) was re-checked the same way against its v1.6 datasheet and holds.
+
+**Climb: 145 kW vs. the 155 kW floor — 6.5% SHORT, not a 4.5% margin over.** V1's headline number was wrong. This package **fails the mission floor at full rated power, before any redundancy tax and independent of AER-81** — it does not clear the gate to even reach the safety-column question below. No published EMRAX 348 winding/cooling combination (including the custom LV+43%/LV+100%/HV+42% variants on the same v1.6 datasheet) reaches 155 kW continuous. Carrying it in the frontier below only to show why it is out.
+
+**Controller/redundancy note, also corrected:** V1's rationale for 2× BAMOCAR D3-700/400 (current-sharing, since 230 A_RMS exceeds a single unit's 200 A rating) is still sound on its own terms. But **both the 268 and 348 v1.6 datasheets state plainly: "All values given are for a standard 3 phase UVW version, please consult EMRAX on 2x UVW values"** — EMRAX does not publish performance numbers, nor confirm electrical/thermal isolation, for the 2×UVW configuration. Whether 2×UVW gives genuinely fault-isolated, independent winding sets (satisfying AER-81's R1a) or is a current-splitting reconfiguration of one winding with no fault containment is **not established from public data** — a direct EMRAX consult would be needed before this could ever be used to satisfy R1, on top of the capability failure above.
 
 | Item | All-new | Used/salvage |
 |---|---:|---:|
-| EMRAX 348 MV/CC | $18,000 **EXTRAP** (range $16,000–$22,000, scaled from the 268's $12,000 by both continuous-power ratio [$16,600] and mass ratio [$23,800] — no vendor quote; midpoint used) | $9,000 **EXTRAP** (no 348 used listing found in this pass — the 268's ~50% used/new ratio applied as a placeholder, flagged low-confidence) |
+| EMRAX 348 MV/CC | $18,000 **EXTRAP** (range $16,000–$22,000, scaled from the 268's $12,000 by both continuous-power ratio and mass ratio — no vendor quote; midpoint used) | $9,000 **EXTRAP** (no 348 used listing found in this pass — the 268's ~50% used/new ratio applied as a placeholder, flagged low-confidence) |
 | 2× BAMOCAR D3-700/400 | $10,000 | $5,000 |
 | **Motor package total** | **$28,000** | **$14,000** |
 | Electric-hardware-only (gen + motor) | $45,000 | $22,500 |
 | Drivetrain subtotal (excl. prop) | $71,500 | $46,000 |
 | **+10% contingency → Total (excl. prop)** | **$78,650 (57% over)** | **$50,600 (1.2% over)** |
 
-**Capability:** generator unchanged (117 kW/22% margin). Climb: 162 kW continuous vs. 155 kW floor — **4.5% margin, a real pass under S1 continuous duty, but far thinner than Package A's 51%.** **No motor-out redundancy** — this is a single point of failure for 100% of thrust, the exact case [AER-81](/AER/issues/AER-81) (open, unanswered) was chartered to rule on. **This package is not adoptable until AER-81 closes.** Reserve unchanged.
-**Mass (installed, incl. prop, motor+controllers only shown here):** 43.5 kg (motor) + 17 kg (2× controller) = 60.5 kg — **essentially flat vs. Package A's 60.8 kg.** Non-obvious finding: consolidating into one bigger motor is **not** a meaningful mass lever by itself, because axial-flux motor mass scales close to linearly with continuous power/torque — you need the same total capability either way. The real mass (and cost) win from single-motor is the **simpler single conventional prop instead of the coaxial contra-rotating assembly**, and a simpler single-nacelle mount — neither is priced/weighed here (no sourced delta for a conventional vs. contra-rotating prop of this class was found this pass); flagged as an open item for AERO/STRUCTURES, likely worth a few kg and a few hundred to ~$2–4k, not a large lever, EXTRAP-direction only.
-**Torque/gyroscopic — does NOT cancel.** A single prop disk has a real, uncancelled torque reaction and a real gyroscopic moment in maneuvering flight. This is a new structural/handling contract item that did not exist under Package A's contra-rotating arrangement — **flagged to STRUCTURES and AERO now**, not resolved here.
+Cost table left as-is for reference (the EXTRAP price inputs are unaffected by the kW correction) — **but the cost is moot: this package does not clear the climb floor regardless of price, and is dropped from the recommendation in §4.**
+
+**Mass (installed, incl. prop, motor+controllers only shown here):** 43.5 kg (motor) + 17 kg (2× controller) = 60.5 kg — essentially flat vs. Package A's 60.8 kg; not the deciding factor here.
+**Torque/gyroscopic — does NOT cancel.** A single prop disk has a real, uncancelled torque reaction and a real gyroscopic moment in maneuvering flight — moot for this package now, noted for completeness only.
 
 ### Package C — Single EMRAX 268 (cheapest single-motor floor; capability-reduced)
 
@@ -98,44 +112,48 @@ Reuses the generator-side unit (§2) in the propulsion role: **1× EMRAX 268 MV/
 | Drivetrain subtotal (excl. prop) | $60,500 | $43,500 |
 | **+10% contingency → Total (excl. prop)** | **$66,550 (33% over)** | **$47,850 (UNDER $50k by 4.3%)** |
 
-**Capability:** generator unchanged (117 kW/22% margin). Climb: 117 kW vs. 155 kW max-climb floor — **25% short, does not close.** Against the *reduced* 700 fpm/~120 kW no-battery-climb target from the standing power-budget table: 117 kW is ~2.5% short of that figure too, though that figure is defined as an ICE-side target, not a clean motor-side comparison — flagged, not asserted as a pass. **This package is only viable if AERO/Elon relaxes the max-climb-rate requirement — a requirements call, not an engineering one, and not made here.** Same single-point-of-failure exposure as Package B, pending AER-81.
+**Capability:** generator unchanged (117 kW/22% margin). Climb: 117 kW vs. 155 kW max-climb floor — **25% short, does not close.** Against the *reduced* 700 fpm/~120 kW no-battery-climb target from the standing power-budget table: 117 kW is ~2.5% short of that figure too, though that figure is defined as an ICE-side target, not a clean motor-side comparison — flagged, not asserted as a pass. **This package is only viable if AERO/Elon relaxes the max-climb-rate requirement — a requirements call, not an engineering one, and not made here.**
 **Mass (motor+controller only):** 21.9 + 8.5 = 30.4 kg — a **real** ~30 kg lighter than Packages A/B, because this is genuinely less machine, not repackaged capability.
+
+**AER-81 safety-column read (R1–R3):** **as priced above, this is exactly the bare single winding-set/single-inverter configuration SAFETY ruled inadmissible** — §3 above explicitly chose the single-BAMOCAR-D3-700/400 config over the 2-controller fix "at extra cost." Making it R1-compliant means either the same unsourced 2×UVW path Package B's correction flagged as unverified (see §3 Package B), or a second physically separate motor+inverter unit — which erodes or eliminates this package's only selling point (being the cheapest floor) and still does not close the 25%-short climb gap. **This package does not clear R1 as currently specified, on top of already failing the climb requirement.** R3: no limp-home applies as written — a motor-out event here is total loss of thrust, full stop.
 
 ---
 
 ## 4. Verdict — the frontier, and the honest knee of the curve
 
-| Package | Motors | Cost (new) | Cost (used) | Climb margin | Redundancy | Gates |
-|---|---|---:|---:|---:|---|---|
-| A — Twin EMRAX 268 | 2 | $85,250 (71% over) | **$57,200 (14% over)** | 51% | Motor-out safe (survivor clears cruise) | Systems concurrence on DG-004 (unchanged, pending) |
-| B — Single EMRAX 348 | 1 | $78,650 (57% over) | **$50,600 (1.2% over)** | 4.5% | None — total-loss-of-thrust | **AER-81 (SAFETY, open)**; 348 price is EXTRAP |
-| C — Single EMRAX 268 | 1 | $66,550 (33% over) | **$47,850 (under $50k)** | **−25% (fails max climb)** | None — total-loss-of-thrust | **AER-81 (SAFETY, open)**; requires AERO/Elon to relax climb-rate requirement |
-| Combo 1 (reference, unchanged) | 2 (EMRAX 228) | $130,900 (162% over*) | — not re-scored this pass | −3% (own shortfall, PR #16 §1.4) | Motor-out (both EMRAX) | *Old R1 figure, includes prop; not re-split to R1′ this pass |
+**Both open gates from V1 have since resolved, and both cut the same direction — against B and C, not against A.** AER-81 ruled (2026-08-11): bare single motor/inverter is inadmissible. And the corrected EMRAX 348 datasheet figure (§0.1, §3) independently disqualifies Package B on capability, before the safety ruling is even applied.
 
-**No package clears $50k on new parts.** On used/salvage, one package clears it outright (C, capability-reduced) and one comes within 1.2% (B, resting on unsourced pricing). Nothing clears it with both full climb margin and full redundancy — that combination (Package A) lands at $57,200, 14% over.
+| Package | Motors | Cost (new) | Cost (used) | Climb margin | AER-81 (R1) status | Gates |
+|---|---|---:|---:|---:|---|---|
+| A — Twin EMRAX 268 | 2 | $85,250 (71% over) | **$57,200 (14% over)** | 51% | **Satisfies R1(b)** — two physically separate motor+inverter units, per AER-69 | R5 common-cause (bus/battery/coolant sharing) unconfirmed; Systems concurrence on DG-004 (unchanged, pending) |
+| B — Single EMRAX 348 | 1 | $78,650 (57% over) | $50,600 (1.2% over) | **−6.5% (fails climb — corrected, was reported as +4.5%)** | Not reached — fails on capability first | **Disqualified this pass, independent of AER-81.** 348 price still EXTRAP; 2×UVW redundancy path unverified with vendor even if capability were fixed |
+| C — Single EMRAX 268 | 1 | $66,550 (33% over) | $47,850 (under $50k) | **−25% (fails max climb)** | **Fails R1** as priced (bare single winding/inverter) | Fails climb *and* R1; would need AERO/Elon climb-rate relaxation *and* an R1 fix that erodes its cost advantage |
+| Combo 1 (reference, unchanged) | 2 (EMRAX 228) | $130,900 (162% over*) | — not re-scored this pass | −3% (own shortfall, PR #16 §1.4) | Motor-out (both EMRAX) | *Old R1′ figure, includes prop; not re-split this pass |
+
+**The frontier has effectively collapsed to one candidate.** Package A is the only package that clears the climb floor and satisfies AER-81's R1 without relying on unverified vendor claims. Packages B and C are kept in the document (not deleted) so the "what did we rule out and why" record is honest and auditable, per V1's own framing — but neither survives to the recommendation below.
 
 **What this actually says to Bill's question ("if we can't make that price point, what CAN we make, and what are the tradeoffs"):**
 
-- **The single biggest lever in this whole frontier is used/salvage electric hardware, not the single-motor architecture change.** Package A used ($57,200) is already closer to $50k than Package B new ($78,650) or Package C new ($66,550) — the R2 used/salvage lever (confirmed 2026-08-09) outweighs the R4 single-motor lever by a wide margin. This matches AER-65's own finding on the disqualified selection: the saving came from used electric hardware, not the engine, not a Tesla drive unit.
-- **The single-motor lever (R4) buys real money (Package A used → B used: $57,200 → $50,600, a further $6,600/12%) but it is not free.** It costs the twin-motor redundancy the architecture currently has, thins the climb margin from 51% to 4.5%, opens a new uncancelled-torque/gyroscopic item for Structures and Aero, and rests one input (348 pricing) on an unsourced extrapolation rather than a real quote. And it cannot be adopted at all until AER-81 rules on the total-loss-of-thrust case it creates.
-- **Package C is the honest floor of the curve.** It is the only package under $50k on used pricing, and it buys that by giving up 25% of climb capability outright — not a rounding error, a real requirement breach that needs an explicit relax-the-climb-rate decision from AERO/Elon, not a quiet substitution.
-- **Recommendation, offered not decided:** if the frontier is being used to pick a working baseline now, **Package A (used/salvage) is the only point on this curve that keeps both the climb margin and the motor-out safety case intact**, at 14% over — a materially better position than Combo 1's 162% over, with no open safety gate. Packages B and C are real, priced options for further squeezing the number, but both are gated on AER-81 and (for C) on a requirements relaxation neither PROPULSION nor SAFETY owns.
+- **The used/salvage lever (R2) is still the single biggest lever in this frontier** — Package A used ($57,200) beats either single-motor package's *new* pricing, confirming AER-65's original finding: the saving is in used electric hardware, not architecture.
+- **The single-motor lever (R4) did not pay off as scored in V1.** Package B's apparent 12% further saving over Package A used was built on a wrong manufacturer number; corrected, it doesn't clear the mission floor at any price. Package C never cleared the floor and, applied against AER-81, also can't clear the safety bar without giving up its price advantage. Neither is a live option right now — not "pending a gate," genuinely disqualified.
+- **Recommendation, offered not decided: Package A (used/salvage), $57,200, 14% over $50k.** It is the only point on this frontier that clears climb, satisfies AER-81's R1 without new unresolved technology, and beats Combo 1 by a wide margin (162% over). Remaining opens before it's adoptable: Systems concurrence on DG-004, and naming/closing the R5 common-cause items (§5).
+- If Bill wants to keep pushing toward $50k, the honest next levers are **further used/salvage sourcing on Package A's own line items** (motor/controller prices here are already midpoint estimates with a real spread — see §2 evidence column) or a **fresh single-motor candidate with a real, vendor-confirmed R1-compliant redundant-winding option** — not a re-scoring of B or C as currently specified.
 
 ---
 
 ## 5. Open items
 
-1. **AER-81 (SAFETY) — total-loss-of-thrust ruling.** Packages B and C cannot be adopted until this closes. Not owned here.
-2. **Systems concurrence on DG-004** — unchanged open item from PR #16, still pending, applies to all three packages (all run the same ~700V bus).
-3. **EMRAX 348 real vendor quote** — §3 Package B's motor and used-price figures are EXTRAP. A real quote would tighten or invalidate the "1.2% over" headline number.
-4. **Prop match, all packages** — PR #16's open item (EMRAX 268's 4,500 RPM/250 Nm characteristic vs. the old AC-X1 assumption) still applies to Package A. Packages B/C need a **new** prop sizing exercise entirely (single conventional prop, not coaxial contra-rotating) — not started this pass. AERO consult needed, successor to AER-71.
-5. **Torque reaction / gyroscopic — Packages B/C.** Uncancelled net torque and a real gyroscopic moment on a single prop disk is a new structural/handling item. Flagged to STRUCTURES and AERO, not analyzed here.
-6. **Conventional-prop cost/mass delta (Packages B/C)** — not priced or weighed this pass; likely a few kg and low-thousands-of-dollars favorable delta vs. the coaxial contra-rotating assembly, EXTRAP-direction only, no sourced figure.
-7. **HV wiring real BOM at the corrected current class** — unchanged open item from PR #16, applies to all packages.
-8. **Combo 1 not re-split to R1′** — its $130,900/162%-over figure still includes the prop under the old R1 definition; not re-computed against the new prop-excluded boundary this pass. Directionally the delta is small relative to the size of the gap.
+1. **R5 common-cause on Package A — needs Systems/Structures confirmation.** Name explicitly whether the two motor+inverter channels share a bus segment, LV control supply, coolant loop, connector, or firmware. Not confirmed either way this pass — this is what stands between "R1(b) satisfied on paper" and "R1(b) satisfied in the installed system."
+2. **Systems concurrence on DG-004** — unchanged open item from PR #16, still pending.
+3. **R2 (safety numbering) — FIT-rate/field-reliability sourcing for the EMRAX 268 + BAMOCAR class**, split windings vs. power electronics, per AER-81's requirement. Not sourced this pass.
+4. **Prop match, Package A** — PR #16's open item (EMRAX 268's 4,500 RPM/250 Nm characteristic vs. the old AC-X1 assumption) still applies. Successor to AER-71, AERO consult needed.
+5. **HV wiring real BOM at the corrected current class** — unchanged open item from PR #16.
+6. **Combo 1 not re-split to R1′** — its $130,900/162%-over figure still includes the prop under the old R1 definition; not re-computed against the new prop-excluded boundary this pass. Directionally the delta is small relative to the size of the gap.
+7. **If B or C is to be revisited:** would need (a) for B, a real vendor consult with EMRAX confirming 2×UVW winding-set electrical/thermal independence and its actual continuous-power rating in that configuration (not published), and separately AERO/Elon relaxing the climb-rate requirement by >6.5%; (b) for C, the same climb-rate relaxation (>25%) plus an R1-compliant redundancy fix, which would need to be priced fresh since it was not costed in this pass. Neither is in progress — flagged as the reopening condition, not started.
 
 ---
 
 *Analysis by PROPULSION, MAOS Design Board*
 *Version 1 — 2026-08-11. Price-vs-capability frontier across three propulsion-motor packages (twin EMRAX 268 / single EMRAX 348 / single EMRAX 268) × two cost bases (all-new / realistic used-salvage), responding to Bill's 2026-08-11 R1′ (frontier, not pass/fail) and R4 (single-motor admissibility pending SAFETY) requirement updates on AER-56.*
+*Version 2 — 2026-08-11. Applies AER-81's SAFETY ruling (R1–R5) package-by-package; corrects the EMRAX 348 continuous-power figure from an unverified 162 kW to the manufacturer's published v1.6 figure of 145 kW, which disqualifies Package B on capability independent of AER-81. Frontier recommendation narrows to Package A (used/salvage, $57,200, 14% over $50k).*
 *R&D guidance for Experimental Amateur-Built development. Not a certification claim.*
