@@ -8,20 +8,25 @@
 
 ## 1. Safety Classification Context
 
-The standard aircraft-EFI safety argument — "ECU failure = engine stops = loss of thrust = emergency" — **does not apply directly to MAOS**. The Hayabusa in Paths H1–H4 drives a generator; it is not directly coupled to the propeller. The propulsion motor is driven electrically from the DC bus.
+**Erratum (2026-08-09, per SAFETY consult [AER-62](/AER/issues/AER-62), folded in by `POWERTRAIN_TRADE_STUDY_50K_V1.md` §6):** this section originally cited an 8–12 min/15–25 kWh battery buffer as the ICE-failure reserve and classified the resulting event as "not an emergency." SAFETY traced that citation back to its own source and found the 8–12 min figure was never the ICE-failure buffer — it was a takeoff-boost figure — and the number is also superseded by the standing 40 kWh/30-min reserve in `maos-1g1b2m-architecture-decision`. That same article classifies ICE/generator failure as "declare emergency," which this section had contradicted. Both are corrected below; the reasoning that follows is retained as directionally sound but reclassified as **conditional**, not a blanket severity downgrade.
+
+The standard aircraft-EFI safety argument — "ECU failure = engine stops = loss of thrust = emergency" — **does not apply directly to MAOS in the same way**. The Hayabusa in Paths H1–H4 drives a generator; it is not directly coupled to the propeller. The propulsion motor is driven electrically from the DC bus.
 
 This changes the fault consequence chain:
 
 ```
 ECU failure → engine stops → generator output drops → battery buffer sustains bus
-           → 8–12 min full-power flight window available (15–25 kWh buffer per PROP_MATRIX_V1)
-           → commanded descent and landing, not emergency
+           → ~30 min at 60 kW emergency-power reserve available (40 kWh buffer per
+             maos-1g1b2m-architecture-decision, superseding the earlier 15–25 kWh figure)
+           → SAFETY ruling (AER-62): Hazardous — declare emergency, divert to nearest
+             suitable landing site — not "not an emergency"
 ```
 
-This does **not** make ECU failure acceptable — it must be detected (ICE-FLT-001), logged (ICE-FLT-003), and responded to via the MAOS derate/shutdown state machine (ICE-SYS-003). But it **does** mean:
+This does **not** make ECU failure acceptable — it must be detected (ICE-FLT-001), logged (ICE-FLT-003), and responded to via the MAOS derate/shutdown state machine (ICE-SYS-003). Per SAFETY's ruling, the severity credit below is **conditional and per-failure-mode**, not a blanket property of this architecture:
 
-- A non-redundant ECU is a lower-severity single point of failure than in a direct-drive aircraft
-- Graceful degradation (derate rather than hard stop) is more achievable and more valuable than immediate redundancy
+- A **clean, detected, commanded shutdown** that the battery picks up cleanly earns a severity credit relative to an unbuffered single point of failure — **Hazardous**, not Catastrophic, *conditional on* verified fault detection and an altitude/phase floor (neither is set yet; owned jointly by AERO/PROPULSION) confirming the 30-min reserve is actually usable from wherever the fault occurs.
+- A **non-graceful/uncommanded failure mode** (e.g., dirty or oscillating generator output before a fault is caught, stressing the bus rather than dropping off cleanly) does **not** earn this credit and should be scored Catastrophic until the specific fault-detection coverage is bench-verified against that failure mode. ICE-FLT-001 does not yet explicitly cover turbocharged-engine-specific faults (overboost, detonation, boost-control runaway) — confirming that coverage is an open PROPULSION action item.
+- Severity is not risk (MIL-STD-882: risk = severity × likelihood). Lowering ECU-loss severity where earned says nothing about fault *probability* — a non-aviation ECU on an engine with zero sustained-duty data plausibly has a **higher** fault probability than an aviation-certified dual-channel system, not a lower one.
 - The ECU is **not required to be aviation-certified** for the Experimental Amateur-Built category
 - The primary gate for engine management is **integration maturity and telemetry quality**, not type certification
 
