@@ -10,6 +10,8 @@
 
 ---
 
+> **Erratum, 2026-09-05 (AER-608, `makerplane/decisions/ORG-003-design-phase-constraints.md`):** §1 line 14 (the 50%-of-documented-steady-state derate) and §1 line 1 (the 2,600 lb MTOW carried as envelope line 1) are both **superseded for the design phase**, not corrected — see ORG-003 Rulings 1 and 2. §1.3's derate table and every combo's scored total in §2–§10 were computed against those two now-struck constraints and are not re-scored here; they stand as a true record of what closed under the old constraints. The live analysis is `PROPULSION_RESET_V1.md` (AER-608), which re-derives cruise/climb power against MTOW as an output rather than a 2,600 lb input, and finds that the corrected series-hybrid architecture (this document's Combo 3 lineage) does not close on any currently-catalogued engine core once that re-derivation is done — a different failure mode than the cost overrun this document scored. Do not size new work to this document's $50k line or its 96 kW/155 kW floors without reading `PROPULSION_RESET_V1.md` §0 first.
+
 ## 0. Cost Scope
 
 **Default scope (per AER-56/AER-57), pending Bill's answer on the open cost-boundary question in AER-56:**
