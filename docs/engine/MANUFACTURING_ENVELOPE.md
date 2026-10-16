@@ -1,8 +1,10 @@
-# Engine manufacturing envelope, v0
+# Engine manufacturing envelope, v1
 
-Owner: MANUFACTURING. Issue: AER-3321 (parent AER-3320). Program: ORG-009, 2026-10-16.
+Owner: MANUFACTURING. Issues: AER-3321 (v0, parent AER-3320); AER-3328 (v1, parent AER-3326). Program: ORG-009, 2026-10-16.
 For PROPULSION to commit as `MAOS-ICE/docs/engine/MANUFACTURING_ENVELOPE.md`.
-Status: v0. Published so the six concepts are written inside it. Nothing here is a quote on real geometry yet, because there is no geometry yet.
+Status: v0 (sections 1-8) Published so the six concepts are written inside it. Nothing here is a quote on real geometry yet, because there is no geometry yet.
+
+v1 (2026-10-16) adds section 9, bottom-up estimates for concept H's six castings, liner and crank, and section 10, normalizing hardware sourcing. Section 9 numbers are still [E], not [Q]: no STEP geometry exists and no RFQ has been sent (9.6). Sections 1-8 are unchanged except the open items in 8.
 
 ## How to read the numbers
 
@@ -163,11 +165,234 @@ Design rule: the dimension set (bore, compression height, pin diameter, rod leng
 
 ## 8. Open items and what I could not prove
 
+- **v1 update:** items (1)-(3) below now have bottom-up [E] estimates for concept H in section 9. They are still not [Q]; section 9.6 names what turns them into quotes.
 - **No quotes on real geometry.** There is no geometry yet. Every [Q] stays open until PROPULSION gives a part envelope. The first quotes I will run, in order: (1) first-op job-shop machining of a crankcase half, (2) bureau-printed mold + pour + T6 + impregnation of a crankcase half, (3) the same for a head, (4) billet crankcase half from plate via Xometry, (5) AlSi10Mg thermostat/crossover housing.
 - **Published foundry one-off pricing does not exist.** Route 1.3 is unpriced until a foundry quotes.
 - **The Hoosier $0.13/in^3 figure is as reported in trade press.** I could not confirm it is current. It may be several years old and needs a live quote.
 - **ASTM B26 minimum properties are from memory**, marked [E]. They need checking against the standard before anyone designs to them.
 - **I could not read `makerplane/decisions/ORG-009-engine-program-and-airframe-pause.md`.** It is not in any local maos-workspace clone, and the clone cannot fetch (authentication fails). This envelope is written from the issue text and my profile's brief.
+
+## 9. Concept H: casting and first-op estimates, liner and crank (v1, AER-3328)
+
+PROPULSION's part envelopes are in `RANKING_PHASE1.md` section 10. The numbers below come from `h_quote_estimate.py`, which MANUFACTURING supplied with this envelope for `analysis/engine_phase1/`. **None of them is a [Q] yet.** A real quote needs a STEP file and an RFQ to a named shop (9.6). These are bottom-up [E] estimates built on sourced rates [S]. They replace the phase-0 bands, which had no method.
+
+### 9.1 Method
+
+- **First-op.** For each casting: CAM programming hours, fixture cost, then per setup the setup hours (per batch) and cycle hours (per part), plus first-article inspection. Hours are my operation-by-operation estimate [E]. The rates are sourced [S]:
+  - 4-axis mill: $60-90/h.
+  - 5-axis: $100-200/h.
+  - CAM programming: $50-150/h.
+  - Horizontal machining center (HMC): no published rate found, so taken at the 5-axis band [E].
+- **Casting.** Hoosier Pattern prices printed sand at **$0.13/in^3 of the CAD bounding box**, cleaned, with a **$450 minimum order** (page updated 2025-12-16) [S]. The price follows the mold's bounding box, not the part's volume, so shelling the mold does not reduce it. The mold box is the part plus 50 mm per side, x1.15-1.35 for gating and risers, plus a core allowance [E]. Every other casting line is [E], because nothing published was found:
+  - pour and fettle;
+  - T6 lot;
+  - impregnation lot;
+  - radiography: 6-12 digital exposures at $15-50 each [S], plus technician time.
+- **Part numbers.** The two crankcase halves are two part numbers. The two heads are a mirrored pair, so also two part numbers. The two cylinder-bank blocks are taken as **one part number, left = right** (9.5, item 3). Programming and fixture cost (NRE) is paid once per part number.
+
+### 9.2 Per casting
+
+| Part | First-op, qty 1 (carries its NRE) | First-op each, qty 5 | First-op marginal (NRE paid once by the program) | NRE per part number (CAM + fixture) | Casting, qty 1 (mold + pour + T6 + impreg + RT) | Casting each, qty 5 | Printed sand alone |
+|---|---|---|---|---|---|---|---|
+| Crankcase half | $2.0k-6.7k | $0.65k-2.0k | $0.57k-1.4k | $1.4k-5.3k | $1.2k-2.7k | $1.0k-2.1k | $630-770 [S rate] |
+| Cylinder-bank block | $1.3k-4.3k | $0.34k-1.1k | $0.26k-0.68k | $1.0k-3.6k | $1.0k-2.4k | $0.79k-1.8k | $370-440 [S rate] |
+| Bank head | $2.2k-7.9k | $0.69k-2.3k | $0.53k-1.7k | $1.7k-6.3k | $0.89k-2.3k | $0.71k-1.7k | $290-350 [S rate] |
+
+All [E] except where tagged. Setups and hours assumed:
+
+- **Crankcase half.**
+  - Setup A, split face on a 4-axis machine: about 30 holes and the dowels, 1.2-1.8 h.
+  - Setup B, on the doweled pair on an HMC: mains, cam, thrust faces, lifters, bank pads, studs and galleries, 2.5-3.5 h per half.
+  - CAM: 12-22 h per part number.
+- **Block.** Base pad 0.6-1.0 h. Deck plus 6 registers plus studs 1.2-2.0 h. CAM: 8-14 h.
+- **Head.** Deck 0.8-1.2 h on 4-axis. Then 2.5-4.0 h on a 5-axis, covering:
+  - seats and guides;
+  - plug and injector bosses;
+  - rocker pads;
+  - port flanges.
+
+  CAM: 14-25 h per part number.
+
+### 9.3 Per engine (six castings): the answer to the cost question
+
+| Line | First engine | Each engine, batch of 5 | Each engine, batch of 5, NRE paid once by the program | Phase-1 model line |
+|---|---|---|---|---|
+| First-op machining | **$9.8k-33.9k** | **$3.1k-9.9k** | **$1.7k-4.6k** | $3.0k-12.0k (`FIRST_OP` x 6) |
+| Castings (mold, pour, T6, impregnation, RT) | $6.2k-14.7k | $5.1k-11.2k | same | $4.4k-10.9k (`CASE_HALF` + `HEAD` + `BLOCK`) |
+| First-op NRE for the whole program | $7.2k-26.7k, once | | | not carried |
+
+What it means for the $22k test:
+
+1. **The first engine cannot meet $22k.** First-op alone costs $9.8k-34k, because one engine carries every CAM program and every fixture. That is true of any cast engine at quantity 1. It is not a flaw of concept H.
+2. **$22k is a per-engine number, so it only holds if the NRE is paid once.** That means AeroCommons (or a builder group) pays $7k-27k one time for CAM programs and a fixture set. The fixtures then travel between shops and the CAM is published with the design (envelope 2.2). On that basis, first-op lands at **$1.7k-4.6k per engine**, below the model's $3k-12k.
+3. **Castings land above the model** at the low end: $5.1k against $4.4k at a batch of 5, and $6.2k for the first engine. That is because radiography and the per-lot T6 and impregnation minimums were not in the phase-0 line.
+4. **The crank and liner lines also move up (9.3 and 9.4).** Net, the honest low end moves **up**, not down. Section 9.7 lists the changes to the line items so that PROPULSION can rerun `member_200.py`. **This estimate does not rescue $22k.** The levers in 9.5 are where the money is.
+
+### 9.4 Catalog wet liner at 104.8 mm, and the billet crank
+
+**Wet liner.** No catalog wet liner is sold **finished** at 104.8 mm (4.125 in).
+
+The closest fit is the **Darton MID (Modular Integrated Deck) sleeve for the GM LS**:
+- ductile iron, wet, sealed by 3 O-rings at the bottom register;
+- the top flanges nest together to form the deck;
+- maximum bore 4.160 in, wall 0.220 in [S, 2014 Darton FAQ];
+- **$1,904 per set of 8**, retail [S, n/d, read 2026-10-16]. That is $238 per sleeve, or $317 per cylinder if a set of 8 is bought for 6 cylinders. Whether single sleeves are sold is [Q].
+
+It is the right family for H. It is LS-native, so it matches the 111.8 mm (4.400 in) bore pitch and takes catalog LS7-bore pistons. But two things change the plan:
+
+1. **It is supplied at 4.100 in, and must be bored about 0.020 in and honed to 4.125 in after installation** [S]. So the bore-and-hone step does not disappear. It goes to the automotive machine shop at $15-60 + $10-20 per cylinder, x1.3 for 2026 [S, envelope 2.1]. That is $33-104 per cylinder.
+2. **Mass.** A 0.220 in iron wall is drag-race practice. My estimate is about **2.5-3 kg per sleeve, 15-18 kg per engine** [E: wall x length x density, length assumed 180 mm]. That is a real hit against H's 134 kg. It is PROPULSION's call. The alternative is a thinner iron dry sleeve in a closed-deck block, which is cheaper and lighter but gives up the "liner sets the deck" simplicity.
+
+Two more facts about the MID:
+- The sleeve length was not found [Q].
+- The block deck must be machined to Darton's MID preparation drawing, which Darton supplies to shops [E]. Copy that drawing into the bank-block design rather than inventing a register geometry.
+
+Cheaper liners exist, but they are not recommended. A John Deere 4045 wet liner kit is **106.5 mm, at about £150 per cylinder including the piston** [S]. It is semi-finished and comes with a diesel piston, so moving to it means a custom spark-ignition piston (envelope 4, [Q]). Porsche Nikasil barrels are 102 mm, sold only as matched sets at $4.7k-8.6k per 6 [S], and are air-cooled barrels, not wet liners.
+
+**Liner line:** $300-450 per cylinder including the bore and hone [E from the [S] rows]. The model line is $150-400.
+
+**Billet crank, 6-throw, 101.6 mm stroke, 60 mm mains, propeller flange.** There is no catalog part. Anchors [S, read 2026-10-16]:
+
+| Crank | Price | Notes |
+|---|---|---|
+| Catalog 6-throw 4340 billets (Brian Crower 2JZ, Tomei RB26, Nitto RB26) | $4.0k-4.9k | nitrided |
+| Eagle 2JZ / RB26 4340 | $2.3k-2.8k | |
+| Crower custom billet, a V8 example | $6,288 | shipping date shown as 2027-02-18, so **about 18-20 weeks** lead |
+
+A one-off flat-6 crank needs new drawings, an opposed-throw layout and a propeller flange. My estimate is **$6.3k-9k plus balancing at $300-400** [E, from the custom anchor], with about 20 weeks lead time [S]. It is [Q] to Crower, Bryant or Winberg once PROPULSION has a crank drawing.
+
+The model line, `CRANK` x 1.15, is $3.9k-7.2k. My low end is about $2.4k higher.
+
+Two dimension choices let catalog parts fit, in the spirit of envelope Finding 4:
+- **Rod journal at 2.100 in**, so catalog LS rods and rod shells fit.
+- **60 mm mains** appear to match the Subaru EJ main-shell catalog. That is [E] from memory and should be confirmed against a Clevite or King listing before the size is frozen.
+
+### 9.5 DFM objections on the three envelopes (raise now, cheap now)
+
+None of the three parts falls outside the casting envelope. The largest box is 560 mm, and a binder-jet bed is about 1.8 x 1.0 x 0.7 m (ExOne S-Max class) [S, envelope 1]. The objections are about setups, part count and the shop pool:
+
+1. **Merge each cylinder-bank block into its crankcase half (the largest lever).** Subaru's EJ and EZ flat engines do exactly this. The block halves carry integral cylinder banks, split at the crank centerline, and run open-deck wet or semi-wet bores [E, general practice]. The merge would:
+   - delete 2 castings and 1 part number of NRE, worth $1.0k-3.6k once;
+   - delete 2 block-to-case gaskets and about 16-24 studs and nuts;
+   - delete 2 machined pad pairs.
+
+   The case half grows to about 560 x 300 x 325 mm with a coolant core. Printed sand rises by about $350-450 per half, and cycle time by about 1-1.5 h. The net saving is about **$1.0k-2.5k per engine plus about 30 parts** [E]. There is a second benefit: the liner registers come off the same datum as the mains. The cost is that a scrapped pour now scraps the whole case half.
+2. **Crankcase setups: two, not three.** In a flat engine the lifter bores and the bank pads both face outboard, normal to the split plane. On a 4-axis HMC with the doweled pair on a tombstone, the table indexes 0 / 90 / 180 / 270 degrees. So mains, cam, thrust faces, lifters, pads and studs all come off **one** setup, referenced to the dowels. Constraints:
+   - The doweled pair (about 560 x 320 x 300 mm, about 22 kg) needs an HMC with a pallet of 630 mm or more and about 1,000 mm swing. That narrows the shop pool, so name it in the RFQ.
+   - The mains are bored from both ends, with a reach of 300 mm or less per side.
+   - The align hone then goes to the automotive shop: $350-440 [S], already in `MACHINE_SHOP`.
+3. **Make the left and right bank blocks the same part number.** Check that the coolant inlet boss and stud pattern are symmetric under a 180-degree rotation. This halves the block NRE, and the estimate above already assumes it. Heads are probably a mirrored pair. If they can be made identical, about $1.7k-6.3k of NRE goes.
+4. **The head is a 5-axis part as drawn. Make it a 4-axis part.** PROPULSION's "2 setups" leaves out the plug bosses, injector bosses, rocker pads and port flanges, which sit on 4-6 more orientations. Three constraints bring every feature after the deck onto **one tilt plus a rotary axis**:
+   - all six valve axes parallel (LS heads are, at a single included angle);
+   - the two plugs per cylinder on two parallel axis sets;
+   - **both port flanges on one face**, as Lycoming's down-ported cylinders are.
+
+   That moves the head's second setup from $100-200/h to $60-90/h and widens the shop pool. Worth about $300-900 per head [E].
+5. **Block registers stepped from one side.** Specify lower register diameter <= upper, so both bore from the deck in one setup. This is already implied by "deck + registers"; make it a drawing rule.
+6. **Drilled-and-plugged galleries (agreed).** Keep each drilled run within 25 x diameter from its entry face. On a 560 mm case drilled from both ends that means a **main gallery of 12 mm or larger**, or a gun-drilling operation [Q]. Plug pressurized galleries with threaded plugs plus sealant, staked, not cup plugs (ledger item MFG-4).
+7. **Printed-sand coolant cores need cleanout exits.** Each head jacket core needs at least 2 exits of 12 mm or more to get sand out. They become threaded or Welch plugs, about 3-4 per head [E]. The builder borescopes the jacket at receipt (B1). Residual core sand next to a combustion chamber is a hot spot (MFG-2).
+
+### 9.6 What it takes to turn these [E] into [Q]
+
+- **A STEP envelope model for each casting.** Coarse is fine if datum pads and critical bores are shown. Owner: PROPULSION. MANUFACTURING can build the coarse STEP from section 10 of `RANKING_PHASE1.md` with `maos freecad` if PROPULSION wants that. Say so on the issue.
+- **RFQs sent to named shops.**
+  - Print plus pour: Hoosier Pattern, Humtown, General Foundry Service (CA, prints and pours aluminum in-house), Kimura Foundry America (IN, all molds printed, about 1 week to raw casting) and Boose Aluminum (PA, pours and heat-treats in-house) [S, quote-only].
+  - First-op: two or three HMC/5-axis job shops.
+  - I hold no email or account to send an RFQ. **Unblock: Bill or Elon names who sends the RFQs**, or grants a channel. Until then every line here stays [E].
+- **What the RFQ should carry:** quantity 1 and 5, A356-T6 / A357-T6, RT acceptance class, impregnation, and the setup plan in 9.5. The datum-pad locations are on the drawing.
+
+### 9.7 Line-item changes PROPULSION can drop into `member_200.py` / `cost_floor.py` (200 hp member, per engine)
+
+The table gives two bases: the first engine, and each engine of a batch of 5 with NRE paid once.
+
+| Line | Model now | First engine | Batch of 5, NRE once | Tag |
+|---|---|---|---|---|
+| First-op, 6 castings | $3.0k-12.0k | $9.8k-33.9k | $1.7k-4.6k | [E] |
+| Castings, 6 | $4.4k-10.9k | $6.2k-14.7k | $5.1k-11.2k | [E] on [S] sand rate |
+| Program NRE (CAM + fixtures) | not carried | carried in first-op above | $7.2k-26.7k once, outside the per-engine number | [E] |
+| Crank | $3.9k-7.2k | $6.6k-9.4k incl. balance | same | [E] on [S] anchors |
+| Liners, 6 incl. bore/hone | $0.9k-2.4k | $1.8k-2.7k | same | [E] on [S] |
+| Normalizing (turbo, wastegate control, intercooler, plumbing) | $1.2k-3.0k | $2.0k-4.5k | same | section 10 |
+| `MACHINE_SHOP` | $0.8k-2.0k x 1.3 | drop the two block decks, now done in first-op | same | [E] |
+
+Rerunning the floor is PROPULSION's job. My read: **at batch-5 / NRE-once the low end rises about $3-4k, to roughly $26-27k.** First-op falls; the crank, liners, castings and normalizing rise. The 9.5 levers recover about $1.5-4k. **$22k is not met on this basis without either the block merge plus the 4-axis head plus a cheaper crank, or relaxing the target.** That is the input to PROPULSION's planned escalation.
+
+## 10. Normalizing hardware sourcing (v1, AER-3328)
+
+The duty comes from PROPULSION:
+- **Compressor:** 0.24 kg/s corrected (31.7 lb/min) at pressure ratio 1.68. At 12,000 ft ISA that is about **0.16 kg/s actual** [E: x p/p0 / sqrt(T/T0)].
+- **Intercooler:** about 4 kW at 0.13 kg/s, which is a charge-air drop of about **31 K** [E].
+
+Prices are retail, read 2026-10-16. Most pages carry no date, and sale and list prices are mixed. **Retailer "30 lb" masses are shipping weights. I give no dry mass that is not marked [E].**
+
+### 10.1 Turbocharger: all catalog parts
+
+| Unit | Price [S] | Bearing / housing [S] | Wastegate [S] | Lead [S] | Dry mass |
+|---|---|---|---|---|---|
+| Garrett GT2860RS | $1,256-1,610 | dual ball bearing; oil cooled | internal, with actuator | in stock | 6-8 kg [E] |
+| Garrett GTX2860R Gen II | $1,428 + $120 actuator | dual ceramic ball; **water-cooled** center housing | internal, T25 0.64/0.86 A/R | in stock | 6-8 kg [E] |
+| Garrett G25-550 | $1,771-2,966 | **oil and water cooled** (4 water ports) | internal-gate or free-float housings | in stock | 7-9 kg [E] |
+| BorgWarner EFR 6258 | $1,811 | dual-row ceramic ball; water cooling recommended | internal, **integrated boost-control solenoid** | in stock | sources disagree, 2.7-15 kg; [Q] |
+| Precision 5558 Gen2 | $1,920-2,504 | ball | | built to order, 3-5 weeks | likely oversized (650 hp) |
+
+Notes on the turbo:
+
+- **Map fit is not checked by MANUFACTURING.** The GT2860RS and GTX2860R class (250-360 hp) is the right size bracket for 31.7 lb/min. The G25-550 is probably oversized at pressure ratio 1.68. Owner of the compressor-map match: PROPULSION.
+- **Water-cooled center housings are the norm in this class.** With the electric coolant pump already in the envelope (Davies Craig EWP115), an **after-run** of the pump after shutdown cools the bearing housing with no extra part. That is a real heat-soak advantage for an aircraft. It is PROPULSION's or FADEC's call.
+- **Wastegate control for normalizing.** The gate must be fully open at sea level and close progressively with altitude to hold sea-level manifold pressure. There are two routes:
+  - an ECU solenoid on the internal pneumatic actuator: about $100-300 [E]; the pneumatic actuator alone is $94-136 [S];
+  - an electronic wastegate: Turbosmart GenV eWG45 at $1,024-1,138 [S]; Hella OEM electronic actuators from about EUR 98 [S].
+
+  Both failure modes go to the ledger: a gate stuck closed overboosts at low altitude; a gate stuck open loses altitude power.
+
+**Turbo line:** turbo $1.3k-2.2k, wastegate control $0.1k-1.1k, oil and coolant lines and manifold flange $0.3k-0.6k [E]. About **$1.7k-3.9k**, plus the intercooler below.
+
+### 10.2 Air-to-air intercooler: catalog cores
+
+| Core | Price [S] | Size | Rating [S] | Mass |
+|---|---|---|---|---|
+| Garrett 703518-6015 | EUR 140-175 | 457 x 163 x 76 mm | 310 hp | 3-4 kg [E] |
+| Mishimoto 20 x 7.8 x 3.5 in | $246 | | | 16.6 lb shipping, so about 5 kg dry [E] |
+| Treadstone TR6, **complete with tanks** | $290-420 | core 550 x 150 x 82.5 mm | 400 hp, under 2 psi drop | 4-5 kg [E] |
+
+- 4 kW at 0.13 kg/s is a small duty. The smallest Garrett core or a complete TR6 covers it [E: rating x 200 hp margin].
+- A complete unit with tanks (TR6) is the B0 path. Otherwise the end tanks are 5052 sheet cut by a service plus TIG (envelope 3) at about $100-300 [E].
+- **Installed line:** $0.3k-0.6k, 4-6 kg with ducting stubs [E].
+- **Install conflict to flag:** the core needs ram or cooling air, so it competes with the radiator duct for R-38. That is PROPULSION's call.
+
+### 10.3 Supercharger, for comparison
+
+Drive power at the duty [E, mine, isentropic plus efficiency, for comparison only]:
+
+- **About 10-11 kW (14 hp) for a centrifugal unit**, at 70 % compressor efficiency and 95 % drive efficiency.
+- **About 11-13 kW (15-17 hp) for a positive-displacement unit**, at 60-70 % efficiency.
+
+A turbo takes that energy from the exhaust instead. Its cost is backpressure, which is PROPULSION's number.
+
+| Unit | Class | Price [S] | Mass [S] | Fit to duty [S] | Notes |
+|---|---|---|---|---|---|
+| Rotrex C30-94 | centrifugal, traction drive | $2,103 | **5.1 kg** | max 0.39 kg/s and pressure ratio 2.52, so the duty sits inside the map | self-contained oil system on Rotrex traction fluid, oil inlet 80 C max. Needs a belt step-up drive of about 4-5:1 from 3,300 rpm [E]: custom pulleys and a bracket, which are service-machinable |
+| Vortech V-3 Si | centrifugal | $3,606, **listed unavailable** | n/f | oversized (775 hp) | |
+| ProCharger P-1SC | centrifugal | head unit n/f | n/f | oversized | |
+| Eaton TVS R900 | positive displacement (Roots/TVS) | **bare unit not sold**; Harrop kits $5,885+ | n/f, 10-15 kg [E] | max pressure ratio 1.8, 0.297 kg/s at 18,000 rpm, so near the top of its range | OEM-only part |
+| Whipple W100AX 1.6 L | twin-screw | $2,595 bare | n/f, 12-18 kg [E] | [E] fits | |
+| TiAL Q 50 mm bypass / blow-off | valve | $279 | | 2 psi spring version for supercharged use | |
+
+**Reading it.** The only catalog-friendly supercharger at this duty is the **Rotrex C30-94**: light, priced and in the map. It costs about 14 hp of shaft power at critical altitude. A centrifugal unit also cannot "normalize" by bypass alone, because its pressure ratio follows rpm, not altitude. At sea level it still absorbs drive power unless it is declutched or throttled [E]. I found no verified aircraft use of a Rotrex.
+
+**The turbo stays the catalog-cheaper, lighter-at-the-shaft route.** The supercharger's case is having no hot turbine and manifold to make or inspect. Part counts are similar:
+- turbo: unit, actuator, oil feed and drain, coolant lines, manifold flange, downpipe;
+- supercharger: unit, belt, 2 pulleys, tensioner, bracket, bypass valve.
+
+**Line for comparison:** centrifugal supercharger system $2.7k-3.8k [E: $2,103 + bypass $279 + pulleys, bracket and tensioner $300-800 + oil cooler and lines $100-300 + intercooler as 10.2].
+
+### 10.4 Additions to the failure-mode ledger (build quality, for PROPULSION to enter)
+
+- **MFG-1. First-op datum error across the case pair** (lifter-to-cam or main misalignment). Mitigation: one setup on the doweled pair (9.5 item 2), a CMM report with the first article, and Plastigage at assembly.
+- **MFG-2. Residual printed-sand core in a head or block jacket**, causing a local hot spot. Mitigation: cleanout exits of 12 mm or more, a borescope at receipt, and a flush.
+- **MFG-3. Darton MID O-ring pinched on install**, putting coolant in the oil. Mitigation: a lead-in chamfer spec, and a jacket pressure test after liner install (B1).
+- **MFG-4. Drilled-gallery plug backs out**, causing oil loss. Mitigation: threaded plugs, thread sealant and staking; no cup plugs on pressurized galleries.
+- **MFG-5. Wastegate actuator stuck**: overboost at low altitude, or loss of altitude power. Mitigation: a FADEC overboost limit, and a manifold-pressure check in the run-up. The design side is PROPULSION's.
 
 ## Sources (all read 2026-10-16)
 
@@ -194,3 +419,21 @@ Design rule: the dimension set (bore, compression height, pin diameter, rod leng
 - GM D585 coils: https://ictbillet.com/collections/ignition-coils
 - Davies Craig EWP115: https://www.americanmuscle.com/challenger-ewp115-alloy-remote-electric-water-pump-12-volt-dc-8140.html
 - JLC3DP metal pricing: https://jlc3dp.com/news/materials-finishing-pricing-update-july2026 ; https://jlc3dp.com/blog/drastic-material-price-cuts-and-adjusted-post-processing-service-fees
+
+### Sources added in v1 (all read 2026-10-16; most retail pages carry no date)
+
+- Hoosier Pattern printed-sand rate, $450 minimum, bounding-box basis: https://hoosierpattern.com/news/cost-analysis-breakdown-of-3d-sand-printing/ (updated 2025-12-16)
+- Humtown $0.07-0.10/in^3: https://www.additivemanufacturing.media/articles/commercializing-sand-3d-printing-in-the-new-tech-belt (2021-08-21)
+- Head casting and machining anecdotes (forum, 2018): https://www.speed-talk.com/forum/viewtopic.php?t=55246
+- Print + pour foundries: https://www.genfoundry.com/capabilities/3d-printed-sand-mold-castings ; https://www.additivemanufacturing.media/articles/new-kimura-us-metal-casting-plant-relies-entirely-on-3d-printing-for-molds-and-cores ; https://www.boosealum.com/capabilities/3d-printed-sand-molds/
+- Radiography rates: https://www.ndtintel.com/guides/pdf/ndt-inspection-rate-guide-2026.pdf
+- CNC hourly rates: https://fabcon.com/articles/?p=302 (2026-05-19); https://precisionam.com/articles/precision-machining/5-axis-cnc-hourly-rate/ (2026-05-19); https://hotean.com/blogs/hotean-blog/cnc-machining-shop-rates-in-2025 (2025-08-12)
+- Machine-shop line items: http://paragonengines.com/machineshoppricing ; https://www.besracing.com/machine-shop-services.html (2022-12-01); https://oakleymotorsports.com/wp-content/uploads/2025/01/OakleyMotorsportsPriceList2024.pdf ; https://amsmotomachine.com/index.php/labor-pricing (2024-05-30)
+- Darton MID LS: https://vividracing.com/brian-crower-block-wet-sleeves-darton-mid-4125-inch-4160-inch-max-bore-chevrolet-ls1-ls6-p-152820306.html ; https://www.corvetteactioncenter.com/tech/knowledgebase/article/1997-2004-corvette-faqs-regarding-the-re-sleeving-of-ls1-ls6-engine-blocks-with-the-darton-mid-sleeve-kit-815.html (2014-08-05)
+- John Deere 4045 cylinder kit: https://dhfarmmachinery.com/products/cylinder-kit-qre507850.html
+- Porsche Nikasil sets: https://fvd.net/us-en/100103038031/mahle-38l-piston-cylinder-set-964-993-1131-102mm-bore-109mm-sleeve-mach-fit-narrow-rod.html
+- 6-throw billet cranks: https://www.evasivemotorsports.com/store/product/brian-crower-crankshaft-toyota-2jzgte2jzge-86mm-stroke-4340-billet-honda-journal/ ; https://www.kuremotorsport.com/products/tomei-forged-billet-full-counterweight-crankshaft-rb26dett-2-6l-73-7mm ; https://www.summitracing.com/parts/cro-95185c
+- Turbochargers: https://www.garrettmotion.com/racing-and-performance/performance-catalog/turbo/g-series-g25-550/ ; https://www.full-race.com/garrett-gtx2860r-gen-ii-turbo ; https://onefastshop.com/products/garrett-gt2860rs-turbocharger-dual-ball-bearing-2 ; https://www.full-race.com/borgwarner-efr-6258-turbo ; https://ffperformance.co/product/precision-turbo-pt5558-cea-gen2-turbocharger/
+- Wastegates and actuators: https://www.subispeed.com/products/tia-mvsb-tial-mv-s-wastegate-38mm-blue-w-all-springs ; https://onefastshop.com/products/turbosmart-electronic-wg45-gen-v-hyper-gate-45-wastegate-black-1 ; https://www.melett.com/hella-actuators/ ; https://www.amsperformance.com/?p=72653
+- Intercooler cores: https://www.garrettmotion.com/wp-content/uploads/2020/10/Garrett_Performance_Intercooler_Cores_Price_Update_Sell_Sheet.pdf (2023-08); https://www.mishimoto.com/20-7-8-3-5-universal-intercooler-core.html ; https://www.speedscience.co.nz/products/treadstone-tr6-interooler
+- Superchargers: https://shop.rotrex.com/product/c30-94-supercharger/ ; https://www.rotrex.com/wp-content/uploads/2022/01/Rotrex-Technical-Datasheet-C30-Rev6.0.pdf ; https://vortechsuperchargers.com/products/v-3-si-trim-supercharger ; https://www.eaton.com/de/de-de/catalog/engine-solutions/tvs-r900.html ; https://harrop.com.au/TVS900-r53-mini-cooper-s ; https://whipplesuperchargers.com/i-2004 ; https://www.jegs.com/i/tial-sport-768-002576-q-series-50mm-blow-off-valve-2-psi-spring-supercharged-applications
