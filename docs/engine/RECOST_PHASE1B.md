@@ -33,6 +33,8 @@ The builder basis is each engine of a batch of five, with the tooling bought onc
 
 `cost_v1.py`. Low / mid / high; the mid is the geometric mean of the band, as in phase 1.
 
+**Superseded for concept H by CASTINGS_H.md section 6 (AER-3331).** After the casting rulings (four castings, one head part number) and a machine-shop double count removed, H is $25.1k / $35.2k / $49.3k on the builder basis and $31.7k / $48.0k / $72.8k on the first-engine basis. `castings_h.py` reproduces the H-as-sent row below exactly before it changes anything.
+
 | Variant | Phase 1 | v1, builder basis | v1, first engine | Program tooling, once |
 |---|---|---|---|---|
 | **H as sent** (6 castings) | $23.2k / $36.8k / $58.4k | **$26.7k / $38.1k / $54.5k** | $35.8k / $55.9k / $87.3k | $7.2k-26.7k |
@@ -147,7 +149,7 @@ This agrees with MANUFACTURING's 10-11 kW (envelope 10.3) and with phase 1's 76 
 | Normalizer: turbo system + intercooler | 9 kg allowance | 14-21.5 kg, so +5 to +12.5 kg | envelope 10 [E]; section 6 |
 | **H installed dry, v1** | | **about 148-158 kg** (mid about 153 kg), +/-25 % | |
 
-R-37's 150 kg is PROPOSED, not ruled, so this is a note, not a card. A's normalizer grows by the same amount, so the comparison with A (183 kg) holds. The lever back under 150 kg is the liner. A thin dry iron sleeve, about 2.5 mm wall, in a closed-deck block weighs about 1 kg per cylinder, not 2.5-3. It saves about 6-7 kg [E] for about the same installed cost, but it gives up the "liner sets the deck" simplicity. That choice is AER-3331's liner question.
+R-37's 150 kg is PROPOSED, not ruled, so this is a note, not a card. A's normalizer grows by the same amount, so the comparison with A (183 kg) holds. The lever back under 150 kg is the liner. A thin dry iron sleeve, about 2.5 mm wall, in a closed-deck block weighs about 1 kg per cylinder, not 2.5-3. It saves about 6-7 kg [E] for about the same installed cost, but it gives up the "liner sets the deck" simplicity. That choice is AER-3331's liner question. **Corrected in CASTINGS_H.md section 3 (AER-3331):** a dry sleeve also needs an aluminum cylinder wall and a closed deck, so on a like-for-like comparison it saves 2.9-4.1 kg, not 6-7 kg. The wet liner stays.
 
 ## 8. Failure ledger
 

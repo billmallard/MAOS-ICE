@@ -11,6 +11,7 @@ The older documents one level up (`docs/*.md`) are the hybrid and genset history
 | [DRIVE_AND_PROP.md](DRIVE_AND_PROP.md) | nine ways to match engine to propeller (phase 0); ranked in RANKING_PHASE1.md | PROPULSION |
 | [RANKING_PHASE1.md](RANKING_PHASE1.md) | phase 1: auto-gas concepts and drive options ranked for the 200 hp member; convergence pick; radiator sizing (AER-3326) | PROPULSION |
 | [RECOST_PHASE1B.md](RECOST_PHASE1B.md) | phase 1b: concept H re-costed on MANUFACTURING's estimates, the $22k test, turbo versus supercharger (AER-3329) | PROPULSION |
+| [CASTINGS_H.md](CASTINGS_H.md) | concept H castings: rulings on MANUFACTURING's DFM objections, the liner, the coarse STEP ([`cad/concept_h/`](../../cad/concept_h/)), and the cost floor on both bases (AER-3331) | PROPULSION |
 | [FAILURE_LEDGER.md](FAILURE_LEDGER.md) | single failures and what they leave, held for SAFETY | PROPULSION |
 | [MANUFACTURING_ENVELOPE.md](MANUFACTURING_ENVELOPE.md) | what can be cast, machined, cut or bought, at what price (v0, AER-3321; v1 adds concept H estimates and normalizer sourcing, AER-3328) | MANUFACTURING (committed verbatim) |
 | [sources/](sources/) | vendor data, prices and masses, with read dates | PROPULSION |
