@@ -1,7 +1,7 @@
 # Engine family requirements, v0 (draft)
 
 Owner: PROPULSION. Issue: AER-3320 (engine program phase 0, ORG-009, 2026-10-16).
-Status: **draft for Bill's review. Nothing here is frozen.** This is an
+Status: **draft. Bill ruled on the four phase-0 card calls on 2026-10-16 (section 12); everything else is still open.** This is an
 experimental engine design. Nothing in it is certified, certifiable or
 flight-ready, and nothing in it has been built or tested.
 
@@ -18,6 +18,9 @@ Every requirement carries one tag:
 - **[PROPOSED]**: PROPULSION's proposal. It stands until Bill confirms or
   corrects it. Where it is one of the four questions on the phase-0 card, it
   says **(card)**.
+- **[BILL RULED 2026-10-16]**: Bill accepted the phase-0 card (section 12).
+  Only the scope the card carried is ruled; the rest of the line stays
+  [PROPOSED].
 
 Numbers come from four places, each named where used:
 
@@ -43,7 +46,7 @@ Numbers come from four places, each named where used:
 |---|---|---|---|
 | R-5 | **Normalized, not boosted.** A turbocharger or supercharger holds sea-level power against density altitude. It does not raise rated power. | BRIEF | |
 | R-6 | Reading of R-5 for spark ignition: manifold pressure at rated power is **no more than about 1.0 bar absolute at sea level**, so rated BMEP stays naturally-aspirated class (about 10-11.5 bar). The compressor exists to hold that manifold pressure to the critical altitude. | PROPOSED | `engine_floor.py`; see ARCHITECTURES.md |
-| R-7 | **Critical altitude (card): MCP held to 12,000 ft density altitude; takeoff power held to 8,000 ft density altitude.** | PROPOSED | Covers hot-day takeoff from high-elevation fields and a useful cruise band. Cost per altitude in the table below. |
+| R-7 | **Critical altitude (card): MCP held to 12,000 ft density altitude; takeoff power held to 8,000 ft density altitude.** | BILL RULED 2026-10-16 | Covers hot-day takeoff from high-elevation fields and a useful cruise band. Cost per altitude in the table below. |
 | R-8 | Reading of R-5 for diesel: **R-5 as written makes diesel uneconomic.** Holding a diesel to 1 bar manifold doubles displacement and roughly doubles mass. The proposal: a diesel may run its turbocharger at sea-level boost as part of its combustion system, and normalizing applies on top. **This is a relaxation of the brief and is on the card.** | PROPOSED | Finding F-1 below |
 
 Normalizing cost versus critical altitude (200 hp spark-ignition member, ISA, compressor efficiency 0.70, 1.08 bar manifold target, from `engine_floor.py`):
@@ -61,7 +64,7 @@ With a turbocharger, the exhaust supplies this work. It costs back-pressure (pum
 | ID | Requirement | Tag | Basis |
 |---|---|---|---|
 | R-9 | **Diesel is preferred but Bill suspects it is harder to execute; US auto gas in the 80-96 octane range is acceptable; ethanol must be tolerated.** | BRIEF | |
-| R-10 | **First family member's fuel: auto gas or diesel (card).** | PROPOSED, Bill decides | ARCHITECTURES.md carries both |
+| R-10 | **First family member's fuel: auto gas.** Diesel concepts stay in ARCHITECTURES.md for later family members; R-8 is not ruled. | BILL RULED 2026-10-16 | card item 1; ARCHITECTURES.md carries both |
 | R-11 | **Octane scale.** The fuel requirement is written in **AKI, (RON+MON)/2**: the number posted on US pumps (ASTM D2699: the antiknock index "in accordance with Specification D4814" is what is "posted on retail dispensing pumps in the U.S." [E6]). Knock margin is **designed and verified against MON**, because sustained full-throttle aircraft duty is the severe, MON-like case. Rotax and UL Power already specify a MON floor (MON 85 and MON 88). | PROPOSED | [R3][R4][U1] |
 | R-12 | **Rated power on 91 AKI (MON 85 or better), E0-E15.** This is the same floor as the Rotax 912/915/916 (min AKI 91 / RON 95 / MON 85 [R3][R5]). | PROPOSED | |
 | R-13 | **Safe continuous operation on 87 AKI E10** at a published derate of **no more than 10 % of rated power**, through a pilot-selected fuel map, with knock sensing as a backstop, not as the primary protection. | PROPOSED | Alternative for Bill: rate the engine on 87 AKI. That costs about one point of compression ratio, which is about 3-4 % more fuel burn (ideal Otto efficiency at 9:1 versus 8:1 is 0.585 versus 0.565, Heywood ch. 5). |
@@ -132,7 +135,7 @@ Comparable engines (price as read 2026-10-16; source keys in `sources/COMPARABLE
 
 | ID | Requirement | Tag | Basis |
 |---|---|---|---|
-| R-35 | **Cost targets (card): 100 hp no more than $15k; 200 hp no more than $22k; 300 hp no more than $30k**, first article, as defined above. | PROPOSED | about one quarter of the certified engine at 300 hp; parity with the cheapest conversion at 100 hp |
+| R-35 | **Cost targets (card): 100 hp no more than $15k; 200 hp no more than $22k; 300 hp no more than $30k**, first article, as defined above. | BILL RULED 2026-10-16 for 200 hp and 300 hp; 100 hp PROPOSED (not on the card) | about one quarter of the certified engine at 300 hp; parity with the cheapest conversion at 100 hp |
 | R-36 | **Finding F-2: at 100 hp no concept meets R-35 at first article.** The cost floor (`cost_floor.py`) is **$15k-47k at 100 hp, $20k-68k at 200 hp and $26k-86k at 300 hp** across the seven concepts. The fixed lines (billet crank, cases, first-op machining, FADEC, turbo) are about 60 % of the bill at 100 hp and do not shrink with cylinder count. **"Substantially lower cost" holds at 200-300 hp and fails at 100 hp** against a $13-14k automotive conversion. This is on the card. | PROPOSED | cost_floor.py; the high end is driven by the unquoted job-shop first-op line [Q] |
 
 ## 8. Mass per family member
@@ -201,3 +204,19 @@ These go to Bill on the phase-0 card. Each states what relaxing it buys.
 | **F-2** | R-32 substantially lower cost, at 100 hp | First-article floor $15-47k across the concepts (lowest: $15-39k, concept A) against a $13-14k automotive conversion. The fixed lines do not scale down. | Making **200 hp the first family member** puts the program where it beats the market: $20-52k for concept A at 200 hp, against $88k + core for a new O-360. 100 hp then follows as a derivative. |
 | **F-3** | R-1 one shared cylinder module across 100/200/300 | A ~50 hp cylinder gives a 2/4/6 family, but the 100 hp member is a **2-cylinder** engine, with large torque pulsation and first- or second-order excitation into the propeller. A ~25 hp cylinder (Rotax-scale) gives 4/8/12; **12 cylinders at 300 hp breaks the part-count goal**. One module cannot give both a smooth 100 hp and a reasonable 300 hp. | **Two modules** (a ~25 hp cylinder for a 4-cylinder 100 hp, and a ~50 hp cylinder for 4/6-cylinder 200/300) buy a smooth 100 hp and a 6-cylinder 300 hp. They cost a second piston/head/valve set: about 2x the part numbers, a second casting set, a second crank. Or drop 100 hp from phase 1 (F-2). |
 | F-4 | R-43 transmission for a fixed-pitch prop | Not a killer; see DRIVE_AND_PROP.md. A CVT recovers full engine power at low speed, but not propeller efficiency. At an assumed 0.88 belt efficiency it delivers less thrust power than an in-flight-adjustable prop at every speed from 60 to 180 kt. No flying piston-engine CVT was found. | Informational. Not on the card. |
+
+## 12. Bill's rulings on the phase-0 card (2026-10-16)
+
+Bill accepted the card "Auto gas, 200 hp first, 12,000 ft, two cylinder
+sizes?" on 2026-10-16 (AER-3320). The ruled scope is exactly what the card
+said; nothing beyond it is implied.
+
+| # | Ruling | Lines it settles |
+|---|---|---|
+| 1 | **Auto gas for the first family member.** | R-10; F-1 is moot for the first member. R-8 (diesel sea-level boost) is not ruled and returns to Bill only if a diesel member is taken up. |
+| 2 | **200 hp is the first family member**, at **no more than $22k (200 hp) and $30k (300 hp)**, parts and services, first article. | R-35 (200/300 hp), F-2. 100 hp follows as a derivative; its $15k target was not on the card and stays proposed. |
+| 3 | **MCP held to 12,000 ft density altitude, takeoff power to 8,000 ft.** | R-7 |
+| 4 | **Two cylinder sizes are allowed** across the family. | F-3; R-1 reads as "common parts across the family, up to two cylinder modules". |
+
+Phase 1 ranks the auto-gas concepts in ARCHITECTURES.md and the drive options
+in DRIVE_AND_PROP.md against these rulings.
