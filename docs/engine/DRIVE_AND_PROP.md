@@ -1,6 +1,6 @@
 # Drive and propeller match, phase 0: the divergence pass
 
-Owner: PROPULSION. Issue: AER-3320 (ORG-009, 2026-10-16). Status: **divergence pass.** These options are **not ranked**; the order implies nothing, and ranking is phase 1. Nothing here has been built or tested.
+Owner: PROPULSION. Issue: AER-3320 (ORG-009, 2026-10-16). Status: **divergence pass.** These options are **not ranked here**; the order implies nothing. **Phase 1 (AER-3326) ranked them at concept H's rpm in [RANKING_PHASE1.md](RANKING_PHASE1.md) section 7**: direct drive with a cruise-set ground-adjustable propeller as the baseline, constant speed as the upgrade, every geared, CVT and two-speed option last. Nothing here has been built or tested.
 
 Bill's brief names the propeller as a constraint. A car can change gear; a fixed-pitch propeller cannot change pitch. So this pass evaluates a transmission (CVT or stepped) that lets a cheap fixed-pitch propeller work at higher airspeeds, and every alternative to it.
 

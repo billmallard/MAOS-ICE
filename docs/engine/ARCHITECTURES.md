@@ -2,7 +2,7 @@
 
 Owner: PROPULSION. Issue: AER-3320 (ORG-009, 2026-10-16). Status: **divergence pass.**
 
-**These concepts are not ranked.** The order is the order they were written, and implies nothing. Ranking is phase 1, after Bill answers the phase-0 card.
+**These concepts are not ranked here.** The order is the order they were written, and implies nothing. **Phase 1 (AER-3326) ranked the auto-gas concepts A, B, C, D and G for the 200 hp member in [RANKING_PHASE1.md](RANKING_PHASE1.md).** A ranks first of the five. The convergence pick is a phase-1 variant, **concept H**: A's flat, direct-drive layout with C's LS7-bore module, as a flat-6 at 3,300 rpm. The diesel concepts E and F stay on file, unranked.
 
 None of this has been built, run or tested. Every mass, cost and power below is a physics floor or an extrapolation from analog engines, labeled as such. Nothing here is certified, certifiable or flight-ready.
 
