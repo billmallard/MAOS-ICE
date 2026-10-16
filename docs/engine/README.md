@@ -1,0 +1,16 @@
+# Engine program documents (ORG-009)
+
+The open, liquid-cooled piston engine family: 100, 200 and 300 hp. It is experimental, untested, and not certified or certifiable.
+
+The older documents one level up (`docs/*.md`) are the hybrid and genset history. They were mined for vendor evidence, and they do not set direction.
+
+| Document | What it is | Owner |
+|---|---|---|
+| [REQUIREMENTS.md](REQUIREMENTS.md) | v0 requirements; every line tagged Bill's brief or proposed | PROPULSION |
+| [ARCHITECTURES.md](ARCHITECTURES.md) | seven engine concepts with physics floors, unranked (phase 0) | PROPULSION |
+| [DRIVE_AND_PROP.md](DRIVE_AND_PROP.md) | nine ways to match engine to propeller, unranked (phase 0) | PROPULSION |
+| [FAILURE_LEDGER.md](FAILURE_LEDGER.md) | single failures and what they leave, held for SAFETY | PROPULSION |
+| [MANUFACTURING_ENVELOPE.md](MANUFACTURING_ENVELOPE.md) | what can be cast, machined, cut or bought, at what price (v0, AER-3321) | MANUFACTURING (committed verbatim) |
+| [sources/](sources/) | vendor data, prices and masses, with read dates | PROPULSION |
+
+The numbers come from the scripts in [`analysis/engine_phase0/`](../../analysis/engine_phase0/). Rerun them rather than trusting the tables.
