@@ -5,8 +5,11 @@ clearance sweep in analysis/engine_crank/crank_decision.py also reads.
 Drawn: main journals, crankpins, webs (round-ended, 1.6 x pin wide),
 counterweight lobes on the outer webs, the propeller flange with its six
 bushing bores and pilot, the seal journal, the rear snout (cam-gear seat,
-reluctor seat, damper flange with its bolt holes and pilot), and one oil
-drilling from a main to each pin. Not drawn: fillets (called out on the
+reluctor seat and damper-hub seat, each keyed at P1's angle and stepping
+down toward the rear so its ring slides on from the rear, and the tapped
+centre-bolt hole that clamps the stack (Rev B, MANUFACTURING DFM B1), the
+front thrust collar ahead of M1 (Rev B, B2), and one oil drilling from a
+main to each pin. Not drawn: fillets (called out on the
 drawing), thrust faces' relief grooves, chamfers, the center holes.
 
 Nothing here has been made, measured or run. An experimental engine design.
@@ -128,7 +131,10 @@ def build():
     # front: seal journal and propeller flange with pilot
     xf_back = G["flange_back_x"]
     xf_front = xf_back - G["flange_t"]
-    parts.append(cyl(G["seal_d"] / 2, xf_back, jspan[0][0]))
+    xc = jspan[0][0] - G["thrust_collar_l"]
+    parts.append(cyl(G["seal_d"] / 2, xf_back, xc))
+    parts.append(cyl(G["thrust_collar_d"] / 2, xc, jspan[0][0]))
+    feats.append(("thrust collar", "T", f"x {xc:.1f}-{jspan[0][0]:.1f}", f"dia {G['thrust_collar_d']:.0f} [E; at least the King F5382 thrust-flange OD, Q]; its rear face is M1's front thrust face"))
     fl = cyl(G["flange_od"] / 2, xf_front, xf_back)
     for k in range(G["flange_bushings"]):
         c = radial(30 + 60 * k, G["flange_bc"] / 2)
@@ -136,29 +142,31 @@ def build():
     parts.append(fl)
     parts.append(cyl(G["pilot_d"] / 2, xf_front - G["pilot_l"], xf_front))
     feats.append(("propeller flange", "F", f"x {xf_front:.2f}-{xf_back:.2f}", f"OD {G['flange_od']:.0f}, {G['flange_t']} thick; 6 bushing bores {G['flange_bushing_bore']} on a {G['flange_bc']} circle (4.750 in); pilot dia {G['pilot_d']:.0f} x {G['pilot_l']:.0f} [Q]"))
-    feats.append(("seal journal", "S", f"x {xf_back:.1f}-{jspan[0][0]:.1f}", f"dia {G['seal_d']:.0f}"))
-    # rear snout
+    feats.append(("seal journal", "S", f"x {xf_back:.1f}-{xc:.1f}", f"dia {G['seal_d']:.0f}"))
+    # rear snout: steps down toward the rear; every ring slides on from the
+    # rear and one centre bolt clamps hub, reluctor and cam gear against the
+    # M4 shoulder. Each seat carries a key slot at P1's angle (clocking).
     x = jspan[3][1]
+    keyed = []
     for name, d, l in (("cam-gear seat", G["cam_gear_seat_d"], G["cam_gear_seat_l"]),
-                       ("reluctor seat", G["reluctor_seat_d"], G["reluctor_seat_l"])):
+                       ("reluctor seat", G["reluctor_seat_d"], G["reluctor_seat_l"]),
+                       ("damper-hub seat", G["hub_seat_d"], G["hub_seat_l"])):
         parts.append(cyl(d / 2, x, x + l))
-        feats.append((name, "", f"x {x:.1f}-{x+l:.1f}", f"dia {d:.0f}"))
+        keyed.append((d, x, l))
+        feats.append((name, "", f"x {x:.1f}-{x+l:.1f}", f"dia {d:.0f}, key slot {G['key_w']:.0f} wide x {G['key_depth']:.0f} deep at P1's angle"))
         x += l
-    df = cyl(G["damper_flange_od"] / 2, x, x + G["damper_flange_t"])
-    for k in range(G["damper_bolts"]):
-        c = radial(60 * k, G["damper_bc"] / 2)
-        df = df.cut(Part.makeCylinder(8.5 / 2, G["damper_flange_t"] + 2, V(x - 1, c.y, c.z), X_AX))
-    parts.append(df)
-    feats.append(("damper flange", "D", f"x {x:.1f}-{x+G['damper_flange_t']:.1f}", f"OD {G['damper_flange_od']:.0f}; 6 x M10 (8.5 drill) on {G['damper_bc']:.0f}"))
-    x += G["damper_flange_t"]
-    parts.append(cyl(G["damper_pilot_d"] / 2, x, x + G["damper_pilot_l"]))
-    feats.append(("damper pilot", "", f"x {x:.1f}-{x+G['damper_pilot_l']:.1f}", f"dia {G['damper_pilot_d']:.0f}"))
-    x_end = x + G["damper_pilot_l"]
+    x_end = x
 
     shape = parts[0]
     for p in parts[1:]:
         shape = shape.fuse(p)
     shape = shape.removeSplitter()
+    for d, x0, l in keyed:
+        slot = Part.makeBox(l + 0.02, G["key_w"], G["key_depth"] + 1, V(x0 - 0.01, -G["key_w"] / 2, d / 2 - G["key_depth"]))
+        shape = shape.cut(slot)
+    tap = Part.makeCylinder(G["center_bolt_tap_d"] / 2, G["center_bolt_depth"], V(x_end - G["center_bolt_depth"], 0, 0), X_AX)
+    shape = shape.cut(tap)
+    feats.append(("centre bolt", "", f"x {x_end - G['center_bolt_depth']:.1f}-{x_end:.1f}", f"M16 x 1.5 tapped ({G['center_bolt_tap_d']} drill) x {G['center_bolt_depth']:.0f} deep; clamps hub, reluctor and cam gear"))
 
     # oil drillings: each pin from its nearer main, entering the main
     # journal 90 deg behind the pin and leaving the pin 60 deg ahead of
@@ -186,7 +194,7 @@ assert len(shape.Solids) == 1, f"H-301 is {len(shape.Solids)} solids"
 doc = App.newDocument("H301")
 o = doc.addObject("Part::Feature", "H301")
 o.Shape = shape
-o.Label = "H-301 crankshaft, 4340 VAR (AMS 6414), gas nitrided"
+o.Label = "H-301 Rev B crankshaft, 4340 VAR (AMS 6414), nitrided"
 Import.export([o], os.path.join(OUT, "H-301.step"))
 mesh_ok = True
 try:

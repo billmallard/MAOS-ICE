@@ -57,7 +57,7 @@ Forced response: RSS over orders 1.5, 3, 4.5, 6, 7.5, 9 of the nominal vibratory
 | Option | 1,200 | 1,600 | 2,000 | 2,300 | 2,600 | 2,900 | 3,100 | 3,300 | 3,465 | worst, 1,000-3,465 rpm |
 |---|---|---|---|---|---|---|---|---|---|---|
 | no damper | 4.4 | 4.2 | 4.8 | 7.5 | 24.2 | 7.5 | 7.4 | 10.3 | 11.1 | **33.2 at 2,550** |
-| viscous damper on the rear snout (ring 0.035 kg m^2 [A], c 20 N m s/rad, swept) | 4.4 | 4.0 | 4.7 | 5.9 | 6.2 | 6.3 | 6.7 | 7.3 | 7.2 | **7.3 at 3,300** |
+| viscous damper on the rear snout (ring 0.015 kg m^2 [A], c 20 N m s/rad, swept) | 4.4 | 4.1 | 5.0 | 7.1 | 6.5 | 6.4 | 7.0 | 7.6 | 7.5 | **7.6 at 3,300** |
 | two 6th-order pendulums on bay 3 (rear) [A] | 5.2 | 4.1 | 4.1 | 4.6 | 5.0 | 6.5 | 12.6 | 7.9 | 7.4 | **13.2 at 1,325** |
 | two 6th-order pendulums on bay 1 (propeller end) | 4.4 | 4.3 | 6.4 | 26.2 | 7.0 | 6.4 | 7.1 | 11.3 | 9.8 | **32.0 at 2,275** |
 
@@ -65,12 +65,12 @@ Sensitivity of the worst case (MPa at rpm), no damper against the viscous damper
 
 | Case | Mode 1 (Hz) | No damper | Viscous damper |
 |---|---|---|---|
-| baseline | 255 | 33.2 at 2,550 | 7.3 at 3,300 |
-| crank stiffness x0.8 | 233 | 28.1 at 2,325 | 7.7 at 3,450 |
-| crank stiffness x1.2 | 274 | 37.7 at 2,750 | 7.3 at 3,300 |
-| loss factor 0.02 | 255 | 65.7 at 2,550 | 7.4 at 3,300 |
-| propeller 0.6 kg m^2 | 260 | 32.0 at 2,600 | 7.0 at 3,300 |
-| propeller 2.5 kg m^2 | 250 | 34.3 at 2,500 | 7.6 at 3,300 |
+| baseline | 255 | 33.2 at 2,550 | 7.6 at 3,300 |
+| crank stiffness x0.8 | 233 | 28.1 at 2,325 | 8.4 at 3,450 |
+| crank stiffness x1.2 | 274 | 37.7 at 2,750 | 8.4 at 2,575 |
+| loss factor 0.02 | 255 | 65.7 at 2,550 | 7.9 at 2,375 |
+| propeller 0.6 kg m^2 | 260 | 32.0 at 2,600 | 7.3 at 3,300 |
+| propeller 2.5 kg m^2 | 250 | 34.3 at 2,500 | 8.0 at 3,300 |
 
 Pendulum check: tuned to order 6.1, pivot radius 73.0 mm, effective length **2.0 mm** (Continental IO-520: 6th-order pin 0.5549-0.5574 in in a 0.622-0.626 in bushing bore, which gives a length of about 1.7-1.8 mm [S]). Swing at the 6th-order crossing (2,549 rpm): 6.4 deg.
 
@@ -81,7 +81,7 @@ Pendulum check: tuned to order 6.1, pivot radius 73.0 mm, effective length **2.0
 | Catalog inline-6 billet (2JZ / RB26) | $4.0k-4.9k [S] | cannot fire a flat six evenly (section 1), wrong stroke and throw spacing: a different engine (an inline-6 block and one long head), not an adaptation | stock to weeks | **does not fit H** |
 | One-off billet to H-301, crank specialist | $6.6k-9.4k incl. balance [E, envelope 9.4] | H-101/H-102/H-201 at the 122 mm pitch (section 3), and a deck rise for a longer rod or relieved liner bottoms (section 6) | 18-20 weeks [S, reseller] | **recommended** |
 | One-off to H-301, general turn-mill shop (route 5) | $7k-19k, central $10-12k [E, AER-3412] | as above; the builder owns the crank process (nitride, grind, straightening) | 6-12 weeks [E] | lead-time alternate, same drawing |
-| Continental O-470 / IO-520, used and overhauled | $8.5k tagged lead [S, snippet]; $11.9k new [S]; MANUFACTURING's $2k-7k band is not supported | case redrawn to Continental's main spacing (not found); 2.250 in pins, so no LS rods; damper pins at 3,300 rpm carry 1.34x the centrifugal load of 2,850 | stock, used market | fallback and TV reference; not cheaper |
+| Continental O-470 / IO-520, VAR, used | $8.2k-10.5k ready to install [S]; $1.5k-3k as a core plus overhaul [E, AER-3443], if the core passes; $11.9k new [S] | case redrawn to Continental's main spacing (not found); 2.250 in pins, so no LS rods; damper pins at 3,300 rpm carry 1.34x the centrifugal load of 2,850 | stock, used market | cheaper only as core + overhaul; open until a core is measured |
 | Subaru EZ36 OE, geared (H-EZ36) | $0.9k-1.2k on the line [S + E] | a gearbox $2.9k-9.8k [E], a 92 mm cylinder module, 7 mains | days | Bill's open card on AER-3411; not H as drawn |
 
 ## 6. Web, counterweight and opposed-rod envelope against the liner and the pistons (rfq item 4)
