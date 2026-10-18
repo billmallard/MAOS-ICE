@@ -64,7 +64,13 @@ PISTONS = [
 ]
 PIN_LEN = 2.250 * IN                  # JE / CP LS7 wrist pin length [S]
 DECK_CLEAR = 0.5                      # piston crown below the deck at TDC [E]; the gasket sets squish
-SLEEVE = 147.3                        # Darton MID LS sleeve length [S, rfq-package-v1]
+SLEEVE = 147.3                        # Darton MID LS sleeve length [S, rfq-package-v1]; fitted uncut
+# The case carries a cast lower barrel round each liner's bottom, so the
+# Darton O-rings (at the very bottom of the sleeve [S, MANUFACTURING on
+# AER-3444]) seal in metal. Barrel: the 116 mm lower register plus a 6 mm
+# wall [E], its bottom in the liner-bottom plane. The crank is checked against
+# that whole annulus, liner and barrel together.
+BARREL_OD = 116.0 + 2 * 6.0
 
 # Big-end swing radius about the pin centre. Published: housing bore
 # 2.225 in for the 2.100 in journal [S, K1], 7/16 in cap screws [S, Callies,
@@ -184,7 +190,7 @@ def run_case(rod_in, bigend_r, ch_in=1.105, step=2):
     deck = deck_for(rod_in, ch_in)
     box = bigend_r == "box"
     g = dict(G, rod_length=rod_in * IN, bigend_r=42.0 if box else bigend_r, bigend_box=CAP_BOX if box else None,
-             liner_bottom_from_axis=deck - SLEEVE)
+             liner_bottom_from_axis=deck - SLEEVE, liner_wall_od_bottom=BARREL_OD)
     reach, who, liner, liner_who, pin_bdc = reach_map(g, step)
     z = zones(g)
     out = dict(rod=rod_in, bigend=bigend_r, deck=deck, pin_bdc=pin_bdc,
@@ -223,7 +229,7 @@ def main():
           f"{PIN_LEN/2+2.5:.1f} mm (pin length 2.250 in [S] plus a 2.5 mm lip [E]) and |y| <= {G['boss_half_w']} mm; "
           f"**skirt panels**, thrust sides beyond |y| {G['panel_y']} mm within +/-{G['panel_half_chord']} mm of x; **rest**, "
           "everything else inside the bore. Deck and liner use the CH 1.105 in piston. "
-          "**Liner need** is the lowest the liner bottom may sit (from the crank axis) for 3 mm.\n")
+          "**Liner need** is the lowest the liner and case-barrel bottom may sit (from the crank axis) for 3 mm, checked over the barrel's 128 mm annulus.\n")
     print("| Rod (in) | Big end R (mm) | Deck (mm) | Pin at BDC from axis (mm) | Bosses: max depth (mm) | Panels | Rest | Liner need (mm) | Uncut liner bottom (mm) |")
     print("|---|---|---|---|---|---|---|---|---|")
     cases = {}
@@ -241,7 +247,8 @@ def main():
     return cases
 
 
-PICK = dict(rod_in=6.560, ch_in=1.105, liner_bottom=100.0, boss_below_pin=18.0, skirt_below_pin=26.0)
+PICK = dict(rod_in=6.560, ch_in=1.105, boss_below_pin=18.0, skirt_below_pin=26.0)
+PICK["liner_bottom"] = round(deck_for(PICK["rod_in"], PICK["ch_in"]) - SLEEVE, 1)   # uncut sleeve
 
 
 def boss_owner(c):
@@ -267,16 +274,16 @@ def pick_section(cases):
     cb = run_case(p["rod_in"], "box", p["ch_in"], step=2)
     rp = ringpack_above_pin(p["ch_in"])
     liner_max = c["pin_bdc"] + rp - CLEAR
-    print(f"## 4. The pick: {p['rod_in']:.3f} in rod, CH {p['ch_in']:.3f} in piston, liner bottom {p['liner_bottom']:.0f} mm\n")
+    print(f"## 4. The pick: {p['rod_in']:.3f} in rod, CH {p['ch_in']:.3f} in piston, uncut liner, bottom {p['liner_bottom']:.1f} mm\n")
     print(f"Deck **{c['deck']:.1f} mm** from the crank axis (LS7 stack 235.0; **+{c['deck']-235:.1f} per side**). "
-          f"Gudgeon pin at BDC {c['pin_bdc']:.1f} mm from the axis. Liner {c['deck'] - p['liner_bottom']:.1f} mm long "
-          f"(Darton MID {SLEEVE} [S]: **cut {SLEEVE - (c['deck'] - p['liner_bottom']):.1f} mm off the bottom**).\n")
+          f"Gudgeon pin at BDC {c['pin_bdc']:.1f} mm from the axis. Darton MID {SLEEVE} mm [S], **fitted uncut**; its bottom and the "
+          f"case's lower barrel ({BARREL_OD:.0f} mm OD [E]) end {p['liner_bottom']:.1f} mm from the axis.\n")
     print("| Check | Big end R42 [E] | Big end box [E, bound] | Requirement it sets |")
     print("|---|---|---|---|")
     print(f"| Bosses: deepest material below the pin for 3 mm | {c['boss']:.1f} | {cb['boss']:.1f} | catalog boss bottom <= {min(c['boss'], cb['boss']):.1f} mm below the pin [Q] |")
     print(f"| Skirt panels: deepest below the pin for 3 mm | {c['panel']:.1f} | {cb['panel']:.1f} | skirt panel bottom <= {min(c['panel'], cb['panel']):.1f} mm below the pin where the crank passes [Q] |")
     print(f"| Rest of the bore below the pin | {c['rest']:.1f} | {cb['rest']:.1f} | no material below the ring belt outside bosses and panels |")
-    print(f"| Liner bottom, lowest allowed from the axis | {c['liner_need']:.1f} | {cb['liner_need']:.1f} | set at {p['liner_bottom']:.0f} |")
+    print(f"| Liner and barrel bottom, lowest allowed from the axis | {c['liner_need']:.1f} | {cb['liner_need']:.1f} | uncut sleeve puts it at {p['liner_bottom']:.1f} |")
     print(f"| Liner bottom, highest allowed (oil ring covered at BDC by 3 mm) | {liner_max:.1f} | {liner_max:.1f} | ring-pack bottom {rp:.1f} mm above the pin [E] |")
     sk = c["pin_bdc"] - 30.0
     print(f"| Skirt out of the liner at BDC (30 mm skirt) | {p['liner_bottom'] - sk:.1f} | | LS7 in its own block: {87.7 - (154.1 - R - 30):.1f} |")
@@ -300,11 +307,11 @@ def rerun_section6():
     cap box for the big end, the liner bottom at the pick."""
     p = PICK
     deck = deck_for(p["rod_in"], p["ch_in"])
-    g = dict(G, rod_length=p["rod_in"] * IN, liner_bottom_from_axis=p["liner_bottom"],
+    g = dict(G, rod_length=p["rod_in"] * IN, liner_bottom_from_axis=p["liner_bottom"], liner_wall_od_bottom=BARREL_OD,
              boss_below_pin=p["boss_below_pin"], skirt_below_pin=p["skirt_below_pin"],
              boss_half_len=PIN_LEN / 2 + 2.5)
     print("## 5. crank_decision.py section 6, rerun on the picked stack\n")
-    print(f"`crank_decision.clearance()`, relieved model, every 2 deg: rod {p['rod_in']} in, liner bottom {p['liner_bottom']:.0f} mm, "
+    print(f"`crank_decision.clearance()`, relieved model, every 2 deg: rod {p['rod_in']} in, uncut liner and the case barrel ending {p['liner_bottom']:.1f} mm from the axis, {BARREL_OD:.0f} mm OD, "
           f"bosses {p['boss_below_pin']:.0f} mm below the pin over |x| <= {PIN_LEN/2+2.5:.1f}, skirt panels {p['skirt_below_pin']:.0f} mm "
           "below the pin. Negative = interference.\n")
     rows = {}

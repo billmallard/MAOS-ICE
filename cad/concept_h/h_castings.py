@@ -57,7 +57,8 @@ LIFTER = 21.4            # LS lifter 0.842 in
 GALLERY = 14.0           # ruling 6: 14 mm main gallery, 20 x D from each end
 GAL_Y, GAL_Z = -105.0, 100.0
 REG_LOWER = 116.0        # liner lower (O-ring) register [Q: Darton MID prep drawing]
-REG_LOWER_Z = 100.0      # register starts here; the liner bottom sits at LINER_BOTTOM
+BARREL_OD = REG_LOWER + 2 * 6.0   # cast lower barrel round each liner bottom, 6 mm wall [E]
+REG_LOWER_Z = LINER_BOTTOM        # the O-ring register runs to the sleeve's bottom, where Darton's O-rings sit
 JACKET = 127.0           # open-deck jacket around the liner
 REG_UPPER = 131.4        # liner flange seat; stepped: upper >= jacket >= lower (ruling 5)
 FLANGE_SEAT = 13.0       # depth of the flange seat below the deck [Q]
@@ -143,6 +144,8 @@ def case_half(side):
         add.append(cyl(12, V(x, y, 0), V(x, y, 30)))
     bx0, bx1 = cs[0] - 72, cs[-1] + 72
     add.append(box(bx0, bx1, -72, 72, 127, DECK))
+    for c in cs:   # lower barrels: the liner's O-ring end seals in metal, not in the open crank bay
+        add.append(cyl(BARREL_OD / 2, V(c, 0, LINER_BOTTOM), V(c, 0, 127.5)))
     add.append(cyl(18, V(bx0 - 12, 0, 185), V(bx0 + 5, 0, 185)))
     pads = [((30, 120, 135), (0, 0, 1)), ((CASE_L - 40, 120, 135), (0, 0, 1)), ((CASE_L - 100, -160, 135), (0, 0, 1)),
             ((60, 150, 60), (0, 1, 0)), ((CASE_L - 60, 150, 60), (0, 1, 0)),
@@ -170,7 +173,7 @@ def case_half(side):
         for y in (MAIN_STUD_Y, -MAIN_STUD_Y):
             cuts.append(cyl(MAIN_STUD / 2, V(xm, y, -0.1), V(xm, y, 135.1)))
     for c in cs:
-        cuts.append(cyl(REG_LOWER / 2, V(c, 0, REG_LOWER_Z), V(c, 0, 150)))
+        cuts.append(cyl(REG_LOWER / 2, V(c, 0, REG_LOWER_Z - 0.1), V(c, 0, 150)))
         cuts.append(cyl(JACKET / 2, V(c, 0, 150), V(c, 0, DECK - FLANGE_SEAT)))
         cuts.append(cyl(REG_UPPER / 2, V(c, 0, DECK - FLANGE_SEAT), V(c, 0, DECK + 0.1)))
     studs = sorted({round(c + d, 1) for c in cs for d in (-P / 2, P / 2)})
@@ -192,7 +195,7 @@ def case_half(side):
         ("cam bore", f"{CAM_BORE} mm (bushed), y = {CAM_Y}, z = 0, in the split plane", "bushing press fit [Q]"),
         ("lifter bores", f"6 x {LIFTER} mm along z at y = {CAM_Y}, x = {[round(x, 1) for x in lobes()[side]]}", "LS lifter fit"),
         ("liner registers", f"3 cylinders at x = {[round(c, 1) for c in cs]}; lower register {REG_LOWER} mm (O-rings) from z = {zs * REG_LOWER_Z:.0f}, jacket {JACKET} mm, flange seat {REG_UPPER} mm x {FLANGE_SEAT} deep; all bored from the deck in setup B, stepped lower <= upper", "per Darton MID prep drawing [Q]"),
-        ("liner", f"Darton MID {BORE} mm, {DECK - LINER_BOTTOM:.1f} mm long (147.3 cut {147.3 - (DECK - LINER_BOTTOM):.1f} at the bottom), bottom at z = {zs * LINER_BOTTOM:.0f}: 5.9 mm or more from the crank's web ends and the opposed big ends (stack_h.py section 5)", "bought; length [Q] with Darton"),
+        ("liner", f"Darton MID {BORE} mm, {DECK - LINER_BOTTOM:.1f} mm long, fitted uncut, bottom at z = {zs * LINER_BOTTOM:.1f}; its O-ring end seals in a cast lower barrel, {BARREL_OD:.0f} mm OD, from z = {zs * LINER_BOTTOM:.1f} to the case wall. Liner and barrel clear the crank by 4.6 mm or more (stack_h.py section 5)", "bought; O-ring land and axial location [Q] with Darton"),
         ("deck", f"z = {zs * DECK:.0f}, open deck; head studs M11 x 8 at x = {studs}, y = +/-{STUD_Y}; ring-dowel counterbores 16 mm at {[(round(x, 1), y) for x, y in ring]}", "flat 0.05 [E]"),
         ("main gallery", f"{GALLERY} mm, drilled {CASE_L / 2:.0f} mm from each end at y = {GAL_Y}, z = {zs * GAL_Z:.0f}; threaded plugs, sealant, staked", "ruling 6"),
         ("main studs", f"8 x {MAIN_STUD} mm through holes at each main, y = +/-{MAIN_STUD_Y}", ""),
