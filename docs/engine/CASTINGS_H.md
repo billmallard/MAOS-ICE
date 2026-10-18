@@ -1,6 +1,7 @@
 # Concept H castings: rulings on the DFM objections, the liner, the coarse STEP, and the cost floor on both bases
 
 Owner: PROPULSION. Issue: AER-3331 (parent AER-3330; follows AER-3329 and MANUFACTURING envelope v1, AER-3328). Date: 2026-10-16.
+**Revision A, 2026-10-18 (AER-3442): the castings now take crank H-301's 122.0 mm bank pitch and a 246.0 mm deck set by a longer rod. See section 9; sections 2-8 keep their AER-3331 numbers except where marked.**
 Status: **design rulings and coarse geometry. Nothing here has been made, measured or run.** This is an experimental engine design. Nothing in it is certified, certifiable or flight-ready.
 
 Numbers come from `analysis/engine_phase1/castings_h.py` (tables in `castings_h_tables.md`) and from the models in `cad/concept_h/` (`PART_LIST.md`). Cost lines are MANUFACTURING's bottom-up estimates [E] on sourced rates, as in RECOST_PHASE1B.md. None is a quote.
@@ -9,7 +10,7 @@ Numbers come from `analysis/engine_phase1/castings_h.py` (tables in `castings_h_
 
 1. **Six castings become four, on three part numbers.** Each cylinder bank is cast into its crankcase half, and one head part number serves both banks. Five of MANUFACTURING's seven objections are accepted as written. Item 4 (the 4-axis head) is accepted with one constraint dropped. Item 3 is accepted for the heads and is moot for the blocks, because item 1 deletes the blocks.
 2. **The Darton MID wet liner stays.** Against a dry sleeve in a closed deck it costs **2.9-4.1 kg per engine**, not the 15-18 kg of iron it weighs. The open deck is what makes the merged case castable and the liner a builder-replaceable part.
-3. **The coarse STEP of each surviving casting is drawn and committed** (`cad/concept_h/`, PROPULSION drew it). Datums, critical bores and alloys are shown. The three parts assemble with zero overlap.
+3. **The coarse STEP of each surviving casting is drawn and committed** (`cad/concept_h/`, PROPULSION drew it). Datums, critical bores and alloys are shown. The three parts assemble with zero overlap. *Rev A:* redrawn at H-301's pitch and the new deck, and H-301 turns inside the case halves with zero overlap (section 9).
 4. **The 200 hp cost floor, after the rulings, on both bases:**
 
 | Basis | Low / mid / high | Against $22k |
@@ -61,9 +62,9 @@ Against MANUFACTURING's six-casting line items, the rulings take **$3.8k-13.2k o
 
 | Part number | Casting | Qty / engine | Alloy | Model box (mm) | Model mass |
 |---|---|---|---|---|---|
-| H-101 | crankcase half LH, bank merged | 1 | A357-T6 | 563 x 331 x 235 | 20.9 kg |
-| H-102 | crankcase half RH, bank merged | 1 | A357-T6 | 563 x 331 x 235 | 21.0 kg |
-| H-201 | cylinder head, both banks | 2 | A356-T6 | 384 x 190 x 113 | 7.1 kg |
+| H-101 | crankcase half LH, bank merged | 1 | A357-T6 | 563 x 331 x 235 (**Rev A: 593.6 x 331 x 246**) | 20.9 kg (**22.4**) |
+| H-102 | crankcase half RH, bank merged | 1 | A357-T6 | 563 x 331 x 235 (**593.6 x 331 x 246**) | 21.0 kg (**22.5**) |
+| H-201 | cylinder head, both banks | 2 | A356-T6 | 384 x 190 x 113 (**404.4 x 190 x 113**) | 7.1 kg (**7.5**) |
 
 - **What is on the models:** datums A/B/C (split face and two reamed dowels on the case; deck and two ring dowels on the head), the as-cast 3-2-1 locating pads for the first setup, and every critical bore with its location: mains, cam, lifters, liner registers, head and main studs, main gallery, seat-insert and guide bores, both plug sets, injectors, ports and coolant bosses. The full list is `cad/concept_h/PART_LIST.md`.
 - **What is not:** the case perimeter flange and its bolts, ribs, oil cross-drillings, fillets, draft, the real chamber and port shapes, and the coolant transfer passages, which wait on the MID flange drawing [Q].
@@ -114,7 +115,79 @@ Added to `FAILURE_LEDGER.md`: **FL-38**, coolant into the oil through the merged
 
 - **No quotes.** Every cost line is still [E]. The STEP files are what an RFQ needs (envelope 9.6). Who sends it is the AER-3330 question.
 - **No Darton MID preparation drawing.** Register diameters, the flange seat and the coolant transfer passages are placeholders until Darton's drawing is in hand [Q]. The MID sleeve length is also unpublished. The 180 mm length, and the skirt's clearance to the crank counterweights, are open until the crank is drawn.
-- **No crank drawing.** The 38.6 mm bank offset and the 14.6 mm webs come from a catalog-class rod (LS, 0.940 in big end) and 20 mm main bearings [E]. The crank drawing could move the cylinder positions by a few millimetres.
+- **No crank drawing.** The 38.6 mm bank offset and the 14.6 mm webs come from a catalog-class rod (LS, 0.940 in big end) and 20 mm main bearings [E]. The crank drawing could move the cylinder positions by a few millimetres. *Closed by Rev A: H-301 is drawn (AER-3439) and the castings follow it (section 9).*
 - **No FEA.** The merged case's bulkheads and bank are drawn to casting-rule walls, not to stress. The first structural check is the main bulkhead under firing load plus propeller gyroscopic moment, on the doweled pair.
 - **Scrap rate** is assumed (5-20 % per pour). No bureau publishes a one-off rate.
 - **The mass credit for the merge** (the two flange pairs and studs it deletes, about 2-3 kg [E]) is not taken in H's 148-158 kg. It is smaller than the band.
+
+## 9. Revision A: H-301's pitch, and a deck set by the rod and piston (AER-3442)
+
+Crank H-301 Rev A (`CRANK_H301.md`, AER-3439) moved the main spacing from 111.8 to 122.0 mm for web margin. Its clearance sweep also found that the LS7 stack (6.067 in rod, 235 mm deck, Darton 147.3 mm sleeve) does not clear the staggered opposed crank at BDC. This revision picks the rod, piston, liner and deck, and redraws H-101, H-102 and H-201 to match. Numbers come from [`analysis/engine_crank/stack_h.py`](../../analysis/engine_crank/stack_h.py) (tables in `stack_h_tables.md`), sources from [`sources/STACK_SOURCES_2026-10-18.md`](sources/STACK_SOURCES_2026-10-18.md).
+
+### 9.1 The answer
+
+1. **Rod: Callies Compstar CSC6560DS2A2AH, 6.560 in, on the 2.100 in journal** [S, Callies 2022 catalog p. 18; 0.927 in pin read from the part-number code, E]. **Piston: MAHLE 930221625, 4.125 in, CH 1.105 in, 438 g** [S], with its skirt panels relieved to 26 mm below the pin where the crank passes. **Deck 246.0 mm** from the crank axis (+11.0 mm per side). **Liner: Darton MID cut to 146.0 mm** (1.3 mm off the bottom), so its bottom sits 100 mm from the axis.
+2. **On that stack, `crank_decision.py` section 6 gives a smallest gap of 4.5 mm** (middle web to the pin boss), with the big ends modelled as a bounding cap box. The rest are 5.0 mm or more. The liner bottom clears by 5.9 mm or more.
+3. **The castings and H-301 now share one pitch and one deck by construction.** `h_castings.py` reads the pitch, the main positions and the pin offsets (40.35 / 81.75 mm from each bay's front main) from `h301_params.json`, the file H-301's STEP is built from. It reads the deck and liner from `h_stack.json`, which `stack_h.py` writes. H-301 turned through 360 degrees inside H-101 and H-102 overlaps them by 0 mm^3 at every 15 degrees. The same check finds up to 189,000 mm^3 against the AER-3331 castings.
+4. **What is not proven: no catalog drawing of the rod's big end or the piston's skirt exists in public.** Every vendor publishes only fit dimensions (section 9.2). So the 3 mm is shown against a keep-out spec and a bounding outline, not against a vendor drawing. The issue's done-when asks for vendor drawings, and **that part stays open** (section 9.6).
+
+### 9.2 What the catalogs give, and what they do not
+
+Vendors publish rod length, journal, pin, big-end width (0.940 in) and cap-screw size (7/16 in), and the piston's compression height, pin size and pin length (2.250 in). **No vendor found publishes a big-end outline, a cap-screw spacing, a skirt length or a boss depth** (Callies, K1, Manley, Molnar, MAHLE, JE, Wiseco, Diamond, CP; read 2026-10-18). So the check was turned round. `stack_h.py` sweeps H-301 through 720 degrees and maps, in each piston's own frame, how high the crank reaches toward the gudgeon pin. That map is a **keep-out spec**. A piston whose material stays out of it, by drawing or by measurement, clears by 3 mm.
+
+![Piston keep-out for the 6.560 in rod: the deepest piston material allowed below the pin centre, worst of the six cylinders, with the pin-boss and skirt-panel zones outlined](../../analysis/engine_crank/stack_h_keepout.png)
+
+*Deepest piston material allowed below the gudgeon-pin centre for 3 mm, worst of six cylinders over 720 degrees, big ends as the bounding cap box. Darker means the crank comes closer. Dashed: the pin-boss zone. Solid: the skirt panels. The light centre strip is the piston's own rod slot, which is not checked against its own rod.*
+
+The big end is run three ways, because its outline is the main unknown: a 42 mm circle about the pin [E], a 46 mm circle [A], and a **bounding cap box** of 81.8 x 68 mm [E]. The box is the 2.225 in housing bore [S, K1], a 5.7 mm cap wall, and 7/16 in 12-point cap-screw heads at the corners, 53 mm from the pin.
+
+### 9.3 Why the rod has to be long: the middle web, not the big end
+
+| Rod (in) | Deck (mm) | Pin-boss depth allowed for 3 mm (mm) | Over an 18 mm boss [E] | Set by |
+|---|---|---|---|---|
+| 6.067 (LS7) | 233.5 | 7.0 | -11.0 | middle web |
+| 6.350 | 240.7 | 14.2 | -3.8 | middle web |
+| 6.460 | 243.5 | 17.0 | -1.0 | middle web |
+| **6.560** | **246.0** | **19.5** | **+1.5** | middle web |
+
+The decks in this table use the CH 1.105 in piston. At BDC the opposed pin in the same bay points at this piston, and **H-301's middle web, 42.5 mm in radius about that pin, comes within 93.3 mm of the axis**. A real 0.927 in pin boss reaches about 17-18 mm below the pin centre [E: an 11.8 mm pin radius plus a boss wall]. So the rod must put the BDC pin at least about 114 mm from the axis. Neither the big-end model nor skirt relief changes this, because a boss cannot be relieved. **6.560 in is the shortest catalog rod with margin over an 18 mm boss.** 6.460 in (Callies U16301) would need a boss no deeper than 17.0 mm, and no published number says one is. The other way to buy those millimetres is a narrower middle web on H-301 (each 1 mm off its end radius is 1 mm of clearance). That is a Rev B crank change, so it is not taken here.
+
+### 9.4 The stack
+
+| Item | Pick | Basis |
+|---|---|---|
+| Rod | Callies Compstar CSC6560DS2A2AH, 6.560 in (166.6 mm), 2.100 in journal, 0.927 in pin, 655 g, rated 1,000 hp | [S]; pin [E, from the code]; one rod per pin, 0.940 in big end as H-301 is drawn |
+| Piston | MAHLE 930221625, 4.125 in, CH 1.105 in (28.1 mm), 0.927 in pin, 4032, 438 g | [S]. The CH sets the deck and is not what clears the crank: the BDC pin height is rod minus half-stroke whatever the CH |
+| Piston relief | pin bosses no deeper than **19.5 mm** below the pin centre; skirt panels no deeper than **26.7 mm** where the crank passes (|x| <= 30, |y| >= 38 mm); nothing below the ring belt elsewhere | keep-out map; [Q] against MAHLE's drawing. If the catalog panels run 30 mm, that is up to 3.3 mm off the panel bottom, a lathe or mill cut of the kind Continental makes on its pistons ("cylindrical relief cuts ... to clear the crankshaft counterweights" [S, IO-520 manual]) |
+| Deck | **246.0 mm** from the crank axis = 50.8 + 166.6 + 28.1 + 0.5 mm crown below the deck | stack_h.py; compression ratio unchanged, because the crown-to-deck gap is held |
+| Liner | Darton MID, **146.0 mm** long (147.3 cut 1.3 mm at the bottom), bottom 100 mm from the axis | the crank needs 97.1 mm or more; the oil ring stays covered at BDC with the bottom up to 124.3 mm. 14.2 mm of a 30 mm skirt leaves the liner at BDC, against 14.4 mm for an LS7 in its own block |
+| Bank pitch and pins | 122.0 mm; LH pins 40.35 mm and RH pins 81.75 mm behind each bay's front main (bank offset 41.4 mm) | read from h301_params.json |
+
+**Knock-on checks.** The rod-and-piston mass matches what the torsion and balance work assumed: about 0.84 kg reciprocating and 0.44 kg rotating per cylinder [E, a third / two thirds split of the rod], against crank_decision.py's 0.90 and 0.45 [A]. So H-301's torsion case (section 4 of CRANK_H301) stands. The rod ratio rises from 3.0 to 3.28, which lowers the side thrust.
+
+### 9.5 The castings at Rev A
+
+| | AER-3331 | Rev A | Change |
+|---|---|---|---|
+| Main housings, x (mm) | 60.0 / 171.8 / 283.6 / 395.4 | **60.0 / 182.0 / 304.0 / 426.0** | H-301 |
+| Bores LH / RH, x (mm) | 96.6 / 208.4 / 320.2 and 135.2 / 247.0 / 358.8 | **100.3 / 222.3 / 344.4 and 141.8 / 263.8 / 385.8** | H-301's pins |
+| Deck from split plane | 235 | **246** | +11 per side |
+| Case half box (mm), model mass | 563 x 331 x 235, 20.9-21.0 kg | **593.6 x 331 x 246, 22.4-22.5 kg** | +1.5 kg each |
+| Head box (mm), model mass | 384 x 190 x 113, 7.1 kg | **404.4 x 190 x 113, 7.5 kg** | +0.4 kg each |
+| Set across both heads | 563 x 331 x 696 | **593.6 x 331 x 718** | +22 mm wide |
+| Casting metal per engine (model, upper bound) | 56 kg | **59.9 kg** | still inside MANUFACTURING's 50-64 kg |
+| Main gallery | 14 mm, 280 mm from each end (20 x D) | 14 mm, **295 mm from each end (21 x D)** | inside DR-6's 25 x D |
+| HMC swing for the doweled pair (part diagonal + 100 mm) | 833 mm | **about 871 mm** | still inside about 1,000 mm (ruling 2) |
+
+Drawn checks: each STEP reads back as one valid solid. Case/case and head/deck overlaps are 0 mm^3. H-301 turned through 360 degrees in the case overlaps it by 0 mm^3 at every 15 degrees (`cad/concept_h/crank_in_case.json`). That last check is static: it tests the crank against the case only, not the rods and pistons, which section 9.4 covers. The cam-lobe and lifter positions keep their AER-3331 layout about each bay's centre, about 6-14 mm from the valves along the row, as before. The rulings in section 2 and the drawing rules in section 5 are unchanged. **The cost floor in section 6 is not rerun.** About 7 % more casting metal and an 11 mm taller bank move the castings and first-op lines by less than their bands' width [E].
+
+**Found by drawing it, not fixed here:** the liner flange seats (131.4 mm) are wider than the 122 mm bore pitch, so neighbouring seats intersect by 9.4 mm (by 19.6 mm at 111.8). That was true in AER-3331 too. Whether Darton's MID flanges are flatted to sit at a 4.400 in pitch, and so at 122 mm, is on its preparation drawing [Q], with the register diameters already waiting on it.
+
+### 9.6 What is open, and what would close it
+
+- **The vendor drawings.** MAHLE's piston drawing for 930221625 (skirt panel depth and chord, boss depth) and Callies' drawing for the CSC6560 big end (cap-screw spacing, head clearance radius) close the done-when. Faster and cheaper: **buy one rod and one piston and measure them** (about $166 for a piston [S, Wiseco price class] plus one rod [Q]), then rerun `stack_h.py`. Either is an outbound request, so it waits on who sends RFQs (AER-3330/AER-3333).
+- **The residual if the cap is unusual.** A big end that reaches 46 mm below the pin on its centreline (the 46 mm circle) leaves 1.0 mm to the piston. The bounding box puts the cap centre at 34 mm. A rod whose cap is deeper than that fails, and the drawing or a measurement decides it.
+- **Darton's MID drawing** for the cut length (1.3 mm off the bottom must not reach the lower O-ring land) and the flange seat [Q].
+- **An assembly check, before anything turns under power:** turn every engine over by hand with clay on the piston skirts and the liner bottoms, then measure the clay. On a stack this tight, a wrong part locks the engine on its first turn.
+- **Recommend; Bill declares any freeze.** Nothing here has been made, measured or run.
+

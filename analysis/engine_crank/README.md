@@ -9,6 +9,7 @@ These scripts back `docs/engine/CRANK_AND_SCALING.md`. They reuse the phase-1 mo
 | `plot_sweep.py` | `sweep_200hp.png` (called by `scaling_sweep.py --plot`) | the figure at the top |
 | `normalizer_redo.py` | turbo against supercharger with the supercharger's ratio set at the climb rpm | section 6 |
 | `crank_decision.py` | AER-3439: firing enumeration for catalog and boxer throws, web bending against pitch, torsional forced response with damper options and sensitivity, the clearance sweep against liners and pistons (reads `cad/concept_h/h301_params.json`), candidate cost | `CRANK_H301.md` |
+| `stack_h.py`, `plot_stack_h.py` | AER-3442: the rod / piston / liner / deck pick against H-301. Keep-out map under each piston over 720 degrees, catalog rod lengths, the liner-bottom window, and `crank_decision.py` section 6 rerun on the pick; writes `cad/concept_h/h_stack.json`, which `h_castings.py` reads | `CASTINGS_H.md` section 9 |
 | `drive_rank_v2.py` | the phase-1 drive ranking with the gearbox scored as proven-class | section 5 |
 
 To regenerate every table and the figure:
@@ -20,6 +21,8 @@ python3 scaling_sweep.py --plot > scaling_sweep_tables.md
 python3 normalizer_redo.py > normalizer_redo_tables.md
 python3 drive_rank_v2.py > drive_rank_v2_tables.md   # about 15 s; reruns drive_match.py
 python3 crank_decision.py > crank_decision_tables.md   # about 4 min (the clearance sweeps)
+python3 stack_h.py > stack_h_tables.md   # about 3 min; also writes cad/concept_h/h_stack.json
+python3 plot_stack_h.py                  # stack_h_keepout.png
 ```
 
-Every figure is an estimate or an assumption unless a source is named; sources are in `docs/engine/sources/CRANK_SOURCES_2026-10-18.md`. None is a quote.
+Every figure is an estimate or an assumption unless a source is named; sources are in `docs/engine/sources/CRANK_SOURCES_2026-10-18.md` and, for the rods and pistons, `STACK_SOURCES_2026-10-18.md`. None is a quote.

@@ -1,5 +1,10 @@
 """Concept H, 200 hp member: coarse STEP envelope of each surviving casting
 (AER-3331, after the rulings on MANUFACTURING envelope v1 section 9.5).
+Revised by AER-3442 to crank H-301: the bank pitch, main positions and pin
+offsets are read from h301_params.json (the file H-301's STEP is built
+from), and the deck and liner from h_stack.json (written by
+analysis/engine_crank/stack_h.py, the rod / piston / liner pick), so the
+castings and the crank cannot drift apart.
 
 Three part numbers, four castings per engine:
   H-101  crankcase half LH, cylinder bank merged (9.5 #1), A357-T6
@@ -17,7 +22,7 @@ Frame (engine, mm): x along the crank axis from the case front face
 split plane is z = 0.
 
 Run (from the MAOS-ICE checkout; see README.md):
-  cp cad/concept_h/h_castings.py /maos-work/shared/cad/aer3331_h/
+  cp cad/concept_h/h_castings.py cad/concept_h/h301_params.json cad/concept_h/h_stack.json /maos-work/shared/cad/aer3331_h/
   maos freecad -c "OUT='/workspace/cad/aer3331_h'; exec(open(OUT + '/h_castings.py').read())"
 """
 import json
@@ -33,12 +38,18 @@ OUT = globals().get("OUT", os.getcwd())
 RHO = 2.68e-6            # kg/mm^3, A356 / A357
 
 # ------------------------------------------------------------- parameters
-P = 111.8                # bore pitch along a bank (LS, 4.400 in)
+CRANK = json.load(open(os.path.join(OUT, "h301_params.json")))     # H-301 Rev A
+STACK = json.load(open(os.path.join(OUT, "h_stack.json")))         # stack_h.py pick
+P = CRANK["pitch"]       # main spacing = bore pitch along a bank (H-301: 122.0)
+DP = P - 111.8           # growth per bay over the AER-3331 draw (LS 4.400 in pitch)
 BORE = 104.8             # finished bore in the liner (LS7)
-X0 = 60.0                # front main centre
+X0 = CRANK["x_main0"]    # front main centre
 MAINS = [X0 + k * P for k in range(4)]
-PIN_OFF = {"LH": 36.6, "RH": 75.2}   # crankpin offset from its bay's front main [E]
-DECK = 235.0             # split plane to deck (LS-class stack: 50.8 + 154.1 + 27.9 + clearance)
+_lh = CRANK["main_w"] / 2 + CRANK["web_t"] + CRANK["pin_w"] / 2
+PIN_OFF = {"LH": _lh, "RH": _lh + CRANK["pin_w"] + CRANK["web_t"]}   # crankpin from its bay's front main (40.35 / 81.75)
+DECK = STACK["deck"]     # split plane to deck: 50.8 + rod + compression height + 0.5 (stack_h.py)
+LINER_BOTTOM = STACK["liner_bottom"]    # liner bottom from the crank axis (stack_h.py)
+CASE_L = 560.0 + 3 * DP  # case length; the rear timing bay keeps its AER-3331 depth
 CAM_Y = -130.0           # cam below the crank, in the split plane
 CAM_BORE = 59.0          # LS cam journal 55 mm + bushing [E]
 MAIN_HOUSING = 64.0      # 60 mm journal + catalog shells [Q: confirm against a shell listing]
@@ -46,6 +57,7 @@ LIFTER = 21.4            # LS lifter 0.842 in
 GALLERY = 14.0           # ruling 6: 14 mm main gallery, 20 x D from each end
 GAL_Y, GAL_Z = -105.0, 100.0
 REG_LOWER = 116.0        # liner lower (O-ring) register [Q: Darton MID prep drawing]
+REG_LOWER_Z = 100.0      # register starts here; the liner bottom sits at LINER_BOTTOM
 JACKET = 127.0           # open-deck jacket around the liner
 REG_UPPER = 131.4        # liner flange seat; stepped: upper >= jacket >= lower (ruling 5)
 FLANGE_SEAT = 13.0       # depth of the flange seat below the deck [Q]
@@ -56,7 +68,7 @@ MAIN_STUD_Y = 85.0
 
 # head (local frame: x along the row, centred on the middle cylinder; y up;
 # z from the deck outboard)
-H_L, H_W, H_T = 380.0, 180.0, 110.0
+H_L, H_W, H_T = 380.0 + 2 * DP, 180.0, 110.0
 VALVE_TILT = math.radians(15.0)      # all six valve axes parallel (ruling 4)
 V_IN, V_EX = -26.0, 26.0             # valve x offsets from the cylinder centre
 SEAT_IN, SEAT_EX = 55.0, 43.0        # seat-insert bores, 2.00 in / 1.55 in valves [E]
@@ -105,43 +117,43 @@ def case_half(side):
     """Build the half on the +z side; RH is mirrored to -z at the end."""
     cs = cylinders(side)
     feats = []
-    shell = box(0, 560, -178, 150, 0, 135).cut(box(8, 552, -170, 142, 0, 127))
+    shell = box(0, CASE_L, -178, 150, 0, 135).cut(box(8, CASE_L - 8, -170, 142, 0, 127))
     add = []
     for i, xm in enumerate(MAINS):
         x0, x1 = (35, 70) if i == 0 else (xm - 10, xm + 10)
         add.append(box(x0, x1, -170, 142, 0, 127))
     for xl in lobes()[side]:
         add.append(cyl(16, V(xl, CAM_Y, 18), V(xl, CAM_Y, 135)))
-    add.append(cyl(15, V(0, GAL_Y, GAL_Z), V(560, GAL_Y, GAL_Z)))
-    dowels = [(18, 134), (542, -162)]
+    add.append(cyl(15, V(0, GAL_Y, GAL_Z), V(CASE_L, GAL_Y, GAL_Z)))
+    dowels = [(18, 134), (CASE_L - 18, -162)]
     for x, y in dowels:
         add.append(cyl(12, V(x, y, 0), V(x, y, 30)))
     bx0, bx1 = cs[0] - 72, cs[-1] + 72
     add.append(box(bx0, bx1, -72, 72, 127, DECK))
     add.append(cyl(18, V(bx0 - 12, 0, 185), V(bx0 + 5, 0, 185)))
-    pads = [((30, 120, 135), (0, 0, 1)), ((520, 120, 135), (0, 0, 1)), ((460, -160, 135), (0, 0, 1)),
-            ((60, 150, 60), (0, 1, 0)), ((500, 150, 60), (0, 1, 0)),
+    pads = [((30, 120, 135), (0, 0, 1)), ((CASE_L - 40, 120, 135), (0, 0, 1)), ((CASE_L - 100, -160, 135), (0, 0, 1)),
+            ((60, 150, 60), (0, 1, 0)), ((CASE_L - 60, 150, 60), (0, 1, 0)),
             ((0, 100, 80), (-1, 0, 0))]
     for (x, y, z), n in pads:
         add.append(cyl(12.5, V(x, y, z), V(x, y, z) + V(*n) * 3))
     s = fuse(shell, add)
 
     cuts = []
-    cuts.append(cyl(MAIN_HOUSING / 2, V(-1, 0, 0), V(561, 0, 0)))
+    cuts.append(cyl(MAIN_HOUSING / 2, V(-1, 0, 0), V(CASE_L + 1, 0, 0)))
     cuts.append(cyl(40, V(-1, 0, 0), V(8.1, 0, 0)))                          # front seal
-    cuts.append(cyl(CAM_BORE / 2, V(8, CAM_Y, 0), V(561, CAM_Y, 0)))
-    cuts.append(cyl(100, V(551.9, -60, 0), V(561, -60, 0)))                  # rear timing opening
-    cuts.append(box(80, 480, -178.1, -169.9, 0, 115))                          # sump opening
+    cuts.append(cyl(CAM_BORE / 2, V(8, CAM_Y, 0), V(CASE_L + 1, CAM_Y, 0)))
+    cuts.append(cyl(100, V(CASE_L - 8.1, -60, 0), V(CASE_L + 1, -60, 0)))    # rear timing opening
+    cuts.append(box(80, 480 + 3 * DP, -178.1, -169.9, 0, 115))                # sump opening
     for xl in lobes()[side]:
         cuts.append(cyl(LIFTER / 2, V(xl, CAM_Y, 0), V(xl, CAM_Y, 135.1)))
-    cuts.append(cyl(GALLERY / 2, V(-1, GAL_Y, GAL_Z), V(561, GAL_Y, GAL_Z)))
+    cuts.append(cyl(GALLERY / 2, V(-1, GAL_Y, GAL_Z), V(CASE_L + 1, GAL_Y, GAL_Z)))
     for x, y in dowels:
         cuts.append(cyl(6, V(x, y, -0.1), V(x, y, 20)))
     for xm in MAINS:
         for y in (MAIN_STUD_Y, -MAIN_STUD_Y):
             cuts.append(cyl(MAIN_STUD / 2, V(xm, y, -0.1), V(xm, y, 135.1)))
     for c in cs:
-        cuts.append(cyl(REG_LOWER / 2, V(c, 0, 100), V(c, 0, 150)))
+        cuts.append(cyl(REG_LOWER / 2, V(c, 0, REG_LOWER_Z), V(c, 0, 150)))
         cuts.append(cyl(JACKET / 2, V(c, 0, 150), V(c, 0, DECK - FLANGE_SEAT)))
         cuts.append(cyl(REG_UPPER / 2, V(c, 0, DECK - FLANGE_SEAT), V(c, 0, DECK + 0.1)))
     studs = sorted({round(c + d, 1) for c in cs for d in (-P / 2, P / 2)})
@@ -162,9 +174,10 @@ def case_half(side):
         ("main housings", f"4 x {MAIN_HOUSING} mm at x = {[round(x, 1) for x in MAINS]}, y = z = 0; line-bored on the doweled pair (setup B), then align-honed; front main carries the thrust faces", "catalog shell housing fit [Q]"),
         ("cam bore", f"{CAM_BORE} mm (bushed), y = {CAM_Y}, z = 0, in the split plane", "bushing press fit [Q]"),
         ("lifter bores", f"6 x {LIFTER} mm along z at y = {CAM_Y}, x = {[round(x, 1) for x in lobes()[side]]}", "LS lifter fit"),
-        ("liner registers", f"3 cylinders at x = {[round(c, 1) for c in cs]}; lower register {REG_LOWER} mm (O-rings), jacket {JACKET} mm, flange seat {REG_UPPER} mm x {FLANGE_SEAT} deep; all bored from the deck in setup B, stepped lower <= upper", "per Darton MID prep drawing [Q]"),
+        ("liner registers", f"3 cylinders at x = {[round(c, 1) for c in cs]}; lower register {REG_LOWER} mm (O-rings) from z = {zs * REG_LOWER_Z:.0f}, jacket {JACKET} mm, flange seat {REG_UPPER} mm x {FLANGE_SEAT} deep; all bored from the deck in setup B, stepped lower <= upper", "per Darton MID prep drawing [Q]"),
+        ("liner", f"Darton MID {BORE} mm, {DECK - LINER_BOTTOM:.1f} mm long (147.3 cut {147.3 - (DECK - LINER_BOTTOM):.1f} at the bottom), bottom at z = {zs * LINER_BOTTOM:.0f}: 5.9 mm or more from the crank's web ends and the opposed big ends (stack_h.py section 5)", "bought; length [Q] with Darton"),
         ("deck", f"z = {zs * DECK:.0f}, open deck; head studs M11 x 8 at x = {studs}, y = +/-{STUD_Y}; ring-dowel counterbores 16 mm at {[(round(x, 1), y) for x, y in ring]}", "flat 0.05 [E]"),
-        ("main gallery", f"{GALLERY} mm, drilled 280 mm from each end at y = {GAL_Y}, z = {zs * GAL_Z:.0f}; threaded plugs, sealant, staked", "ruling 6"),
+        ("main gallery", f"{GALLERY} mm, drilled {CASE_L / 2:.0f} mm from each end at y = {GAL_Y}, z = {zs * GAL_Z:.0f}; threaded plugs, sealant, staked", "ruling 6"),
         ("main studs", f"8 x {MAIN_STUD} mm through holes at each main, y = +/-{MAIN_STUD_Y}", ""),
         ("coolant inlet", f"22 mm bore in a 36 mm boss on the bank's front end, y = 0, z = {zs * 185}", ""),
     ]
@@ -178,8 +191,8 @@ def head():
     d = V(0, math.sin(VALVE_TILT), math.cos(VALVE_TILT))
     cs = [-P, 0.0, P]
     s = box(-H_L / 2, H_L / 2, -H_W / 2, H_W / 2, 0, H_T)
-    s = s.cut(box(-182, 182, -82, 82, 20, 72))                 # coolant jacket (printed core)
-    s = s.cut(box(-185, 185, -85, 85, 80, H_T + 0.1))           # rocker box, open to the cover
+    s = s.cut(box(-182 - DP, 182 + DP, -82, 82, 20, 72))       # coolant jacket (printed core)
+    s = s.cut(box(-185 - DP, 185 + DP, -85, 85, 80, H_T + 0.1))  # rocker box, open to the cover
     add = []
     studs = [(x, y) for x in (-1.5 * P, -0.5 * P, 0.5 * P, 1.5 * P) for y in (STUD_Y, -STUD_Y)]
     for x, y in studs:
@@ -196,10 +209,10 @@ def head():
         add.append(box(c + V_IN - 24, c + V_IN + 24, 90, 93, 22, 78))       # intake flange pad
         add.append(box(c + V_EX - 22, c + V_EX + 22, -93, -90, 22, 78))     # exhaust flange pad
     for sx in (-1, 1):   # coolant bosses on the top face at both ends: reachable on 4-axis
-        add.append(cyl(18, V(sx * 172, 80, 46), V(sx * 172, H_W / 2 + 5, 46)))
-    pads = [((-181, -81, H_T), (0, 0, 1)), ((181, -81, H_T), (0, 0, 1)), ((0, 81, H_T), (0, 0, 1)),
-            ((-150, -90, 95), (0, -1, 0)), ((150, -90, 95), (0, -1, 0)),
-            ((-190, 60, 95), (-1, 0, 0))]
+        add.append(cyl(18, V(sx * (172 + DP), 80, 46), V(sx * (172 + DP), H_W / 2 + 5, 46)))
+    pads = [((-181 - DP, -81, H_T), (0, 0, 1)), ((181 + DP, -81, H_T), (0, 0, 1)), ((0, 81, H_T), (0, 0, 1)),
+            ((-150 - DP, -90, 95), (0, -1, 0)), ((150 + DP, -90, 95), (0, -1, 0)),
+            ((-H_L / 2, 60, 95), (-1, 0, 0))]
     for (x, y, z), n in pads:
         add.append(cyl(10, V(x, y, z - (3 if n[2] else 0)), V(x, y, z) + V(*n) * 3))
     s = fuse(s, add)
@@ -223,7 +236,7 @@ def head():
     for x in (-1.5 * P, 1.5 * P):
         cuts.append(cyl(8, V(x, -STUD_Y, -0.1), V(x, -STUD_Y, 10)))           # ring dowels
     for sx in (-1, 1):
-        cuts.append(cyl(11, V(sx * 172, 78, 46), V(sx * 172, H_W / 2 + 5.1, 46)))
+        cuts.append(cyl(11, V(sx * (172 + DP), 78, 46), V(sx * (172 + DP), H_W / 2 + 5.1, 46)))
     for x in (-0.5 * P, 0.5 * P):
         for y in (40, -40):
             cuts.append(cyl(4, V(x, y, -0.1), V(x, y, 23)))                    # coolant transfer [Q]
@@ -240,7 +253,7 @@ def head():
         ("injector bosses", f"3 x {INJ} mm from the top face into the intake port", ""),
         ("ports", f"intake {PORT_IN} mm to the top face, exhaust {PORT_EX} mm to the bottom face (opposite faces; see ruling 4)", ""),
         ("head studs", f"8 x 12 mm clearance at x = +/-{0.5 * P:.1f}, +/-{1.5 * P:.1f}; y = +/-{STUD_Y}", "matches H-101/102 deck"),
-        ("coolant", "22 mm bosses on the top face at x = +/-172 (one plugged on each bank; they are also the two core-sand exits, ruling 7); 4 placeholder 8 mm deck transfer holes", "transfer holes [Q] with the liner"),
+        ("coolant", f"22 mm bosses on the top face at x = +/-{172 + DP:.1f} (one plugged on each bank; they are also the two core-sand exits, ruling 7); 4 placeholder 8 mm deck transfer holes", "transfer holes [Q] with the liner"),
         ("chambers", f"3 x {CHAMBER} mm, {CHAMBER_D} mm deep (placeholder shape)", ""),
     ]
     return s

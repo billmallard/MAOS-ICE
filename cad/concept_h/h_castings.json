@@ -5,12 +5,12 @@
    "label": "Crankcase half LH, bank merged, A357-T6",
    "valid": true,
    "solids": 1,
-   "volume_l": 7.813895267112444,
-   "mass_kg": 20.941239315861353,
+   "volume_l": 8.375754313315316,
+   "mass_kg": 22.447021559685048,
    "box_mm": [
-    563.0,
+    593.6,
     331.0,
-    235.0
+    246.0
    ]
   },
   {
@@ -18,12 +18,12 @@
    "label": "Crankcase half RH, bank merged, A357-T6",
    "valid": true,
    "solids": 1,
-   "volume_l": 7.828371445839051,
-   "mass_kg": 20.98003547484866,
+   "volume_l": 8.383460660626326,
+   "mass_kg": 22.467674570478554,
    "box_mm": [
-    563.0,
+    593.6,
     331.0,
-    235.0
+    246.0
    ]
   },
   {
@@ -31,10 +31,10 @@
    "label": "Cylinder head, both banks, A356-T6",
    "valid": true,
    "solids": 1,
-   "volume_l": 2.65543265716927,
-   "mass_kg": 7.116559521213643,
+   "volume_l": 2.7851149575170524,
+   "mass_kg": 7.464108086145702,
    "box_mm": [
-    384.0,
+    404.4,
     190.0,
     113.0
    ]
@@ -49,7 +49,7 @@
    ],
    [
     "datum B / C",
-    "dowel holes 12 mm at (x, y) = [(18, 134), (542, -162)], reamed in setup A",
+    "dowel holes 12 mm at (x, y) = [(18, 134), (572.6, -162)], reamed in setup A",
     "H7"
    ],
    [
@@ -59,7 +59,7 @@
    ],
    [
     "main housings",
-    "4 x 64.0 mm at x = [60.0, 171.8, 283.6, 395.4], y = z = 0; line-bored on the doweled pair (setup B), then align-honed; front main carries the thrust faces",
+    "4 x 64.0 mm at x = [60.0, 182.0, 304.0, 426.0], y = z = 0; line-bored on the doweled pair (setup B), then align-honed; front main carries the thrust faces",
     "catalog shell housing fit [Q]"
    ],
    [
@@ -69,22 +69,27 @@
    ],
    [
     "lifter bores",
-    "6 x 21.4 mm along z at y = -130.0, x = [82.9, 126.9, 194.7, 238.7, 306.5, 350.5]",
+    "6 x 21.4 mm along z at y = -130.0, x = [88.0, 132.0, 210.0, 254.0, 332.0, 376.0]",
     "LS lifter fit"
    ],
    [
     "liner registers",
-    "3 cylinders at x = [96.6, 208.4, 320.2]; lower register 116.0 mm (O-rings), jacket 127.0 mm, flange seat 131.4 mm x 13.0 deep; all bored from the deck in setup B, stepped lower <= upper",
+    "3 cylinders at x = [100.3, 222.3, 344.4]; lower register 116.0 mm (O-rings) from z = 100, jacket 127.0 mm, flange seat 131.4 mm x 13.0 deep; all bored from the deck in setup B, stepped lower <= upper",
     "per Darton MID prep drawing [Q]"
    ],
    [
+    "liner",
+    "Darton MID 104.8 mm, 146.0 mm long (147.3 cut 1.3 at the bottom), bottom at z = 100: 5.9 mm or more from the crank's web ends and the opposed big ends (stack_h.py section 5)",
+    "bought; length [Q] with Darton"
+   ],
+   [
     "deck",
-    "z = 235, open deck; head studs M11 x 8 at x = [40.7, 152.5, 264.3, 376.1], y = +/-64.0; ring-dowel counterbores 16 mm at [(40.7, -64.0), (376.1, -64.0)]",
+    "z = 246, open deck; head studs M11 x 8 at x = [39.3, 161.3, 283.4, 405.4], y = +/-64.0; ring-dowel counterbores 16 mm at [(39.3, -64.0), (405.4, -64.0)]",
     "flat 0.05 [E]"
    ],
    [
     "main gallery",
-    "14.0 mm, drilled 280 mm from each end at y = -105.0, z = 100; threaded plugs, sealant, staked",
+    "14.0 mm, drilled 295 mm from each end at y = -105.0, z = 100; threaded plugs, sealant, staked",
     "ruling 6"
    ],
    [
@@ -106,7 +111,7 @@
    ],
    [
     "datum B / C",
-    "dowel holes 12 mm at (x, y) = [(18, 134), (542, -162)], reamed in setup A",
+    "dowel holes 12 mm at (x, y) = [(18, 134), (572.6, -162)], reamed in setup A",
     "H7"
    ],
    [
@@ -116,7 +121,7 @@
    ],
    [
     "main housings",
-    "4 x 64.0 mm at x = [60.0, 171.8, 283.6, 395.4], y = z = 0; line-bored on the doweled pair (setup B), then align-honed; front main carries the thrust faces",
+    "4 x 64.0 mm at x = [60.0, 182.0, 304.0, 426.0], y = z = 0; line-bored on the doweled pair (setup B), then align-honed; front main carries the thrust faces",
     "catalog shell housing fit [Q]"
    ],
    [
@@ -126,22 +131,27 @@
    ],
    [
     "lifter bores",
-    "6 x 21.4 mm along z at y = -130.0, x = [104.9, 148.9, 216.7, 260.7, 328.5, 372.5]",
+    "6 x 21.4 mm along z at y = -130.0, x = [110.0, 154.0, 232.0, 276.0, 354.0, 398.0]",
     "LS lifter fit"
    ],
    [
     "liner registers",
-    "3 cylinders at x = [135.2, 247.0, 358.8]; lower register 116.0 mm (O-rings), jacket 127.0 mm, flange seat 131.4 mm x 13.0 deep; all bored from the deck in setup B, stepped lower <= upper",
+    "3 cylinders at x = [141.8, 263.8, 385.8]; lower register 116.0 mm (O-rings) from z = -100, jacket 127.0 mm, flange seat 131.4 mm x 13.0 deep; all bored from the deck in setup B, stepped lower <= upper",
     "per Darton MID prep drawing [Q]"
    ],
    [
+    "liner",
+    "Darton MID 104.8 mm, 146.0 mm long (147.3 cut 1.3 at the bottom), bottom at z = -100: 5.9 mm or more from the crank's web ends and the opposed big ends (stack_h.py section 5)",
+    "bought; length [Q] with Darton"
+   ],
+   [
     "deck",
-    "z = -235, open deck; head studs M11 x 8 at x = [79.3, 191.1, 302.9, 414.7], y = +/-64.0; ring-dowel counterbores 16 mm at [(79.3, -64.0), (414.7, -64.0)]",
+    "z = -246, open deck; head studs M11 x 8 at x = [80.8, 202.8, 324.8, 446.8], y = +/-64.0; ring-dowel counterbores 16 mm at [(80.8, -64.0), (446.8, -64.0)]",
     "flat 0.05 [E]"
    ],
    [
     "main gallery",
-    "14.0 mm, drilled 280 mm from each end at y = -105.0, z = -100; threaded plugs, sealant, staked",
+    "14.0 mm, drilled 295 mm from each end at y = -105.0, z = -100; threaded plugs, sealant, staked",
     "ruling 6"
    ],
    [
@@ -163,7 +173,7 @@
    ],
    [
     "datum B / C",
-    "ring-dowel counterbores 16 mm at x = +/-167.7, y = -64.0, symmetric so one part fits both banks",
+    "ring-dowel counterbores 16 mm at x = +/-183.0, y = -64.0, symmetric so one part fits both banks",
     "H7"
    ],
    [
@@ -173,7 +183,7 @@
    ],
    [
     "valve axes",
-    "all six parallel, tilted 15 deg toward the intake side in the y-z plane; inline along the row at x = c -26 (intake) and c +26 (exhaust), c in [-111.8, 0.0, 111.8]",
+    "all six parallel, tilted 15 deg toward the intake side in the y-z plane; inline along the row at x = c -26 (intake) and c +26 (exhaust), c in [-122.0, 0.0, 122.0]",
     "ruling 4: every axis normal to x"
    ],
    [
@@ -203,12 +213,12 @@
    ],
    [
     "head studs",
-    "8 x 12 mm clearance at x = +/-55.9, +/-167.7; y = +/-64.0",
+    "8 x 12 mm clearance at x = +/-61.0, +/-183.0; y = +/-64.0",
     "matches H-101/102 deck"
    ],
    [
     "coolant",
-    "22 mm bosses on the top face at x = +/-172 (one plugged on each bank; they are also the two core-sand exits, ruling 7); 4 placeholder 8 mm deck transfer holes",
+    "22 mm bosses on the top face at x = +/-182.2 (one plugged on each bank; they are also the two core-sand exits, ruling 7); 4 placeholder 8 mm deck transfer holes",
     "transfer holes [Q] with the liner"
    ],
    [
@@ -224,8 +234,8 @@
   0.0
  ],
  "set_box_mm": [
-  563.0,
+  593.6,
   331.0,
-  696.0
+  718.0
  ]
 }
