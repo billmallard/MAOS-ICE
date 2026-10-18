@@ -83,6 +83,11 @@
     "bought; O-ring land and axial location [Q] with Darton"
    ],
    [
+    "lower barrel end faces",
+    "3 per half, faced to z = 98.7 in setup A from the open split-face side (an as-cast end at CT11, about +/-2.2 mm, could take the 4.6 mm crank clearance to 2.4 mm)",
+    "+/-0.3 [E] to datum A"
+   ],
+   [
     "deck",
     "z = 246, open deck; head studs M11 x 8 at x = [39.3, 161.3, 283.4, 405.4], y = +/-64.0; ring-dowel counterbores 16 mm at [(39.3, -64.0), (405.4, -64.0)]",
     "flat 0.05 [E]"
@@ -143,6 +148,11 @@
     "liner",
     "Darton MID 104.8 mm, 147.3 mm long, fitted uncut, bottom at z = -98.7; its O-ring end seals in a cast lower barrel, 128 mm OD, from z = -98.7 to the case wall. Liner and barrel clear the crank by 4.6 mm or more (stack_h.py section 5)",
     "bought; O-ring land and axial location [Q] with Darton"
+   ],
+   [
+    "lower barrel end faces",
+    "3 per half, faced to z = -98.7 in setup A from the open split-face side (an as-cast end at CT11, about +/-2.2 mm, could take the 4.6 mm crank clearance to 2.4 mm)",
+    "+/-0.3 [E] to datum A"
    ],
    [
     "deck",

@@ -196,6 +196,7 @@ def case_half(side):
         ("lifter bores", f"6 x {LIFTER} mm along z at y = {CAM_Y}, x = {[round(x, 1) for x in lobes()[side]]}", "LS lifter fit"),
         ("liner registers", f"3 cylinders at x = {[round(c, 1) for c in cs]}; lower register {REG_LOWER} mm (O-rings) from z = {zs * REG_LOWER_Z:.0f}, jacket {JACKET} mm, flange seat {REG_UPPER} mm x {FLANGE_SEAT} deep; all bored from the deck in setup B, stepped lower <= upper", "per Darton MID prep drawing [Q]"),
         ("liner", f"Darton MID {BORE} mm, {DECK - LINER_BOTTOM:.1f} mm long, fitted uncut, bottom at z = {zs * LINER_BOTTOM:.1f}; its O-ring end seals in a cast lower barrel, {BARREL_OD:.0f} mm OD, from z = {zs * LINER_BOTTOM:.1f} to the case wall. Liner and barrel clear the crank by 4.6 mm or more (stack_h.py section 5)", "bought; O-ring land and axial location [Q] with Darton"),
+        ("lower barrel end faces", f"3 per half, faced to z = {zs * LINER_BOTTOM:.1f} in setup A from the open split-face side (an as-cast end at CT11, about +/-2.2 mm, could take the 4.6 mm crank clearance to 2.4 mm)", "+/-0.3 [E] to datum A"),
         ("deck", f"z = {zs * DECK:.0f}, open deck; head studs M11 x 8 at x = {studs}, y = +/-{STUD_Y}; ring-dowel counterbores 16 mm at {[(round(x, 1), y) for x, y in ring]}", "flat 0.05 [E]"),
         ("main gallery", f"{GALLERY} mm, drilled {CASE_L / 2:.0f} mm from each end at y = {GAL_Y}, z = {zs * GAL_Z:.0f}; threaded plugs, sealant, staked", "ruling 6"),
         ("main studs", f"8 x {MAIN_STUD} mm through holes at each main, y = +/-{MAIN_STUD_Y}", ""),

@@ -33,6 +33,7 @@ Casting set as assembled (`H-000_casting_set.step`, fit check only): 593.6 x 331
 | lifter bores | 6 x 21.4 mm along z at y = -130.0, x = [88.0, 132.0, 210.0, 254.0, 332.0, 376.0] | LS lifter fit |
 | liner registers | 3 cylinders at x = [100.3, 222.3, 344.4]; lower register 116.0 mm (O-rings) from z = 99, jacket 127.0 mm, flange seat 131.4 mm x 13.0 deep; all bored from the deck in setup B, stepped lower <= upper | per Darton MID prep drawing [Q] |
 | liner | Darton MID 104.8 mm, 147.3 mm long, fitted uncut, bottom at z = 98.7; its O-ring end seals in a cast lower barrel, 128 mm OD, from z = 98.7 to the case wall. Liner and barrel clear the crank by 4.6 mm or more (stack_h.py section 5) | bought; O-ring land and axial location [Q] with Darton |
+| lower barrel end faces | 3 per half, faced to z = 98.7 in setup A from the open split-face side (an as-cast end at CT11, about +/-2.2 mm, could take the 4.6 mm crank clearance to 2.4 mm) | +/-0.3 [E] to datum A |
 | deck | z = 246, open deck; head studs M11 x 8 at x = [39.3, 161.3, 283.4, 405.4], y = +/-64.0; ring-dowel counterbores 16 mm at [(39.3, -64.0), (405.4, -64.0)] | flat 0.05 [E] |
 | main gallery | 14.0 mm, drilled 295 mm from each end at y = -105.0, z = 100; threaded plugs, sealant, staked | ruling 6 |
 | main studs | 8 x 11.0 mm through holes at each main, y = +/-85.0 |  |
@@ -63,6 +64,7 @@ All pads are cast in the same mould half as the face they stand on, kept off the
 | lifter bores | 6 x 21.4 mm along z at y = -130.0, x = [110.0, 154.0, 232.0, 276.0, 354.0, 398.0] | LS lifter fit |
 | liner registers | 3 cylinders at x = [141.8, 263.8, 385.8]; lower register 116.0 mm (O-rings) from z = -99, jacket 127.0 mm, flange seat 131.4 mm x 13.0 deep; all bored from the deck in setup B, stepped lower <= upper | per Darton MID prep drawing [Q] |
 | liner | Darton MID 104.8 mm, 147.3 mm long, fitted uncut, bottom at z = -98.7; its O-ring end seals in a cast lower barrel, 128 mm OD, from z = -98.7 to the case wall. Liner and barrel clear the crank by 4.6 mm or more (stack_h.py section 5) | bought; O-ring land and axial location [Q] with Darton |
+| lower barrel end faces | 3 per half, faced to z = -98.7 in setup A from the open split-face side (an as-cast end at CT11, about +/-2.2 mm, could take the 4.6 mm crank clearance to 2.4 mm) | +/-0.3 [E] to datum A |
 | deck | z = -246, open deck; head studs M11 x 8 at x = [80.8, 202.8, 324.8, 446.8], y = +/-64.0; ring-dowel counterbores 16 mm at [(80.8, -64.0), (446.8, -64.0)] | flat 0.05 [E] |
 | main gallery | 14.0 mm, drilled 295 mm from each end at y = -105.0, z = -100; threaded plugs, sealant, staked | ruling 6 |
 | main studs | 8 x 11.0 mm through holes at each main, y = +/-85.0 |  |
