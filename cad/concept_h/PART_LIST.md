@@ -7,25 +7,26 @@ certificate, radiographed before first-op, impregnated after machining. Nothing 
 
 | Part number | Description | Qty / engine | Material | Model box x/y/z (mm) | Model mass (kg) | STEP |
 |---|---|---|---|---|---|---|
-| H-101 | Crankcase half LH, bank merged, A357-T6 | 1 | A357-T6 | 563.0 x 331.0 x 235.0 | 20.9 | `H-101.step` |
-| H-102 | Crankcase half RH, bank merged, A357-T6 | 1 | A357-T6 | 563.0 x 331.0 x 235.0 | 21.0 | `H-102.step` |
-| H-201 | Cylinder head, both banks, A356-T6 | 2 | A356-T6 | 384.0 x 190.0 x 113.0 | 7.1 | `H-201.step` |
+| H-101 | Crankcase half LH, bank merged, A357-T6 | 1 | A357-T6 | 593.6 x 331.0 x 246.0 | 22.4 | `H-101.step` |
+| H-102 | Crankcase half RH, bank merged, A357-T6 | 1 | A357-T6 | 593.6 x 331.0 x 246.0 | 22.5 | `H-102.step` |
+| H-201 | Cylinder head, both banks, A356-T6 | 2 | A356-T6 | 404.4 x 190.0 x 113.0 | 7.5 | `H-201.step` |
 
-Casting set as assembled (`H-000_casting_set.step`, fit check only): 563.0 x 331.0 x 696.0 mm. Overlap between mating parts in the model: [0.0, 0.0, 0.0] mm^3 (case/case, case/head LH, case/head RH).
+Casting set as assembled (`H-000_casting_set.step`, fit check only): 593.6 x 331.0 x 718.0 mm. Overlap between mating parts in the model: [0.0, 0.0, 0.0] mm^3 (case/case, case/head LH, case/head RH).
 
 ## H-101: datums and critical features
 
 | Feature | Location and size | Fit / control |
 |---|---|---|
 | datum A | split face, z = 0, machined in setup A (4-axis) | flat 0.05 [E] |
-| datum B / C | dowel holes 12 mm at (x, y) = [(18, 134), (542, -162)], reamed in setup A | H7 |
+| datum B / C | dowel holes 12 mm at (x, y) = [(18, 134), (572.6, -162)], reamed in setup A | H7 |
 | rough datums | 3 pads on the outer case face, 2 on the top face, 1 on the front face, 25 mm dia x 3 mm proud: setup A locates on these | as cast |
-| main housings | 4 x 64.0 mm at x = [60.0, 171.8, 283.6, 395.4], y = z = 0; line-bored on the doweled pair (setup B), then align-honed; front main carries the thrust faces | catalog shell housing fit [Q] |
+| main housings | 4 x 64.0 mm at x = [60.0, 182.0, 304.0, 426.0], y = z = 0; line-bored on the doweled pair (setup B), then align-honed; front main carries the thrust faces | catalog shell housing fit [Q] |
 | cam bore | 59.0 mm (bushed), y = -130.0, z = 0, in the split plane | bushing press fit [Q] |
-| lifter bores | 6 x 21.4 mm along z at y = -130.0, x = [82.9, 126.9, 194.7, 238.7, 306.5, 350.5] | LS lifter fit |
-| liner registers | 3 cylinders at x = [96.6, 208.4, 320.2]; lower register 116.0 mm (O-rings), jacket 127.0 mm, flange seat 131.4 mm x 13.0 deep; all bored from the deck in setup B, stepped lower <= upper | per Darton MID prep drawing [Q] |
-| deck | z = 235, open deck; head studs M11 x 8 at x = [40.7, 152.5, 264.3, 376.1], y = +/-64.0; ring-dowel counterbores 16 mm at [(40.7, -64.0), (376.1, -64.0)] | flat 0.05 [E] |
-| main gallery | 14.0 mm, drilled 280 mm from each end at y = -105.0, z = 100; threaded plugs, sealant, staked | ruling 6 |
+| lifter bores | 6 x 21.4 mm along z at y = -130.0, x = [88.0, 132.0, 210.0, 254.0, 332.0, 376.0] | LS lifter fit |
+| liner registers | 3 cylinders at x = [100.3, 222.3, 344.4]; lower register 116.0 mm (O-rings) from z = 100, jacket 127.0 mm, flange seat 131.4 mm x 13.0 deep; all bored from the deck in setup B, stepped lower <= upper | per Darton MID prep drawing [Q] |
+| liner | Darton MID 104.8 mm, 146.0 mm long (147.3 cut 1.3 at the bottom), bottom at z = 100: 5.9 mm or more from the crank's web ends and the opposed big ends (stack_h.py section 5) | bought; length [Q] with Darton |
+| deck | z = 246, open deck; head studs M11 x 8 at x = [39.3, 161.3, 283.4, 405.4], y = +/-64.0; ring-dowel counterbores 16 mm at [(39.3, -64.0), (405.4, -64.0)] | flat 0.05 [E] |
+| main gallery | 14.0 mm, drilled 295 mm from each end at y = -105.0, z = 100; threaded plugs, sealant, staked | ruling 6 |
 | main studs | 8 x 11.0 mm through holes at each main, y = +/-85.0 |  |
 | coolant inlet | 22 mm bore in a 36 mm boss on the bank's front end, y = 0, z = 185 |  |
 
@@ -34,14 +35,15 @@ Casting set as assembled (`H-000_casting_set.step`, fit check only): 563.0 x 331
 | Feature | Location and size | Fit / control |
 |---|---|---|
 | datum A | split face, z = 0, machined in setup A (4-axis) | flat 0.05 [E] |
-| datum B / C | dowel holes 12 mm at (x, y) = [(18, 134), (542, -162)], reamed in setup A | H7 |
+| datum B / C | dowel holes 12 mm at (x, y) = [(18, 134), (572.6, -162)], reamed in setup A | H7 |
 | rough datums | 3 pads on the outer case face, 2 on the top face, 1 on the front face, 25 mm dia x 3 mm proud: setup A locates on these | as cast |
-| main housings | 4 x 64.0 mm at x = [60.0, 171.8, 283.6, 395.4], y = z = 0; line-bored on the doweled pair (setup B), then align-honed; front main carries the thrust faces | catalog shell housing fit [Q] |
+| main housings | 4 x 64.0 mm at x = [60.0, 182.0, 304.0, 426.0], y = z = 0; line-bored on the doweled pair (setup B), then align-honed; front main carries the thrust faces | catalog shell housing fit [Q] |
 | cam bore | 59.0 mm (bushed), y = -130.0, z = 0, in the split plane | bushing press fit [Q] |
-| lifter bores | 6 x 21.4 mm along z at y = -130.0, x = [104.9, 148.9, 216.7, 260.7, 328.5, 372.5] | LS lifter fit |
-| liner registers | 3 cylinders at x = [135.2, 247.0, 358.8]; lower register 116.0 mm (O-rings), jacket 127.0 mm, flange seat 131.4 mm x 13.0 deep; all bored from the deck in setup B, stepped lower <= upper | per Darton MID prep drawing [Q] |
-| deck | z = -235, open deck; head studs M11 x 8 at x = [79.3, 191.1, 302.9, 414.7], y = +/-64.0; ring-dowel counterbores 16 mm at [(79.3, -64.0), (414.7, -64.0)] | flat 0.05 [E] |
-| main gallery | 14.0 mm, drilled 280 mm from each end at y = -105.0, z = -100; threaded plugs, sealant, staked | ruling 6 |
+| lifter bores | 6 x 21.4 mm along z at y = -130.0, x = [110.0, 154.0, 232.0, 276.0, 354.0, 398.0] | LS lifter fit |
+| liner registers | 3 cylinders at x = [141.8, 263.8, 385.8]; lower register 116.0 mm (O-rings) from z = -100, jacket 127.0 mm, flange seat 131.4 mm x 13.0 deep; all bored from the deck in setup B, stepped lower <= upper | per Darton MID prep drawing [Q] |
+| liner | Darton MID 104.8 mm, 146.0 mm long (147.3 cut 1.3 at the bottom), bottom at z = -100: 5.9 mm or more from the crank's web ends and the opposed big ends (stack_h.py section 5) | bought; length [Q] with Darton |
+| deck | z = -246, open deck; head studs M11 x 8 at x = [80.8, 202.8, 324.8, 446.8], y = +/-64.0; ring-dowel counterbores 16 mm at [(80.8, -64.0), (446.8, -64.0)] | flat 0.05 [E] |
+| main gallery | 14.0 mm, drilled 295 mm from each end at y = -105.0, z = -100; threaded plugs, sealant, staked | ruling 6 |
 | main studs | 8 x 11.0 mm through holes at each main, y = +/-85.0 |  |
 | coolant inlet | 22 mm bore in a 36 mm boss on the bank's front end, y = 0, z = -185 |  |
 
@@ -50,14 +52,14 @@ Casting set as assembled (`H-000_casting_set.step`, fit check only): 563.0 x 331
 | Feature | Location and size | Fit / control |
 |---|---|---|
 | datum A | deck face, z = 0, machined in setup A (4-axis) | flat 0.05 [E] |
-| datum B / C | ring-dowel counterbores 16 mm at x = +/-167.7, y = -64.0, symmetric so one part fits both banks | H7 |
+| datum B / C | ring-dowel counterbores 16 mm at x = +/-183.0, y = -64.0, symmetric so one part fits both banks | H7 |
 | rough datums | 3 pads on the rocker-cover rail, 2 on the exhaust (bottom) face, 1 on the front end face: setup A locates on these | as cast |
-| valve axes | all six parallel, tilted 15 deg toward the intake side in the y-z plane; inline along the row at x = c -26 (intake) and c +26 (exhaust), c in [-111.8, 0.0, 111.8] | ruling 4: every axis normal to x |
+| valve axes | all six parallel, tilted 15 deg toward the intake side in the y-z plane; inline along the row at x = c -26 (intake) and c +26 (exhaust), c in [-122.0, 0.0, 122.0] | ruling 4: every axis normal to x |
 | seat-insert bores | intake 55.0 mm, exhaust 43.0 mm, 10 mm deep on the valve axis | catalog insert press fit [Q] |
 | guide bores | 12.7 mm on the valve axis, through to the rocker box | catalog guide press fit [Q] |
 | spark plugs | 2 per cylinder, 14.0 mm: set A from the top face at x = c + 8, set B from the bottom face at x = c - 8; each set parallel | R-25, ruling 4 |
 | injector bosses | 3 x 14.5 mm from the top face into the intake port |  |
 | ports | intake 38.0 mm to the top face, exhaust 32.0 mm to the bottom face (opposite faces; see ruling 4) |  |
-| head studs | 8 x 12 mm clearance at x = +/-55.9, +/-167.7; y = +/-64.0 | matches H-101/102 deck |
-| coolant | 22 mm bosses on the top face at x = +/-172 (one plugged on each bank; they are also the two core-sand exits, ruling 7); 4 placeholder 8 mm deck transfer holes | transfer holes [Q] with the liner |
+| head studs | 8 x 12 mm clearance at x = +/-61.0, +/-183.0; y = +/-64.0 | matches H-101/102 deck |
+| coolant | 22 mm bosses on the top face at x = +/-182.2 (one plugged on each bank; they are also the two core-sand exits, ruling 7); 4 placeholder 8 mm deck transfer holes | transfer holes [Q] with the liner |
 | chambers | 3 x 100.0 mm, 8.0 mm deep (placeholder shape) |  |
