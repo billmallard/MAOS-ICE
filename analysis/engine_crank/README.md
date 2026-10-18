@@ -8,6 +8,7 @@ These scripts back `docs/engine/CRANK_AND_SCALING.md`. They reuse the phase-1 mo
 | `scaling_sweep.py` | the 200 hp sweep over 4/6/8 cylinders and 2,600-6,000 rpm, by crank route, and the mass-production cranks on the same model | section 4 |
 | `plot_sweep.py` | `sweep_200hp.png` (called by `scaling_sweep.py --plot`) | the figure at the top |
 | `normalizer_redo.py` | turbo against supercharger with the supercharger's ratio set at the climb rpm | section 6 |
+| `crank_decision.py` | AER-3439: firing enumeration for catalog and boxer throws, web bending against pitch, torsional forced response with damper options and sensitivity, the clearance sweep against liners and pistons (reads `cad/concept_h/h301_params.json`), candidate cost | `CRANK_H301.md` |
 | `drive_rank_v2.py` | the phase-1 drive ranking with the gearbox scored as proven-class | section 5 |
 
 To regenerate every table and the figure:
@@ -18,6 +19,7 @@ python3 crank_routes.py > crank_routes_tables.md
 python3 scaling_sweep.py --plot > scaling_sweep_tables.md
 python3 normalizer_redo.py > normalizer_redo_tables.md
 python3 drive_rank_v2.py > drive_rank_v2_tables.md   # about 15 s; reruns drive_match.py
+python3 crank_decision.py > crank_decision_tables.md   # about 4 min (the clearance sweeps)
 ```
 
 Every figure is an estimate or an assumption unless a source is named; sources are in `docs/engine/sources/CRANK_SOURCES_2026-10-18.md`. None is a quote.
