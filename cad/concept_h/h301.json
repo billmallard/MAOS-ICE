@@ -1,0 +1,169 @@
+{
+ "part": "H-301",
+ "mass_kg": 24.58,
+ "volume_mm3": 3131173,
+ "box_mm": [
+  531.0,
+  173.0,
+  186.5
+ ],
+ "x_span": [
+  -32.01,
+  499.0
+ ],
+ "solids": 1,
+ "valid": true,
+ "features": [
+  [
+   "main journal (thrust)",
+   "M1",
+   "x 45.0-71.0",
+   "dia 60.00, width 26.0"
+  ],
+  [
+   "main journal",
+   "M2",
+   "x 171.0-193.0",
+   "dia 60.00, width 22.0"
+  ],
+  [
+   "main journal",
+   "M3",
+   "x 293.0-315.0",
+   "dia 60.00, width 22.0"
+  ],
+  [
+   "main journal",
+   "M4",
+   "x 415.0-437.0",
+   "dia 60.00, width 22.0"
+  ],
+  [
+   "crankpin",
+   "P1 (LH)",
+   "x 100.35",
+   "dia 53.34, width 24.1; at 0 deg against rotation from P1"
+  ],
+  [
+   "crankpin",
+   "P2 (RH)",
+   "x 141.75",
+   "dia 53.34, width 24.1; at 180 deg against rotation from P1"
+  ],
+  [
+   "webs",
+   "bay 1",
+   "x 71.0-171.0",
+   "3 x 17.3 thick, 85 wide; counterweights R62 on the outer two"
+  ],
+  [
+   "crankpin",
+   "P3 (LH)",
+   "x 222.35",
+   "dia 53.34, width 24.1; at 240 deg against rotation from P1"
+  ],
+  [
+   "crankpin",
+   "P4 (RH)",
+   "x 263.75",
+   "dia 53.34, width 24.1; at 60 deg against rotation from P1"
+  ],
+  [
+   "webs",
+   "bay 2",
+   "x 193.0-293.0",
+   "3 x 17.3 thick, 85 wide; counterweights R62 on the outer two"
+  ],
+  [
+   "crankpin",
+   "P5 (LH)",
+   "x 344.35",
+   "dia 53.34, width 24.1; at 120 deg against rotation from P1"
+  ],
+  [
+   "crankpin",
+   "P6 (RH)",
+   "x 385.75",
+   "dia 53.34, width 24.1; at 300 deg against rotation from P1"
+  ],
+  [
+   "webs",
+   "bay 3",
+   "x 315.0-415.0",
+   "3 x 17.3 thick, 85 wide; counterweights R62 on the outer two"
+  ],
+  [
+   "propeller flange",
+   "F",
+   "x -20.01--8.90",
+   "OD 146, 11.11 thick; 6 bushing bores 19.82 on a 120.65 circle (4.750 in); pilot dia 60 x 12 [Q]"
+  ],
+  [
+   "seal journal",
+   "S",
+   "x -8.9-45.0",
+   "dia 64"
+  ],
+  [
+   "cam-gear seat",
+   "",
+   "x 437.0-467.0",
+   "dia 50"
+  ],
+  [
+   "reluctor seat",
+   "",
+   "x 467.0-479.0",
+   "dia 46"
+  ],
+  [
+   "damper flange",
+   "D",
+   "x 479.0-491.0",
+   "OD 110; 6 x M10 (8.5 drill) on 90"
+  ],
+  [
+   "damper pilot",
+   "",
+   "x 491.0-499.0",
+   "dia 60"
+  ],
+  [
+   "oil drilling",
+   "O1",
+   "main x 60.0 to pin x 100.3",
+   "dia 6, straight, 93 long, no plugs"
+  ],
+  [
+   "oil drilling",
+   "O2",
+   "main x 182.0 to pin x 141.8",
+   "dia 6, straight, 92 long, no plugs"
+  ],
+  [
+   "oil drilling",
+   "O3",
+   "main x 182.0 to pin x 222.4",
+   "dia 6, straight, 93 long, no plugs"
+  ],
+  [
+   "oil drilling",
+   "O4",
+   "main x 304.0 to pin x 263.8",
+   "dia 6, straight, 92 long, no plugs"
+  ],
+  [
+   "oil drilling",
+   "O5",
+   "main x 304.0 to pin x 344.4",
+   "dia 6, straight, 93 long, no plugs"
+  ],
+  [
+   "oil drilling",
+   "O6",
+   "main x 426.0 to pin x 385.8",
+   "dia 6, straight, 92 long, no plugs"
+  ]
+ ],
+ "stl": true
+}
