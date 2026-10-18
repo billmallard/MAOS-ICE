@@ -111,6 +111,19 @@ def cylinders(side):
 
 
 FEATURES = {}
+PADS = {}               # rough (as-cast) datum pads per part: (role, centre, outward normal, dia)
+PAD_PROUD = 3.0         # every pad of a part stands this far proud of its as-cast face
+
+# Machining stock (MANUFACTURING on AER-3442, from ISO 8062:1994, now 8062-3):
+# stock per side = RMA + CT/2. One-off chemically bonded (binder-jet, furan)
+# sand light alloy: CT10-12 (Table A.2), RMA grade F-H (Table B.1). Plan on
+# CT11 / RMA G until the foundry states the grade it holds; the first-article
+# layout may then reduce it. [MANUFACTURING's figures; the 2023 tables not checked]
+STOCK = {
+    "H-101": ("ISO 8062 - CT11 - RMA 4 (G)", "5.0 / 6.8 / 10", 7.0, "the split face (datum A) and the deck"),
+    "H-102": ("ISO 8062 - CT11 - RMA 4 (G)", "5.0 / 6.8 / 10", 7.0, "the split face (datum A) and the deck"),
+    "H-201": ("ISO 8062 - CT11 - RMA 4 (G)", "4.8 / 6.5 / 9.5", 7.0, "the deck (datum A)"),
+}
 
 
 def case_half(side):
@@ -134,8 +147,12 @@ def case_half(side):
     pads = [((30, 120, 135), (0, 0, 1)), ((CASE_L - 40, 120, 135), (0, 0, 1)), ((CASE_L - 100, -160, 135), (0, 0, 1)),
             ((60, 150, 60), (0, 1, 0)), ((CASE_L - 60, 150, 60), (0, 1, 0)),
             ((0, 100, 80), (-1, 0, 0))]
+    zs_ = 1 if side == "LH" else -1
+    roles = ["primary 1", "primary 2", "primary 3", "secondary 1", "secondary 2", "tertiary"]
+    PADS["H-101" if side == "LH" else "H-102"] = [
+        (r, (x, y, zs_ * z), (n[0], n[1], zs_ * n[2]), 25.0) for r, ((x, y, z), n) in zip(roles, pads)]
     for (x, y, z), n in pads:
-        add.append(cyl(12.5, V(x, y, z), V(x, y, z) + V(*n) * 3))
+        add.append(cyl(12.5, V(x, y, z), V(x, y, z) + V(*n) * PAD_PROUD))
     s = fuse(shell, add)
 
     cuts = []
@@ -170,7 +187,7 @@ def case_half(side):
     feats += [
         ("datum A", "split face, z = 0, machined in setup A (4-axis)", "flat 0.05 [E]"),
         ("datum B / C", f"dowel holes 12 mm at (x, y) = {dowels}, reamed in setup A", "H7"),
-        ("rough datums", "3 pads on the outer case face, 2 on the top face, 1 on the front face, 25 mm dia x 3 mm proud: setup A locates on these", "as cast"),
+        ("rough datums", "3 pads on the outer case face, 2 on the top face, 1 on the front face, 25 mm dia x 3 mm proud: setup A locates on these (table below)", "as cast"),
         ("main housings", f"4 x {MAIN_HOUSING} mm at x = {[round(x, 1) for x in MAINS]}, y = z = 0; line-bored on the doweled pair (setup B), then align-honed; front main carries the thrust faces", "catalog shell housing fit [Q]"),
         ("cam bore", f"{CAM_BORE} mm (bushed), y = {CAM_Y}, z = 0, in the split plane", "bushing press fit [Q]"),
         ("lifter bores", f"6 x {LIFTER} mm along z at y = {CAM_Y}, x = {[round(x, 1) for x in lobes()[side]]}", "LS lifter fit"),
@@ -213,8 +230,10 @@ def head():
     pads = [((-181 - DP, -81, H_T), (0, 0, 1)), ((181 + DP, -81, H_T), (0, 0, 1)), ((0, 81, H_T), (0, 0, 1)),
             ((-150 - DP, -90, 95), (0, -1, 0)), ((150 + DP, -90, 95), (0, -1, 0)),
             ((-H_L / 2, 60, 95), (-1, 0, 0))]
+    roles = ["primary 1", "primary 2", "primary 3", "secondary 1", "secondary 2", "tertiary"]
+    PADS["H-201"] = [(r, (x, y, z), n, 20.0) for r, ((x, y, z), n) in zip(roles, pads)]
     for (x, y, z), n in pads:
-        add.append(cyl(10, V(x, y, z - (3 if n[2] else 0)), V(x, y, z) + V(*n) * 3))
+        add.append(cyl(10, V(x, y, z - (PAD_PROUD if n[2] else 0)), V(x, y, z) + V(*n) * PAD_PROUD))
     s = fuse(s, add)
     # angled bosses overshoot the deck plane; clip to the head's envelope
     s = s.common(box(-H_L / 2 - 10, H_L / 2 + 10, -H_W / 2 - 5, H_W / 2 + 5, 0, H_T + 5))
@@ -245,7 +264,7 @@ def head():
     FEATURES["H-201"] = [
         ("datum A", "deck face, z = 0, machined in setup A (4-axis)", "flat 0.05 [E]"),
         ("datum B / C", f"ring-dowel counterbores 16 mm at x = +/-{1.5 * P:.1f}, y = {-STUD_Y}, symmetric so one part fits both banks", "H7"),
-        ("rough datums", "3 pads on the rocker-cover rail, 2 on the exhaust (bottom) face, 1 on the front end face: setup A locates on these", "as cast"),
+        ("rough datums", "3 pads on the rocker-cover rail, 2 on the exhaust (bottom) face, 1 on the front end face, 20 mm dia x 3 mm proud: setup A locates on these (table below)", "as cast"),
         ("valve axes", f"all six parallel, tilted {math.degrees(VALVE_TILT):.0f} deg toward the intake side in the y-z plane; inline along the row at x = c {V_IN:+.0f} (intake) and c {V_EX:+.0f} (exhaust), c in {cs}", "ruling 4: every axis normal to x"),
         ("seat-insert bores", f"intake {SEAT_IN} mm, exhaust {SEAT_EX} mm, 10 mm deep on the valve axis", "catalog insert press fit [Q]"),
         ("guide bores", f"{GUIDE} mm on the valve axis, through to the rocker box", "catalog guide press fit [Q]"),
@@ -308,14 +327,21 @@ clash = [round(asm[i].common(asm[j]).Volume, 1) for i, j in ((0, 1), (0, 2), (1,
 bb = Part.makeCompound(asm).BoundBox
 
 with open(os.path.join(OUT, "h_castings.json"), "w") as f:
-    json.dump(dict(parts=rep, features=FEATURES, clash_mm3=clash,
+    json.dump(dict(parts=rep, features=FEATURES, rough_pads=PADS, stock=STOCK, clash_mm3=clash,
                    set_box_mm=[round(bb.XLength, 1), round(bb.YLength, 1), round(bb.ZLength, 1)]), f, indent=1)
 
 L = ["# Concept H casting set: part list (generated by `h_castings.py`; do not edit by hand)", "",
      "Coarse envelope models for quoting. Near-net as-machined shape; walls, ribs, the case perimeter flange and its",
-     "bolts, oil cross-drillings, fillets and draft are not drawn. Leave 1.5-3 mm machining stock on every machined",
-     "face (envelope 1.2/1.3). Route: binder-jet printed mold + foundry pour (envelope 1.2), degassed, T6 with a",
-     "certificate, radiographed before first-op, impregnated after machining. Nothing here has been made or tested.", "",
+     "bolts, oil cross-drillings, fillets and draft are not drawn. The foundry adds machining stock on every machined",
+     "face to the ISO 8062 callout for each part below (stock per side = RMA + CT/2; plan on about 7 mm on the split",
+     "face and the deck until the foundry states the grade it holds and the first-article layout shows less is enough).",
+     "Route: binder-jet printed mold + foundry pour (envelope 1.2), degassed, T6 with a certificate, radiographed before",
+     "first-op, impregnated after machining. Nothing here has been made or tested.", "",
+     "| Part number | General tolerance and stock callout | Stock per side, CT10 / CT11 / CT12 (mm) | Plan on (mm) |",
+     "|---|---|---|---|"]
+for pn, (callout, band, plan, faces) in STOCK.items():
+    L.append(f"| {pn} | `{callout}`; the RFQ asks the foundry which grade it holds, and its answer becomes the basis | {band} | {plan:.0f} on {faces} |")
+L += ["",
      "| Part number | Description | Qty / engine | Material | Model box x/y/z (mm) | Model mass (kg) | STEP |",
      "|---|---|---|---|---|---|---|"]
 for r in rep:
@@ -329,7 +355,14 @@ L += ["", f"Casting set as assembled (`H-000_casting_set.step`, fit check only):
 for pn in ("H-101", "H-102", "H-201"):
     L += [f"## {pn}: datums and critical features", "", "| Feature | Location and size | Fit / control |", "|---|---|---|"]
     L += [f"| {a} | {b} | {c} |" for a, b, c in FEATURES[pn]]
-    L.append("")
+    L += ["", f"### {pn}: rough datum pads (as cast; setup A, the foundry's first-article layout and the first-op fixture all use these)", "",
+          "| Pad | Centre x, y, z (mm) | Face normal | Size | Height |", "|---|---|---|---|---|"]
+    for role, c, n, d in PADS[pn]:
+        L.append(f"| {role} | {', '.join(f'{v:.1f}' for v in c)} | {', '.join(f'{v:+.0f}' for v in n)} | {d:.0f} mm dia | "
+                 f"{PAD_PROUD:.0f} mm proud of its as-cast face; every pad in the set at this one height |")
+    L += ["", "All pads are cast in the same mould half as the face they stand on, kept off the parting line and the gates "
+          "[Q: the foundry places the parting line and gates, then confirms]. The secondary and tertiary pads stand on walls drafted "
+          "about 2 deg, so their stated height is what stops the draft moving the part in x-y at setup (AMC/ATI casting GD&T tip, via MANUFACTURING).", ""]
 with open(os.path.join(OUT, "PART_LIST.md"), "w") as f:
     f.write("\n".join(L))
 print(json.dumps(dict(parts=rep, clash_mm3=clash), indent=1))

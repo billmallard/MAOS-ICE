@@ -20,7 +20,7 @@ The castings that survive the rulings on MANUFACTURING envelope v1 section 9.5 (
 
 - **Drawn:** the outer envelope; the crank bay and the main bulkheads; every datum (machined datums A/B/C and the as-cast 3-2-1 locating pads for the first setup); every critical bore: main housings, cam bore, lifter bores, liner registers, head studs, main studs, the main oil gallery, valve seat-insert and guide bores, both plug sets, injector bosses, ports, coolant bosses.
 - **Not drawn:** the case perimeter flange and its roughly 30 bolts, ribs, oil cross-drillings, fillets, draft, the combustion-chamber shape (a flat 8 mm placeholder), the port shapes (straight cylinders), and the coolant transfer passages between the case jacket and the head (they depend on the Darton MID flange, [Q]).
-- **Shape is near-net as-machined.** The foundry adds 1.5-3 mm of stock on every machined face (envelope 1.2/1.3).
+- **Shape is near-net as-machined.** The foundry adds stock on every machined face to each part's ISO 8062 callout in `PART_LIST.md` (CT11 / RMA G: about 7 mm on the split face and the deck until the foundry states its grade). The earlier 1.5-3 mm (envelope 1.2/1.3) is a long-run, machine-moulded figure, and MANUFACTURING withdrew it on AER-3442.
 - **The masses are model masses at 2.68 g/cm^3.** The case halves have solid bulkheads and 8 mm walls with no ribs or lightening, so 20.9 kg is an upper bound. The set (2 x 20.9 + 2 x 7.1 = 56 kg) sits inside MANUFACTURING's six-casting estimate of 50-64 kg (envelope 9 envelopes summed).
 
 ## Frame
