@@ -1,6 +1,6 @@
 # Engine failure-mode ledger, v0 (seed)
 
-Owner: PROPULSION, holding it for SAFETY, which is paused (ORG-009). Issues: AER-3320 (seed), AER-3326 (phase 1: FL-24 to FL-29), AER-3329 (phase 1b: FL-30 to FL-37), AER-3331 (castings: FL-38, FL-39; FL-34 reworded), AER-3411 (crank routes, gearbox, supercharger: FL-40 to FL-49, each conditional on the route being taken).
+Owner: PROPULSION, holding it for SAFETY, which is paused (ORG-009). Issues: AER-3320 (seed), AER-3326 (phase 1: FL-24 to FL-29), AER-3329 (phase 1b: FL-30 to FL-37), AER-3331 (castings: FL-38, FL-39; FL-34 reworded), AER-3411 (crank routes, gearbox, supercharger: FL-40 to FL-49, each conditional on the route being taken), AER-3439 (crank H-301: FL-50).
 
 This is a seed, not a hazard analysis. It records every single failure that phase 0 raised and what each leaves the pilot, so SAFETY inherits a list when it resumes. Nothing here has been tested. "Leaves" is a design intent or a physics expectation, not a demonstrated result.
 
@@ -55,3 +55,4 @@ This is a seed, not a hazard analysis. It records every single failure that phas
 | FL-47 | 180-degree V6 balance shaft (route 4) | balance-shaft drive fails | a free primary couple of about 1,000-2,100 N m at 55 Hz into the engine mount | CRANK_AND_SCALING.md section 3.4 |
 | FL-48 | Supercharger bypass valve (only if the supercharger is chosen) | valve stuck closed | with the ratio set at the climb rpm, the compressor can make a pressure ratio of about 1.8 at sea level and 3,300 rpm: a manifold near 1.8 bar, heavy knock. Mitigation: a mechanical relief valve, a FADEC overboost cut of spark and fuel, and a run-up manifold-pressure check | CRANK_AND_SCALING.md section 6 |
 | FL-49 | Supercharger belt drive | belt failure | unboosted power (65 % at 12,000 ft), belt debris at the crank nose. Mitigation: belt guard, a belt-condition item on the inspection list | RECOST_PHASE1B.md section 6; CRANK_AND_SCALING.md section 6 |
+| FL-50 | Rear viscous damper, crank H-301 | silicone leaks or degrades; the damper stops damping | FL-24 returns: the 6th-order resonance at about 2,550 rpm, 33-66 MPa nominal in the journal against a 34 MPa yardstick, with no cockpit cue. Mitigation: a damper inspection and replacement interval; a dynamometer torsional survey with and without the damper, so the undamped margin is measured | CRANK_H301.md section 4; `crank_decision.py` |
