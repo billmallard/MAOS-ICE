@@ -12,7 +12,7 @@ Numbers come from [`analysis/engine_hayabusa/`](../../analysis/engine_hayabusa/)
 **The strongest case against it:**
 
 1. **Nobody sells a reduction drive for it, and the one Hayabusa aircraft found was lost.** No Hayabusa PSRU was found from any vendor in about 18 searches [P section 1]. The Bugatti 100P replica flew on two Hayabusas driving through the motorcycles' own wet clutches, locked in 6th gear. On its third flight the forward engine surged to about 10,000 rpm just after liftoff, and the airplane stalled and crashed, killing the pilot (NTSB CEN16FA307) [P1-P4]. The NTSB named an engine anomaly of undetermined cause. The builders' team concluded that the forward clutch slipped. So the program would have to design, qualify and support the drive itself. That drive is the hardest part of any automotive conversion.
-2. **It does not beat what a builder can buy today.** First engine, built to this program's standard (two lanes, dry sump, our gearbox): **$16.5k / $25.1k / $37.9k** (low / mid / high), **112-140 kg** installed dry, for **113-139 hp** at takeoff. The Aeromomentum AM15 is **$13.0k-14.1k** with its gearbox, starter, alternator and ECU, at **83.9 kg** and 120 hp, against **113-139 hp** for the Hayabusa. Even the low end of the Hayabusa band costs more and weighs 28 kg more.
+2. **It does not beat what a builder can buy today.** First engine, built to this program's standard (two lanes, dry sump, our gearbox): **$19.0k / $29.7k / $46.4k** (low / mid / high), **112-140 kg** installed dry, for **113-139 hp** at takeoff. The Aeromomentum AM15 is **$13.0k-14.1k** with its gearbox, starter, alternator and ECU, at **83.9 kg** and 120 hp, against **113-139 hp** for the Hayabusa. Even the low end of the Hayabusa band costs more and weighs 28 kg more.
 3. **R-25 (two independent lanes) needs head work nobody has done.** The stock head has one plug per cylinder. On that head, one coil or plug failure leaves **about 72 % of MCP**, against R-25's 90 %. It also drives the gear mesh into torque reversal near 3,400 rpm (section 5). No twin-plug Hayabusa head exists anywhere [D section B7]. The injectors are the good news: there are two per cylinder.
 4. **There is no evidence for a long life at aircraft load.** The only high-load data are Radical race cars, which rebuild their 1340 engines every 90-100 hours [F, D1-D2]. Scaled to aircraft rpm, that is **about 100-370 h**, against R-40's 2,000 h. No generator, marine, airboat or aircraft hours were found at all.
 
@@ -128,7 +128,7 @@ The Yamaha Genesis 4-cylinder conversions are the closest flying analog. They ha
 - **(i) Through the motorcycle's primary gear (1.596:1), clutch and gearbox, locked in one gear,** with a second reduction behind the countershaft. The Bugatti did this, using 6th gear (1.043) [H12, P3]. It is the cheap layout, and it puts a slipping wet clutch in the torque path. **Design rule: no motorcycle clutch in the torque path** (FL-53). Lock the clutch pack solid, or replace it with a solid hub. The only element allowed to slip is a calibrated overload clutch at about 2-2.7 x rated torque, as on the Rotax (FL-41).
 - **(ii) A gearbox on the crank end,** with the motorcycle gearbox left idle or emptied. This is cleaner, and it is a new adapter, a coupling and a gearbox: the program's own gearbox.
 
-**Make, not buy:** the program's proven-class gearbox (CRANK_AND_SCALING section 5) at **$2.9k-9.8k** and **8-15 kg**, sized for 408 N m of propeller torque. The adapter and coupling are on AER-3526.
+**Make, not buy:** the program's proven-class gearbox (CRANK_AND_SCALING section 5) at **$2.9k-9.8k** and **8-15 kg**, sized for 408 N m of propeller torque. MANUFACTURING prices the adapter plate and crank-side hub at $1.1k-4.5k and the elastic coupling at $0.3k-1.0k (AER-3526). Its flag stands as a PROPULSION load question, open: the Hayabusa case has no bellhousing, so a plate on a cover flange's small bolts cannot be the whole answer for the gearbox's overhung mass and reaction torque. The gearbox needs a tie into the mount structure.
 
 **Torsional risk** (`torsional_busa.py`). The method: a cylinder-pressure cycle gives gas plus inertia torque. That is summed over the firing order and Fourier-split, then fed to a damped two-inertia drive with propeller damping. Inertias are assumed, with bands.
 
@@ -157,7 +157,7 @@ The Yamaha Genesis 4-cylinder conversions are the closest flying analog. They ha
 
 | R-25 element | On a stock Gen 2 | What it takes | Cost [E] |
 |---|---|---|---|
-| Two plugs per cylinder | one M10 plug per cylinder, central, coil on plug [D33] | a second plug machined into the chamber edge from outside the head, between an intake and an exhaust valve. No Hayabusa twin-plug head exists. The precedent is other 4-valve heads (Ducati Testastretta DS, BMW R1200 twin-spark, KTM 690) [D34-D37]. Feasibility depends on the water jacket, unmeasured | $1.0k-4.0k incl. a scrap-head survey (AER-3526) |
+| Two plugs per cylinder | one M10 plug per cylinder, central, coil on plug [D33] | a second plug machined into the chamber edge from outside the head, between an intake and an exhaust valve. No Hayabusa twin-plug head exists. The precedent is other 4-valve heads (Ducati Testastretta DS, BMW R1200 twin-spark, KTM 690) [D34-D37]. Feasibility depends on the water jacket, unmeasured | $2.1k-7.3k (MANUFACTURING, AER-3526): two scrap heads, a section, a fixture, sleeved plug tubes. **Outside the envelope until a sectioned head proves it** |
 | Two coils per cylinder | four coils | four more D585-class coils | $0.2k-0.4k |
 | Two injectors per cylinder | **already there: 8 x 280 cc/min, staged** [H14, D39] | lane A on the primaries, lane B on the secondaries; each set alone carries takeoff at about 58 % duty (161 against 280 cc/min). Untested: the secondaries spray into the bellmouth, so mixture at low load may differ [D section B8] | in the FADEC line |
 | Two crank sensors | one reluctor pickup, 24-2 [H14] | a second pickup on the same wheel, or a second wheel | $0.1k-0.3k |
@@ -165,7 +165,7 @@ The Yamaha Genesis 4-cylinder conversions are the closest flying analog. They ha
 | Two power feeds | one stator, one regulator | a second generator for lane B | $0.4k-0.9k |
 | Throttle | Gen 2 cable throttle; the secondary butterflies are ECU-driven | pin the secondary butterflies open or remove them. Gen 3's ride-by-wire is a single point (FL-58) | small |
 
-**Is the head modifiable? Unknown, and that is the honest answer.** If a scrap-head survey shows room for an M10 or M12 boss without breaking into the jacket, R-25 is met in full. Then a single lane failure loses one plug per cylinder, a few percent of power. If not, **the Hayabusa is a reduced-redundancy exception to R-25, and should be said so plainly:**
+**Is the head modifiable? Unknown, and that is the honest answer.** MANUFACTURING's read (AER-3526): the free spots at the chamber edge sit at the ends of the roof ridge, which face the next cylinder, so any approach is a steep compound angle that very likely crosses the water jacket. The workable form is a sleeved plug tube (M10 x 1.0, the stock thread) sealed at both walls; a welded boss is ruled out. The first risk is the ligament to the pressed-in valve-seat inserts: a bore too close loosens a seat, and a dropped seat destroys the engine (FL-60). The first step is to section a scrap head and measure that wall. If a scrap-head survey shows room for an M10 or M12 boss without breaking into the jacket, R-25 is met in full. Then a single lane failure loses one plug per cylinder, a few percent of power. If not, **the Hayabusa is a reduced-redundancy exception to R-25, and should be said so plainly:**
 - **Injection, sensing, processing and power can be made dual. Ignition cannot.**
 - **One coil or plug failure then leaves about 72 % of MCP** (`torsional_busa.py` section 4: (3/4 IMEP - FMEP) / BMEP).
 - **It also adds half- and first-order torque to a drive tuned below idle.** The half order crosses the drive mode near **3,400 crank rpm**, in the descent band. There the mesh torque reverses at about **3.2 times the mean** (FL-52).
@@ -231,16 +231,16 @@ Does not carry over:
 | rebuild parts, 11:1 pistons, machine-shop inspection [S partial, E] | $2.2k | $3.8k |
 | dry sump (SBD kit plus tank and lines) [S + E] | $1.9k | $2.3k |
 | reduction gearbox, made [E] | $2.9k | $9.8k |
-| adapter and coupling, mount [E, AER-3526] | $1.4k | $4.0k |
+| adapter plate and hub, elastic coupling, engine mount (builder TIG) [MFG, AER-3526] | $2.8k | $9.2k |
 | FADEC, two lanes [E] | $1.5k | $4.0k |
-| second lane beyond the FADEC: plug machining, coils, sensor, generator [E, AER-3526] | $1.7k | $5.6k |
+| second lane beyond the FADEC: second plug (MFG), coils, sensor, generator [MFG + E] | $2.8k | $8.9k |
 | cooling, fuel, exhaust, intake, misc [E] | $1.9k | $4.6k |
-| **Total, naturally aspirated** | **$16.5k** (mid $25.1k) | **$37.9k** |
-| with a normalizer | $18.5k (mid $28.1k) | $42.4k |
+| **Total, naturally aspirated** | **$19.0k** (mid $29.7k) | **$46.4k** |
+| with a normalizer | $21.0k (mid $32.7k) | $50.9k |
 
 - **Core availability is not the issue.** The eBay snapshot showed about 33 complete engines among 100 listings [H24]. **No new crate engine was found** at any price, so every build starts from a used core of unknown history. That is another reason for the teardown and crack test.
-- **Builder labor: 220-470 hours** [E], about half of it the gearbox, harness and FADEC calibration.
-- **Where the money goes.** The lines any engine in this program needs (gearbox, FADEC, cooling, fuel, exhaust, mount) are $8.4k-24.0k. The Hayabusa-specific part is $8.1k-14.0k.
+- **Builder labor: 240-510 hours** [E], about half of it the gearbox, harness and FADEC calibration; the mount alone is 40-80 h of TIG at skill B3 (MANUFACTURING).
+- **Where the money goes.** The lines any engine in this program needs (gearbox, FADEC, cooling, fuel, exhaust, mount) are $9.8k-29.2k. The Hayabusa-specific part is $9.2k-17.3k.
 
 **Against the yardsticks:**
 
@@ -248,16 +248,16 @@ Does not carry over:
 |---|---|---|
 | Aeromomentum AM15, incl. gearbox, starter, alternator, ECU | $13.0k-14.1k [A1] | 120 hp |
 | Viking 130, no radiator or exhaust | $15.0k [V3] | 130 hp |
-| **Hayabusa conversion, NA, first engine** | **$16.5k / $25.1k / $37.9k** | **113-139 hp** |
+| **Hayabusa conversion, NA, first engine** | **$19.0k / $29.7k / $46.4k** | **113-139 hp** |
 | Rotax 912 ULS | $26.5k (Australian dealer, basis not stated) [R7] | 100 hp |
 | Rotax 915 iS | $51.6k ex-GST (same dealer) [R7] | 141 hp |
 | Concept H, 200 hp, basis 1 (CASTINGS_H section 6) | $31.7k / $48.0k / $72.8k | 200 hp |
 
 **The proposed 100 hp target of $15k (R-35, not ruled) is missed even at the low end.**
-- The Hayabusa is under the Rotax 912's $26.5k only at its low and mid estimates; the high end is $11k over.
-- It beats the 915 easily. But the 915 makes its power to altitude with a turbo, so the fair comparison there is $18.5k-42.4k.
+- The Hayabusa is under the Rotax 912's $26.5k only at its low estimate; the mid is $3k over and the high end $20k over.
+- It beats the 915 easily. But the 915 makes its power to altitude with a turbo, so the fair comparison there is $21.0k-50.9k.
 - It does not beat the two conversions that already fly.
-- Per takeoff horsepower it is cheaper than concept H's first engine: about $120-340 per hp against $160-360.
+- Per takeoff horsepower it is about level with concept H's first engine: about $140-410 per hp against $160-360.
 
 ## 8. What it means for the program (question 8)
 
@@ -265,7 +265,7 @@ Scores are out of 10: 10 means it does the role well.
 
 | Role | Score | Why | Carries forward to concept H | Thrown away |
 |---|---|---|---|---|
-| **(a) Development mule** | **4** | It runs cheaply on a stand: about $8-14k of Hayabusa-specific spend on top of work the program does anyway. It is weak in flight: a drive must be designed first, the stock head cannot exercise R-25, and it has no field record. As a FADEC mule it is beaten by a bought conversion with a proven drive. As a gearbox mule it is the wrong size for H-EZ36 (408 against 558 N m at the propeller) and the wrong firing order (I4 against flat-6) | FADEC (70-80 %); the radiator, duct and pump method (hardware about 60 % of H's size); propeller matching and test instrumentation; the test stand; gearbox design method and lessons, not the gearbox | the core, the pistons, the dry sump, the adapter, the mount, the head work, Hayabusa-specific harness and calibration |
+| **(a) Development mule** | **4** | It runs cheaply on a stand: about $9-17k of Hayabusa-specific spend on top of work the program does anyway. It is weak in flight: a drive must be designed first, the stock head cannot exercise R-25, and it has no field record. As a FADEC mule it is beaten by a bought conversion with a proven drive. As a gearbox mule it is the wrong size for H-EZ36 (408 against 558 N m at the propeller) and the wrong firing order (I4 against flat-6) | FADEC (70-80 %); the radiator, duct and pump method (hardware about 60 % of H's size); propeller matching and test instrumentation; the test stand; gearbox design method and lessons, not the gearbox | the core, the pistons, the dry sump, the adapter, the mount, the head work, Hayabusa-specific harness and calibration |
 | **(b) The 100 hp member, or a starter product** | **2** | Costs more and weighs more than the AM15 and Viking 130 that builders can buy today. It needs a program-designed drive with no field record, misses R-37 by 22-50 kg, and may need an R-25 exception. Its life is unknown, and the most likely evidence-based interval is a few hundred hours. There is no new-engine supply: every product would be a used core. It also does not fit R-1 or R-28 (made from files), which Bill already knew | as (a) | the whole product line: support, documentation and liability for a conversion |
 | **(c) A dead end** | **6** | Likely if it is taken on as the platform. The drive, the head work and a durability program on an engine the family will not use are a year or more of work [E] that delays H. Taken narrowly as a ground FADEC rig, it is not a dead end | as (a) | as (a), plus the schedule |
 | **(d) Added: a ground mule matched to H's own risks** | **7, if Bill takes H-EZ36** | A used Subaru EZ36 behind the program's gearbox on a stand tests the actual donor crank in aircraft duty (FL-43), the right-size gearbox and the 6-cylinder torsional system. It carries the FADEC work as well as the Hayabusa would. Too heavy to fly as is. Not costed here | crank, gearbox and torsional evidence for H-EZ36, plus all of (a) | the EZ36 block and heads, if H keeps its own castings |
@@ -276,7 +276,7 @@ Scores are out of 10: 10 means it does the role well.
 The findings that would make me recommend against it, and whether I found them:
 
 1. **No credible drive. Found.** There is nothing to buy. The one Hayabusa aircraft drove through a motorcycle clutch, and its builders blame that clutch for a fatal loss of power. Its first-mode tuning has to match the Rotax 912's softness, and it tolerates a stiffened coupling less well (section 4). That is solvable, but it is the program's own engineering, not a purchase. It is also the same work H-EZ36 needs at a different size.
-2. **No cost advantage over a bought conversion. Found.** The low end ($16.5k) is above the AM15's price with gearbox and ECU ($13.0k-14.1k), and 28 kg heavier.
+2. **No cost advantage over a bought conversion. Found.** The low end ($19.0k) is above the AM15's price with gearbox and ECU ($13.0k-14.1k), and 28 kg heavier.
 3. **R-25 unmet on the stock head. Open.** It is decided by a scrap-head survey (AER-3526). If the second plug cannot be fitted, the Hayabusa is a reduced-redundancy exception: 72 % of MCP and a torque-reversal band after one coil failure.
 
 ## 10. Failure ledger
@@ -291,11 +291,12 @@ Added to `FAILURE_LEDGER.md`, each conditional on a Hayabusa route being taken:
 - **FL-57:** knock at the stock compression ratio.
 - **FL-58:** Gen 3 ride-by-wire.
 - **FL-59:** the bottom end with no aviation hours.
+- **FL-60:** the second-plug sleeve in a modified head (seat-insert ligament, sleeve leak).
 
 ## 11. What this pass did not do
 
 - **No core was weighed, measured or run.** The engine mass (86-92 kg) is forum-only. No head was sectioned, so the second-plug question is open. Both are cheap to settle with one scrap core, but that is a purchase, and this pass was analysis only.
-- **No quotes.** The gearbox, adapter, mount and head work are [E]. MANUFACTURING is asked on **AER-3526**.
+- **No quotes.** The gearbox is the program's [E]. The adapter, hub, coupling, mount and head work are MANUFACTURING's envelope estimates from **AER-3526** (2026-10-19), not quotes. None has a drawing behind it yet: the mount needs PROPULSION's mount-point drawing and an isolator stiffness, the head work a hole drawing after the section.
 - **No crank-dyno curve.** The aircraft torque curve is a rear-wheel dyno divided by 0.94, anchored on Suzuki's 149 N m claim.
 - **No Gen 3 injector flow, crank trigger pattern or limp-home throttle position** was found.
 - **The torsional model** is two inertias with assumed inertias, an assumed rod length and an assumed coupling damping (zeta 0.08). It gives ratios between engines, not stresses. It does not include the crank's own modes, gear backlash or the propeller blades.
@@ -305,4 +306,4 @@ Added to `FAILURE_LEDGER.md`, each conditional on a Hayabusa route being taken:
 
 ## 12. Bill's call
 
-**Drop the Hayabusa as the starting platform, and if you want an early flying FADEC test bed, carry the program's FADEC on a bought conversion instead?** I recommend yes. The Hayabusa costs more and weighs more than the AM15 or Viking 130 once it has a drive and two lanes, the drive would be ours to invent, and its one aviation precedent was lost. If Bill wants to keep it, the cheapest next step is one scrap core, weighed and with its head sectioned: that settles the mass and the second-plug question for a few hundred dollars. The question is on AER-3525 as a card.
+**Drop the Hayabusa as the starting platform, and if you want an early flying FADEC test bed, carry the program's FADEC on a bought conversion instead?** I recommend yes. The Hayabusa costs more and weighs more than the AM15 or Viking 130 once it has a drive and two lanes, the drive would be ours to invent, and its one aviation precedent was lost. If Bill wants to keep it, the cheapest next step is one scrap core, weighed and with its head sectioned: that settles the mass and the second-plug question for about $0.3k-1.7k (MANUFACTURING: two scrap heads and a section). The question is on AER-3525 as a card.
