@@ -13,8 +13,8 @@ CRANK_AND_SCALING.md section 5 for the gearbox), so the comparison with H is on
 one basis. Mid = geometric mean of low and high, as in phases 1 and 1b.
 
 Tags: [S] sourced (sources/HAYABUSA_SOURCES_2026-10-19.md), [F] forum or a
-search snippet only, [E] PROPULSION estimate, [MFG] waiting on MANUFACTURING
-(AER-3526) and carried as [E] until then. None of these is a quote.
+search snippet only, [E] PROPULSION estimate, [MFG] MANUFACTURING's envelope
+estimate on AER-3526 (2026-10-19, first engine). None of these is a quote.
 
 Run: python3 mass_cost_busa.py
 """
@@ -63,17 +63,18 @@ COST = {   # USD, basis 1, R-35 definition
     "machine shop: crack test of crank and rods, valve job, inspection [E]": (500, 1200),
     "dry sump: SBD kit GBP 1,160 ex VAT plus tank, lines and fittings [S D30 + E]": (1160 * GBP_USD + 400, 1160 * GBP_USD + 800),
     "reduction gearbox, proven-class, made (none to buy, P section 1) [E, CRANK_AND_SCALING 5]": GEARBOX_B1,
-    "adapter plate and soft coupling [E, MFG AER-3526]": (800, 2500),
+    "adapter plate and crank-side hub [MFG AER-3526]": (1100, 4500),
+    "torsional elastic coupling [MFG AER-3526]": (300, 1000),
     "FADEC, two lanes (cost_floor.py, same line as H) [E]": CF.FADEC,
     "second coil per cylinder, 4 x D585 class (cost_floor.py) [S-MFG]": (CF.DUAL_LANE_PER_CYL[0] * 4, CF.DUAL_LANE_PER_CYL[1] * 4),
-    "second plug per cylinder machined into the head, incl. a scrap-head survey [E, MFG AER-3526]": (1000, 4000),
+    "second plug per cylinder: sleeved plug tubes, two scrap heads, section, fixture, prove-out [MFG AER-3526; outside the envelope until a section proves it]": (2100, 7300),
     "second crank sensor and trigger wheel [E]": (100, 300),
     "second generator and regulator for lane B (cost_floor START_ALT as the allowance) [E]": CF.START_ALT,
     "cooling at 81 kW (cost_floor.py rate per 100 kW) [E]": (CF.COOLING_PER_100KW[0] * HEAT_MCP / 100, CF.COOLING_PER_100KW[1] * HEAT_MCP / 100),
     "fuel system, two pumps, E15-rated hoses (cost_floor.py) [E]": CF.FUEL["SI"],
     "exhaust (cost_floor.py) [E]": CF.EXHAUST,
     "intake plenum and filter [E]": (200, 500),
-    "engine mount [E, MFG AER-3526]": (600, 1500),
+    "engine mount, 4130 tube bed, 4 isolators, jig; builder TIG (shop route $3.0k-8.4k) [MFG AER-3526]": (1400, 3700),
     "misc: fasteners, seals, filters (cost_floor.py) [E]": CF.MISC,
 }
 NORMALIZER_COST = (2000, 4500)   # cost_v1.py NORM_TURBO [MFG 10]
@@ -83,7 +84,8 @@ LABOR_H = {   # builder hours [E]
     "dry sump fit": (10, 20),
     "gearbox, adapter and coupling fit and alignment": (40, 100),
     "FADEC wiring, two lanes, and calibration on the stand": (60, 140),
-    "cooling, exhaust, intake and mount fabrication": (60, 120),
+    "cooling, exhaust and intake fabrication": (40, 80),
+    "engine mount welding, builder TIG, skill B3 (MFG AER-3526)": (40, 80),
     "first runs and a torsional survey on the stand": (20, 40),
 }
 
@@ -128,7 +130,7 @@ if __name__ == "__main__":
     nlo, nhi = clo + NORMALIZER_COST[0], chi + NORMALIZER_COST[1]
     print(f"With a normalizer: ${nlo/1e3:.1f}k / ${mid(nlo, nhi)/1e3:.1f}k / ${nhi/1e3:.1f}k.")
     # what is Hayabusa-specific and what is the program's own work
-    shared = ("gearbox", "adapter", "FADEC", "second coil", "second crank", "second generator", "cooling", "fuel system", "exhaust", "intake", "mount", "misc")
+    shared = ("gearbox", "adapter", "elastic", "FADEC", "second coil", "second crank", "second generator", "cooling", "fuel system", "exhaust", "intake", "mount", "misc")
     slo = sum(v[0] for k, v in COST.items() if any(s in k for s in shared))
     shi = sum(v[1] for k, v in COST.items() if any(s in k for s in shared))
     print(f"Of which lines any engine in the program needs (gearbox, FADEC, cooling, fuel, exhaust, mount, misc): ${slo/1e3:.1f}k-{shi/1e3:.1f}k; "
