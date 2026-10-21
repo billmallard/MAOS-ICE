@@ -14,8 +14,9 @@ The older documents one level up (`docs/*.md`) are the hybrid and genset history
 | [CASTINGS_H.md](CASTINGS_H.md) | concept H castings: rulings on MANUFACTURING's DFM objections, the liner, the coarse STEP ([`cad/concept_h/`](../../cad/concept_h/)), and the cost floor on both bases (AER-3331) | PROPULSION |
 | [CRANK_AND_SCALING.md](CRANK_AND_SCALING.md) | crank routes costed for the one-off build, the 200 hp small-fast / large-slow sweep with the crank and gearbox priced, and the turbo-versus-supercharger trade reopened (AER-3411; exploration, not rulings) | PROPULSION |
 | [CRANK_H301.md](CRANK_H301.md) | concept H's crank: the catalog inline-6 billet against a one-off and a Continental crank, the torsional case, and the H-301 Rev A quoting drawing against the 10 rfq-package-v1 items (AER-3439) | PROPULSION |
+| [HAYABUSA_PLATFORM.md](HAYABUSA_PLATFORM.md) | the Suzuki Hayabusa as a cheap first flying engine: aircraft rating, durability, the drive and its torsion, dual lane, mass, cost, and three roles scored (AER-3525; exploration, not a ruling) | PROPULSION |
 | [FAILURE_LEDGER.md](FAILURE_LEDGER.md) | single failures and what they leave, held for SAFETY | PROPULSION |
 | [MANUFACTURING_ENVELOPE.md](MANUFACTURING_ENVELOPE.md) | what can be cast, machined, cut or bought, at what price (v0, AER-3321; v1 adds concept H estimates and normalizer sourcing, AER-3328) | MANUFACTURING (committed verbatim) |
 | [sources/](sources/) | vendor data, prices and masses, with read dates | PROPULSION |
 
-The numbers come from the scripts in [`analysis/engine_phase0/`](../../analysis/engine_phase0/), [`analysis/engine_phase1/`](../../analysis/engine_phase1/) and [`analysis/engine_crank/`](../../analysis/engine_crank/). Rerun them rather than trusting the tables.
+The numbers come from the scripts in [`analysis/engine_phase0/`](../../analysis/engine_phase0/), [`analysis/engine_phase1/`](../../analysis/engine_phase1/), [`analysis/engine_crank/`](../../analysis/engine_crank/) and [`analysis/engine_hayabusa/`](../../analysis/engine_hayabusa/). Rerun them rather than trusting the tables.
