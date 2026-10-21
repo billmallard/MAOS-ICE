@@ -1,7 +1,7 @@
 # The Suzuki Hayabusa as a starting platform: a serious evaluation
 
 Owner: PROPULSION. Issue: AER-3525 (MANUFACTURING pricing: AER-3526). Date: 2026-10-19.
-Status: **exploration, not a ruling.** Bill asked for this in conversation on 2026-10-19. Nothing here changes REQUIREMENTS section 12 or the family plan (R-1). Nothing here has been built, weighed, run or flown. This is an experimental engine design; nothing in it is certified, certifiable or flight-ready.
+Status: **Bill decided on 2026-10-21 (section 12): the Hayabusa is dropped as the starting platform, and the program's FADEC flies on a bought conversion instead (AER-3631).** The rest of this document stays an exploration. Bill asked for it in conversation on 2026-10-19. Nothing here changes REQUIREMENTS section 12 or the family plan (R-1). Nothing here has been built, weighed, run or flown. This is an experimental engine design; nothing in it is certified, certifiable or flight-ready.
 
 Numbers come from [`analysis/engine_hayabusa/`](../../analysis/engine_hayabusa/): `rating_busa.py` (rating, knock, boost, radiator), `torsional_busa.py` (crank torque and the geared drive) and `mass_cost_busa.py` (mass, cost, labor, durability bracket), with their tables beside them. Tags: **[S]** sourced, **[F]** forum or a search snippet only, **[E]** PROPULSION estimate with its method in the script, **[A]** assumed. Source keys: [Hn] specifications, [Dn] durability and dual-lane, [Pn] aviation and reduction drives, all in [`sources/HAYABUSA_SOURCES_2026-10-19.md`](sources/HAYABUSA_SOURCES_2026-10-19.md). **None of the costs is a quote.**
 
@@ -306,4 +306,8 @@ Added to `FAILURE_LEDGER.md`, each conditional on a Hayabusa route being taken:
 
 ## 12. Bill's call
 
-**Drop the Hayabusa as the starting platform, and if you want an early flying FADEC test bed, carry the program's FADEC on a bought conversion instead?** I recommend yes. The Hayabusa costs more and weighs more than the AM15 or Viking 130 once it has a drive and two lanes, the drive would be ours to invent, and its one aviation precedent was lost. If Bill wants to keep it, the cheapest next step is one scrap core, weighed and with its head sectioned: that settles the mass and the second-plug question for about $0.3k-1.7k (MANUFACTURING: two scrap heads and a section). The question is on AER-3525 as a card.
+**Drop the Hayabusa as the starting platform, and if you want an early flying FADEC test bed, carry the program's FADEC on a bought conversion instead?** I recommend yes. The Hayabusa costs more and weighs more than the AM15 or Viking 130 once it has a drive and two lanes, the drive would be ours to invent, and its one aviation precedent was lost. If Bill wants to keep it, the cheapest next step is one scrap core, weighed and with its head sectioned: that settles the mass and the second-plug question for about $0.3k-1.7k (MANUFACTURING: two scrap heads and a section). The question was on AER-3525 as a card.
+
+**Bill's decision, 2026-10-21: accepted.** The Hayabusa is dropped as the starting platform. The program's FADEC will be developed and flown on a bought conversion; picking that engine and planning the FADEC swap is AER-3631.
+
+This decision does not change any requirement line, R-1, or concept H. The Hayabusa ledger entries FL-51 to FL-60 stay as records, conditional on a route that is not being taken. The open load question in section 4 (the gearbox tie to the mount) is closed as not needed.
