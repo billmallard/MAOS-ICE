@@ -383,7 +383,7 @@ def tau_allow(uts=1000.0, d_mm=60.0, ck=0.50, lam=1.0):
     return (uts + 160) / 18 * ck * cd * f
 
 
-VISCOUS = dict(J=0.035, k=0.0, c=None)       # ring inertia [A]: 8 in automotive viscous damper class
+VISCOUS = dict(J=0.015, k=0.0, c=None)       # ring inertia [E]: catalog Fluidampr class, 0.01-0.02 kg m^2 (MANUFACTURING, AER-3443); c is not published [Q]
 PEND = dict(m=0.55, Rp=0.075, n=6.1)         # one 6th-order pendulum [A]; Rp = pivot radius + pendulum length
 
 
@@ -489,7 +489,7 @@ def cost_section():
         ("Catalog inline-6 billet (2JZ / RB26)", "$4.0k-4.9k [S]", "cannot fire a flat six evenly (section 1), wrong stroke and throw spacing: a different engine (an inline-6 block and one long head), not an adaptation", "stock to weeks", "**does not fit H**"),
         ("One-off billet to H-301, crank specialist", "$6.6k-9.4k incl. balance [E, envelope 9.4]", "H-101/H-102/H-201 at the 122 mm pitch (section 3), and a deck rise for a longer rod or relieved liner bottoms (section 6)", "18-20 weeks [S, reseller]", "**recommended**"),
         ("One-off to H-301, general turn-mill shop (route 5)", "$7k-19k, central $10-12k [E, AER-3412]", "as above; the builder owns the crank process (nitride, grind, straightening)", "6-12 weeks [E]", "lead-time alternate, same drawing"),
-        ("Continental O-470 / IO-520, used and overhauled", "$8.5k tagged lead [S, snippet]; $11.9k new [S]; MANUFACTURING's $2k-7k band is not supported", "case redrawn to Continental's main spacing (not found); 2.250 in pins, so no LS rods; damper pins at 3,300 rpm carry 1.34x the centrifugal load of 2,850", "stock, used market", "fallback and TV reference; not cheaper"),
+        ("Continental O-470 / IO-520, VAR, used", "$8.2k-10.5k ready to install [S]; $1.5k-3k as a core plus overhaul [E, AER-3443], if the core passes; $11.9k new [S]", "case redrawn to Continental's main spacing (not found); 2.250 in pins, so no LS rods; damper pins at 3,300 rpm carry 1.34x the centrifugal load of 2,850", "stock, used market", "cheaper only as core + overhaul; open until a core is measured"),
         ("Subaru EZ36 OE, geared (H-EZ36)", "$0.9k-1.2k on the line [S + E]", "a gearbox $2.9k-9.8k [E], a 92 mm cylinder module, 7 mains", "days", "Bill's open card on AER-3411; not H as drawn"),
     ]
     for r in rows:
