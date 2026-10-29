@@ -70,4 +70,3 @@ published; at 43 psi (2.96 bar) the catalog rating applies almost unchanged.
 | A. Flying Viking 130 CH 750, re-engined with the AM15 | $76,397 | $144,897 | $94,447 | $174,297 | F AF14, AF15; the removed Viking's resale not found |
 | D. Host aircraft: an owner flying an AM15 aircraft lends it | $2,000 | $10,000 | $20,050 | $39,400 | E: swap parts back to stock, insurance increment, the owner's costs; no AM15 aircraft for sale was found and no host is known |
 | E. No airframe yet: ground stand only | $0 | $0 | $18,050 | $29,400 | flight deferred |
-
