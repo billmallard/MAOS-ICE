@@ -1,15 +1,15 @@
 {
  "part": "H-301",
- "mass_kg": 24.58,
- "volume_mm3": 3131173,
+ "mass_kg": 23.86,
+ "volume_mm3": 3039405,
  "box_mm": [
-  531.0,
+  541.0,
   173.0,
   186.5
  ],
  "x_span": [
   -32.01,
-  499.0
+  509.0
  ],
  "solids": 1,
  "valid": true,
@@ -17,8 +17,8 @@
   [
    "main journal (thrust)",
    "M1",
-   "x 45.0-71.0",
-   "dia 60.00, width 26.0"
+   "x 47.8-71.0",
+   "dia 60.00, width 23.2"
   ],
   [
    "main journal",
@@ -93,6 +93,12 @@
    "3 x 17.3 thick, 85 wide; counterweights R62 on the outer two"
   ],
   [
+   "thrust collar",
+   "T",
+   "x 41.8-47.8",
+   "dia 80 [E; at least the King F5382 thrust-flange OD, Q]; its rear face is M1's front thrust face"
+  ],
+  [
    "propeller flange",
    "F",
    "x -20.01--8.90",
@@ -101,32 +107,32 @@
   [
    "seal journal",
    "S",
-   "x -8.9-45.0",
+   "x -8.9-41.8",
    "dia 64"
   ],
   [
    "cam-gear seat",
    "",
    "x 437.0-467.0",
-   "dia 50"
+   "dia 50, key slot 8 wide x 4 deep at P1's angle"
   ],
   [
    "reluctor seat",
    "",
    "x 467.0-479.0",
-   "dia 46"
+   "dia 46, key slot 8 wide x 4 deep at P1's angle"
   ],
   [
-   "damper flange",
-   "D",
-   "x 479.0-491.0",
-   "OD 110; 6 x M10 (8.5 drill) on 90"
-  ],
-  [
-   "damper pilot",
+   "damper-hub seat",
    "",
-   "x 491.0-499.0",
-   "dia 60"
+   "x 479.0-509.0",
+   "dia 40, key slot 8 wide x 4 deep at P1's angle"
+  ],
+  [
+   "centre bolt",
+   "",
+   "x 469.0-509.0",
+   "M16 x 1.5 tapped (14.5 drill) x 40 deep; clamps hub, reluctor and cam gear"
   ],
   [
    "oil drilling",

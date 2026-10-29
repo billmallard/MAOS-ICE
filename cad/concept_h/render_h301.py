@@ -71,12 +71,13 @@ dim(ax, mains[0], mains[1], 112, f"bank pitch = main spacing {G['pitch']:.1f}")
 x1 = mains[0] + G["main_w"] / 2 + G["web_t"] + G["pin_w"] / 2
 dim(ax, x1, x1 + G["pin_w"] + G["web_t"], 75, f"bank offset {G['pin_w'] + G['web_t']:.1f}")
 dim(ax, INFO["x_span"][0], INFO["x_span"][1], -150, f"overall {INFO['x_span'][1] - INFO['x_span'][0]:.1f}", above=False)
-ax.text(-25, 82, f"propeller flange\nOD {G['flange_od']:.0f} x {G['flange_t']}\n6 bushing bores {G['flange_bushing_bore']}\non {G['flange_bc']} (4.750 in)\npilot {G['pilot_d']:.0f} [Q]",
+ax.text(-25, 82, f"propeller flange\nOD {G['flange_od']:.0f} x {G['flange_t']}\n6 bushing bores\n{G['flange_bushing_bore']:.3f}-{G['flange_bushing_bore_max']:.3f} on {G['flange_bc']} (4.750 in)\npilot {G['pilot_d']:.0f} [Q]",
         fontsize=6.5, ha="center")
 xr = mains[3] + G["main_w"] / 2
-ax.text(xr + 40, 82, f"cam-gear seat {G['cam_gear_seat_d']:.0f} x {G['cam_gear_seat_l']:.0f}\nreluctor seat {G['reluctor_seat_d']:.0f} x {G['reluctor_seat_l']:.0f}\n"
-        f"damper flange {G['damper_flange_od']:.0f}, 6 x M10 on {G['damper_bc']:.0f}\ndamper pilot {G['damper_pilot_d']:.0f}", fontsize=6.5, ha="center")
-ax.set_xlim(-60, 540)
+ax.text(xr + 45, 82, f"rear stack, keyed at P1, slides on from the rear:\ncam-gear seat {G['cam_gear_seat_d']:.0f} x {G['cam_gear_seat_l']:.0f}\nreluctor seat {G['reluctor_seat_d']:.0f} x {G['reluctor_seat_l']:.0f}\n"
+        f"damper-hub seat {G['hub_seat_d']:.0f} x {G['hub_seat_l']:.0f}\ncentre bolt M16 x 1.5 x {G['center_bolt_depth']:.0f}", fontsize=6.5, ha="center")
+ax.text(G["x_main0"] - 35, -95, f"thrust collar {G['thrust_collar_d']:.0f} x {G['thrust_collar_l']:.0f}\nM1 {G['front_main_w']} between thrust faces", fontsize=6.5, ha="center")
+ax.set_xlim(-60, 555)
 ax.set_ylim(-175, 135)
 ax.set_aspect("equal")
 ax.set_title("H-301 crankshaft, side view, cylinder 1 at TDC (pin P1 toward the LH bank, +z). x from the case front face, mm", fontsize=9)
@@ -119,16 +120,18 @@ ax.set_title("shaded, from the front left", fontsize=8)
 
 # --- notes block
 notes = (
-    f"H-301 crankshaft, concept H 200 hp member. Rev A, for quotation only. AER-3439. Model mass {INFO['mass_kg']} kg.\n"
-    "Material: 4340 VAR, AMS 6414 (quote AMS 6415 air-melt as an alternate). Quench and temper 28-32 HRC core.\n"
-    f"Journals: mains {G['main_d']:.2f} (-0.013/-0.025 [E], to the main shell maker's table [Q]); pins {G['pin_d']} = 2.100 in\n"
-    f"(LS rod shell table). Pin width {G['pin_w']}; main width {G['main_w']:.0f}, M1 {G['front_main_w']:.0f} with ground thrust faces.\n"
-    f"Fillets R{G['fillet_r']:.0f} on every journal, ground in form, no undercut; journals Ra 0.2 um, fillets Ra 0.4 um.\n"
-    "Gas nitride after finish grind: effective case 0.30-0.50 mm, compound layer <= 5 um on journals; micropolish after.\n"
-    "Runout, supported on M1 and M4: M2/M3 0.025 FIR; flange face 0.05 FIR [E] (Continental IO-520 service limit 0.005 in [S]).\n"
-    "Oil: one straight 6 mm drilling per pin from its nearer main; break and polish both ends; no plugs.\n"
-    "Balance the crank alone, no bob weight, ISO 21940-11 G2.5 at 3,300 rpm [E]; match rods end for end and pistons per pair.\n"
-    "MPI (ASTM E1444) after rough machining and after nitriding. Unlisted dims ISO 2768-m. Nothing here has been made or tested."
+    f"H-301 crankshaft Rev B, concept H 200 hp member. For quotation only. AER-3439; Rev B folds in MANUFACTURING's DFM read (AER-3443).\n"
+    f"Model mass {INFO['mass_kg']} kg. Material, three priced lines: AMS 6414 (4340 VAR); AMS 6415 (air-melt); the shop's own crank steel\n"
+    "(4330M / EN30B class). Quench and temper 28-32 HRC core.\n"
+    f"Mains {G['main_d']:.2f} 0/-0.02 for King MB5382XPG (Subaru EJ) shells; M1 {G['front_main_w']} +0.05/0 between thrust faces (King F5382).\n"
+    f"Pins {G['pin_d']} (2.100 in) x {G['pin_w']} for King CR807XPN (narrowed) LS rod shells. Fillets R{G['fillet_r']:.0f} ground in form to the named\n"
+    "shells' edge chamfers [Q to King]; fallback R2.5. Journals Ra 0.2 um, fillets Ra 0.4 um.\n"
+    "Nitride after finish grind, process the vendor's (ion/plasma or gas): effective case 0.10 mm min, vendor to state;\n"
+    "compound layer <= 5 um after polish. Mask the bushing bores and the centre-bolt thread, or finish them after nitriding.\n"
+    "Flange bushing bores 19.820-19.845 (0.7803-0.7813 in), 6 on 120.65; pattern clocking to cyl 1 TDC from the hub drawing [Q].\n"
+    "Runout on M1/M4: M2/M3 0.025 FIR, flange face 0.05 FIR, reported after nitriding and after any straightening.\n"
+    "Oil: one straight 6 mm drilling per pin from its nearer main; no plugs. Balance alone, no bob weight, G2.5 at 3,300 rpm.\n"
+    "MPI (ASTM E1444) after roughing, after nitriding and after any straightening. ISO 2768-m. Nothing here has been made or tested."
 )
 fig.text(0.44, 0.03, notes, fontsize=7.4, family="monospace", va="bottom")
 fig.savefig(os.path.join(HERE, "H-301_drawing.png"), dpi=130)
